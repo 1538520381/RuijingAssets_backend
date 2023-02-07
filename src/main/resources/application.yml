@@ -1,0 +1,30 @@
+# 正式环境(prod) or 测试环境(dev)
+spring:
+  profiles:
+    active: dev
+
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+server:
+  port: 12000
+
+mybatis-plus:
+  global-config:
+    db-config:
+      #自动递增
+      id-type: auto
+      #日志
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
+minio:
+  endpoint: http://175.178.189.129:9000
+  accessKey: admin
+  secretKey: admin123
+  bucket: ruijing
