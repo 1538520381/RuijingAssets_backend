@@ -46,6 +46,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         String token = request.getHeader("token");
         if (!StringUtils.hasText(token)) {
             //说明该接口不需要登录  直接放行
+
             filterChain.doFilter(request, response);
             return;
         }
