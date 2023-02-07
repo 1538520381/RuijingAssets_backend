@@ -1,10 +1,9 @@
 package com.ruijing.assets.controller;
 
 
-import com.ruijing.assets.dao.AboutUsDao;
 import com.ruijing.assets.entity.dto.AboutUsDto;
 import com.ruijing.assets.entity.result.R;
-import com.ruijing.assets.entity.vo.AboutUsVo;
+import com.ruijing.assets.entity.vo.aboutUsVO.AboutUsVo;
 import com.ruijing.assets.service.AboutUsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

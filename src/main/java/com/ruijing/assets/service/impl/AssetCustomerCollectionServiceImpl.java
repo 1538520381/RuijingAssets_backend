@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ruijing.assets.dao.AssetCustomerCollectionDao;
-import com.ruijing.assets.entity.customerCollectionVO.AssetCustomerCollectionVO;
+import com.ruijing.assets.entity.vo.customerCollectionVO.AssetCustomerCollectionVO;
 import com.ruijing.assets.entity.pojo.AssetCustomerCollectionEntity;
 
 import com.ruijing.assets.entity.pojo.AssetEntity;

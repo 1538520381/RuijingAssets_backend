@@ -1,4 +1,4 @@
-package com.ruijing.assets.entity.customerCollectionVO;
+package com.ruijing.assets.entity.vo.customerCollectionVO;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;

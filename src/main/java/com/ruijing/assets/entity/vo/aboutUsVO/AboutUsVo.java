@@ -1,4 +1,4 @@
-package com.ruijing.assets.entity.vo;
+package com.ruijing.assets.entity.vo.aboutUsVO;
 
 
 import com.ruijing.assets.entity.pojo.AboutUsCompanyEntity;
