@@ -86,12 +86,6 @@
             <artifactId>commons-codec</artifactId>
             <version>1.11</version>
         </dependency>
-        <!--        日期工具栏依赖-->
-        <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time</artifactId>
-            <version>2.12.2</version>
-        </dependency>
         <!--         数据库连接池-->
         <dependency>
             <groupId>com.alibaba</groupId>
