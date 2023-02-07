@@ -102,7 +102,7 @@ public class AssetServiceImpl extends ServiceImpl<AssetDao, AssetEntity> impleme
             assetVoInDetail.setHighlights(highlights);
         }
 
-        //1，封装基本属性
+        //2，封装基本属性
         BeanUtils.copyProperties(assetEntity, assetVoInDetail);
 
 
@@ -115,6 +115,7 @@ public class AssetServiceImpl extends ServiceImpl<AssetDao, AssetEntity> impleme
         assetVoInDetail.setLitigationStatusString(LitigationStatusConstant.litigationStatusMap.get(assetVoInDetail.getLitigationStatus()));
         assetVoInDetail.setProvinceString(ProvinceAndCityConstant.provinceAndCityMap.get(assetVoInDetail.getProvince()));
         assetVoInDetail.setDisposalMethodString(DisposalMethodTypeConstant.disposalMethodType.get(assetEntity.getDisposalMethod()));
+
 
         //5,资产所有的图片
         List<AssetImageEntity> images = assetImageService
@@ -137,7 +138,6 @@ public class AssetServiceImpl extends ServiceImpl<AssetDao, AssetEntity> impleme
                 .peek(assetCollateralEntity -> assetCollateralEntity.setAssetTypeString(AssetCollateralTypeConstant.assetCollateralTypeMap.get(assetCollateralEntity.getCollateralType())))
                 .collect(Collectors.toList());
 
-        System.out.println(assetCollateralEntities);
 
 
         //7,担保人

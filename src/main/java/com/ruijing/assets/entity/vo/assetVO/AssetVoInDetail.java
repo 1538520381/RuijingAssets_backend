@@ -90,10 +90,6 @@ public class AssetVoInDetail implements Serializable {
      */
     private String disposalMethodString;
     /*
-     * 是否收藏
-     */
-    private Boolean collectionOrNot;
-    /*
      * 资产亮点
      */
     private List<Highlight> highlights;
