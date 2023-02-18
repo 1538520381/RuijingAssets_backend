@@ -249,16 +249,19 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRoleEntity> i
         });
 
 
-        //删除父权限和角色之间的绑定
-        sysRoleMenuService.remove(new LambdaQueryWrapper<SysRoleMenuEntity>()
-                .eq(
-                        roleDTO.getId() != 0,
-                        SysRoleMenuEntity::getSysRoleId,
-                        roleDTO.getId())
-                .in(
-                        !CollectionUtils.isEmpty(parentIdsToBeDelete),
-                        SysRoleMenuEntity::getSysMenuId,
-                        parentIdsToBeDelete));
+        if (!CollectionUtils.isEmpty(parentIdsToBeDelete)) {
+            //删除父权限和角色之间的绑定
+            sysRoleMenuService.remove(new LambdaQueryWrapper<SysRoleMenuEntity>()
+                    .eq(
+                            roleDTO.getId() != 0,
+                            SysRoleMenuEntity::getSysRoleId,
+                            roleDTO.getId())
+                    .in(
+                            !CollectionUtils.isEmpty(parentIdsToBeDelete),
+                            SysRoleMenuEntity::getSysMenuId,
+                            parentIdsToBeDelete));
+        }
+
 
     }
 
