@@ -21,7 +21,9 @@ import com.ruijing.assets.util.using.PageUtils;
 import com.ruijing.assets.util.unUsing.Query;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
@@ -44,6 +46,12 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRoleEntity> i
     @Autowired
     SysUserRoleService sysUserRoleService;
 
+
+    @Autowired
+    @Lazy
+    SysRoleService sysRoleService;
+
+
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
         IPage<SysRoleEntity> page = this.page(
@@ -62,6 +70,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRoleEntity> i
      * @date: 2023/1/31 22:59
      */
     @Override
+    @Transactional
     public void addRole(RoleDTO roleDTO) {
         SysRoleEntity sysRoleEntity = new SysRoleEntity();
         BeanUtils.copyProperties(roleDTO, sysRoleEntity);
@@ -70,7 +79,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRoleEntity> i
         this.save(sysRoleEntity);
         //绑定角色和权限之间的关系
         if (!CollectionUtils.isEmpty(roleDTO.getMenuIds())) {
-            this.bindRoleAndMenu(roleDTO);
+            sysRoleService.bindRoleAndMenu(roleDTO);
         }
     }
 
@@ -79,7 +88,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRoleEntity> i
     public void deliverMenu(RoleDTO roleDTO) {
         //绑定角色和权限之间的关系
         if (!CollectionUtils.isEmpty(roleDTO.getMenuIds())) {
-            this.bindRoleAndMenu(roleDTO);
+            sysRoleService.bindRoleAndMenu(roleDTO);
         }
     }
 
@@ -94,6 +103,8 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRoleEntity> i
         }
     }
 
+
+    @Transactional
     @Override
     public void removeRole(Long roleId) {
         //首先查询是否有某用户绑定了该角色
@@ -173,14 +184,31 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRoleEntity> i
 
     //绑定角色和权限之间的关系
     //添加了多字段联合唯一 保证接口幂等性。
-    private void bindRoleAndMenu(RoleDTO roleDTO) {
+    //alter table sys_role_menu add unique key role_menu_unique (role_id,menu_id)
+    @Transactional
+    public void bindRoleAndMenu(RoleDTO roleDTO) {
         List<SysRoleMenuEntity> sysRoleMenuEntityListToBeSaved = new ArrayList<>();
         //获得其绑定的权限id
-        roleDTO.getMenuIds().forEach(o -> {
+        roleDTO.getMenuIds().forEach(menuId -> {
+            //查询该权限的父权限是否已经和该角色绑定
+            SysMenuEntity sysMenuEntity = sysMenuService.getById(menuId);
+            Long parentId = sysMenuEntity.getParentId();
+            int count = sysRoleMenuService.count(new LambdaQueryWrapper<SysRoleMenuEntity>()
+                    .eq(SysRoleMenuEntity::getSysMenuId, parentId)
+                    .eq(SysRoleMenuEntity::getSysRoleId, roleDTO.getId()));
+            if (count == 0) {
+                //需要绑定一级菜单和该角色之间的关系
+                SysRoleMenuEntity sysRoleMenuEntity = SysRoleMenuEntity.builder()
+                        .sysRoleId(roleDTO.getId())
+                        .sysMenuId(parentId)
+                        .build();
+                sysRoleMenuEntityListToBeSaved.add(sysRoleMenuEntity);
+            }
+
             //绑定角色和权限之间的关系
             SysRoleMenuEntity sysRoleMenuEntity = SysRoleMenuEntity.builder()
                     .sysRoleId(roleDTO.getId())
-                    .sysMenuId(o)
+                    .sysMenuId(menuId)
                     .build();
             sysRoleMenuEntityListToBeSaved.add(sysRoleMenuEntity);
         });

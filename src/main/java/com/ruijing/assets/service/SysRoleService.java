@@ -36,5 +36,7 @@ public interface SysRoleService extends IService<SysRoleEntity> {
     void removeRole(Long roleId);
 
     SysRoleVo getRoleInfo(Long roleId);
+
+     void bindRoleAndMenu(RoleDTO roleDTO);
 }
 
