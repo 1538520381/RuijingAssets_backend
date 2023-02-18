@@ -60,6 +60,20 @@ public class SysRoleController {
 
     /*
      * @author: K0n9D1KuA
+     * @description: 修改角色信息
+     * @param: sysRoleEntity
+     * @return: com.ruijing.assets.entity.result.R
+     * @date: 2023/2/18 15:55
+     */
+    @PostMapping("/updateRole")
+    @SysLog(operationType = 2, operationName = "修改角色信息")
+    public R updateRole(@RequestBody SysRoleEntity sysRoleEntity) {
+        sysRoleService.updateById(sysRoleEntity);
+        return R.ok();
+    }
+
+    /*
+     * @author: K0n9D1KuA
      * @description: 给某个角色分配权限
      * @param: roleDTO 内含 roleId  menuIds（要绑定的权限的id）
      * @return: com.ruijing.assets.entity.result.R

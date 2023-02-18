@@ -24,7 +24,8 @@ public enum RuiJingExceptionEnum {
     ADD_DUPLICATION("请勿重复收藏哦  亲~", 100020),
     LOGOUT_FAILED("退出登录失败", 100021),
     ADD_DUPLICATION_ROLE_TO_ONE_USER("请勿重复给用户分配相同的角色  亲~", 100022),
-    ADD_DUPLICATION_MENU_TO_ONE_ROLE("请勿重复给角色分配相同的权限  亲~", 100022);
+    ADD_DUPLICATION_MENU_TO_ONE_ROLE("请勿重复给角色分配相同的权限  亲~", 100022),
+    THE_USER_FORBIDDEN("该用户已经被禁用!", 100023);
     //状态码
     private final int code;
     //状态消息
