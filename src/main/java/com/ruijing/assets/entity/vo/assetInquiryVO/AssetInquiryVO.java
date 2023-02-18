@@ -5,11 +5,15 @@ import com.ruijing.assets.entity.pojo.AssetInquiryEntity;
 import com.ruijing.assets.entity.pojo.CustomerEntity;
 import lombok.Data;
 
+import java.util.List;
+
 
 @Data
-public class AssetInquiryVO extends AssetInquiryEntity {
+public class AssetInquiryVO {
     //客户信息
-    private CustomerEntity customerEntity;
+    private List<InquiryCustomerVO> inquiryCustomerVOList;
     //资产信息
     private AssetEntity assetEntity;
+    //询价数量
+    private Long inquiryNum;
 }

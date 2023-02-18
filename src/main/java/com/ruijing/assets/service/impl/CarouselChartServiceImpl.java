@@ -23,8 +23,7 @@ import java.util.*;
 
 @Service("carouselChartService")
 public class CarouselChartServiceImpl extends ServiceImpl<CarouselChartDao, CarouselChartEntity> implements CarouselChartService {
-    @Autowired
-    UploadService uploadService;
+
     @Autowired
     MinioUtil minioUtil;
 
@@ -51,12 +50,12 @@ public class CarouselChartServiceImpl extends ServiceImpl<CarouselChartDao, Caro
                     //排序
                     .sorted(Comparator.comparingInt(CarouselChartEntity::getImageOrder))
                     //处理url
-                    //2023/02/06/a730488ecbb28a73a98f2e5281db6fb1.jpeg
+                    //ruijing/2023/02/06/a730488ecbb28a73a98f2e5281db6fb1.jpeg
                     //变为http://175.178.189.129:9000/ruijing/2023/02/06/a730488ecbb28a73a98f2e5281db6fb1.jpeg
                     .forEach(
                             carouselChartEntity
                                     -> carouselChartEntity
-                                    .setImage(minioUtil.getEndpoint() + "/" + minioUtil.getBucket() + "/" + carouselChartEntity.getImage()));
+                                    .setImage(minioUtil.getEndpoint() + "/" + carouselChartEntity.getImage()));
 
             return R.success(carouselChartEntities);
         }
@@ -66,7 +65,7 @@ public class CarouselChartServiceImpl extends ServiceImpl<CarouselChartDao, Caro
     public String uploadCarouselChart(byte[] bytes, String originalFilename, String contentType) {
         //上传文件
         try {
-            String originalUrl = uploadService.uploadFile(bytes, originalFilename, contentType);
+            String originalUrl = minioUtil.uploadFile(bytes, originalFilename, contentType);
             //更新数据库
             CarouselChartEntity carouselChartEntity = new CarouselChartEntity();
             carouselChartEntity.setImage(originalUrl);
@@ -110,7 +109,7 @@ public class CarouselChartServiceImpl extends ServiceImpl<CarouselChartDao, Caro
                 //转化为   2023/02/06/2d7adc6c312190602c7e3d20efa200c7.png
                 String objectName = this.convertImageUrlToObjectName(imageUrl);
                 //删除
-                uploadService.deleteFileByObjectName(objectName);
+                minioUtil.deleteFileByObjectName(objectName);
                 //同时删除数据库中的数据
                 this.removeById(currentDeleteId);
             });

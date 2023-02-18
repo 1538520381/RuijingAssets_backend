@@ -31,5 +31,7 @@ public interface SysUserService extends IService<SysUserEntity> {
     UserVo userInfo(Long userId);
 
     void updatePassword(UpdatePasswordDTO updatePasswordDTO);
+
+    public void removeUserAndRole(UserDTO userDTO);
 }
 

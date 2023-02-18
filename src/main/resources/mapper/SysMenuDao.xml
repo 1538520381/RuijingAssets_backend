@@ -22,7 +22,7 @@
             FROM sys_role_menu
             WHERE sys_role_id IN (
                 -- 		查询某用户所对应的角色的id
-                SELECT id
+                SELECT sys_role_id
                 FROM sys_user_role
                 WHERE sys_user_id = (
                     -- 	  查询某用户的id

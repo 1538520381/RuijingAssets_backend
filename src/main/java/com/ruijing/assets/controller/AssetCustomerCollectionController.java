@@ -35,9 +35,9 @@ public class AssetCustomerCollectionController {
      * @return: com.ruijing.assets.entity.result.R
      * @date: 2023/2/5 4:18
      */
-    @PostMapping("/list")
-    public R list(@RequestParam Map<String, Object> params, @RequestBody AssetCustomerCollectionQueryDTO assetCustomerCollectionQueryDTO) {
-        PageUtils page = assetCustomerCollectionService.queryPage(params, assetCustomerCollectionQueryDTO);
+    @GetMapping ("/list")
+    public R list(@RequestParam Map<String, Object> params) {
+        PageUtils page = assetCustomerCollectionService.queryPage(params);
         return R.ok().put("page", page);
     }
 

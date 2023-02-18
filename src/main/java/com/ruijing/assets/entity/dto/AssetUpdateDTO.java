@@ -1,20 +1,22 @@
-package com.ruijing.assets.entity.vo.assetVO;
+package com.ruijing.assets.entity.dto;
 
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.ruijing.assets.entity.pojo.AssetCollateralEntity;
+import com.ruijing.assets.entity.pojo.AssetGuaranteeEntity;
+import com.ruijing.assets.entity.pojo.AssetHighlight;
 import lombok.Data;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 
 @Data
-public class AssetVoInDetail implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class AssetUpdateDTO {
 
     /**
      * 主键
      */
+    @TableId
     private Long id;
     /**
      * 资产名字
@@ -24,18 +26,6 @@ public class AssetVoInDetail implements Serializable {
      * 债权本金
      */
     private Long creditRightFare;
-    /**
-     * 所属省份
-     */
-    private Integer province;
-    /**
-     * 收藏量
-     */
-    private Long collection;
-    /**
-     * 浏览量
-     */
-    private Long browse;
     /**
      * 资产所在地址
      */
@@ -48,10 +38,6 @@ public class AssetVoInDetail implements Serializable {
      * 诉讼状态[1,未诉 2，已诉未判决 3，已判决未执行 4，已执行 5，破产]
      */
     private Integer litigationStatus;
-    /**
-     * 诉讼状态[1,未诉 2，已诉未判决 3，已判决未执行 4，已执行 5，破产]
-     */
-    private String litigationStatusString;
     /**
      * 处置方式[1，折扣变现 2，债务更新 3，以资抵债 4，资产置换 5，收益权转让 6，破产清算 7，以物抵债 8，委托处置 9，其他方式]
      */
@@ -69,6 +55,10 @@ public class AssetVoInDetail implements Serializable {
      */
     private Integer recommend;
     /**
+     * 所属省份
+     */
+    private Integer province;
+    /**
      * 开始日期 格式yyyy-MM-dd
      */
     private Date startTime;
@@ -81,23 +71,17 @@ public class AssetVoInDetail implements Serializable {
      *  处置状态[1，拟处置  2，处置中  3，处置完毕  4，待核销  5，已核销  6，作废]
      */
     private Integer DisposalStatus;
-    /*
-     * 省份
-     */
-    private String provinceString;
-    /*
-     * 处置方式
-     */
-    private String disposalMethodString;
-    /*
-     * 资产亮点
-     */
-    private List<Highlight> highlights;
 
-    //债权种类
-    private Integer assetType;
+    /*
+     * 债权种类[1, "金融债权" 2, "非金融债权"]
+     */
+    private Integer AssetType;
 
+    //抵押物
+    private List<AssetCollateralEntity> collateral;
 
+    //担保人
+    private List<AssetGuaranteeEntity> guarantees;
+
+    private List<AssetHighlight> highlights;
 }
-
-

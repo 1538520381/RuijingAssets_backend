@@ -14,4 +14,9 @@ public class GuaranteesDTO {
      * 担保方式
      */
     private Integer method;
+
+    /**
+     * 担保方式 冗余字段
+     */
+    private String methodString;
 }

@@ -12,8 +12,8 @@ package com.ruijing.assets.enume.status;
 
 public enum OnShelfStatus {
     //上架状态[0，删除 1，待上架 2，已上架 3，已下架]
-    //0，删除
-    DELETE("删除", 0),
+    //0，逻辑删除
+    LOGIC_DELETE("作废", 0),
     //1，待上架
     TO_BE_PUT_ON_THE_SHELF("待上架", 1),
     //2，已上架

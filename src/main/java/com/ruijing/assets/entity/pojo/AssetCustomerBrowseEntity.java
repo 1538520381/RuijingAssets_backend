@@ -2,21 +2,21 @@ package com.ruijing.assets.entity.pojo;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Builder;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
- * 小程序端客户
+ * 客户浏览表
  *
  * @author K0n9D1KuA
  * @email 3161788646@qq.com
- * @date 2022-12-15 00:46:41
+ * @date 2022-12-27 00:20:54
  */
 @Data
-@TableName("customer")
-public class CustomerEntity implements Serializable {
+@TableName("asset_customer_browse")
+public class AssetCustomerBrowseEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
@@ -25,20 +25,16 @@ public class CustomerEntity implements Serializable {
     @TableId
     private Long id;
     /**
-     * 客户姓名
+     * 客户id
      */
-    private String name;
+    private Long customerId;
     /**
-     * 电话号码
+     * 资产id
      */
-    private String phone;
+    private Long assetId;
     /**
-     * 用户微信唯一标识
+     * 浏览时间
      */
-    private String openId;
-    /**
-     * 邮箱
-     */
-    private String email;
+    private Date browseTime;
 
 }

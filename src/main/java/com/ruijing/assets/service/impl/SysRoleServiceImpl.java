@@ -83,10 +83,15 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRoleEntity> i
         }
     }
 
+    //移除角色的权限
+    //roleDTO roleDTO 内含 id  menuIds（要移除的权限的id）
     @Override
     public void removeMenu(RoleDTO roleDTO) {
-        //移除角色和权限之间的关系
-        this.removeRoleAndMenu(roleDTO);
+        //判断是否为空？
+        if (!CollectionUtils.isEmpty(roleDTO.getMenuIds())) {
+            //移除角色和权限之间的关系
+            this.removeRoleAndMenu(roleDTO);
+        }
     }
 
     @Override
@@ -129,17 +134,23 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRoleEntity> i
         List<Long> menuIdS = sysRoleMenuEntities.stream()
                 .map(sysRoleMenuEntity -> sysRoleMenuEntity.getSysMenuId())
                 .collect(Collectors.toList());
-
-        List<SysMenuEntity> sysMenuEntities = sysMenuService.list(new LambdaQueryWrapper<SysMenuEntity>()
-                .in(SysMenuEntity::getId, menuIdS));
-
-        result.setSysMenuEntityList(sysMenuEntities);
-
+        List<SysMenuEntity> sysMenuEntities = null;
+        if (!CollectionUtils.isEmpty(menuIdS)) {
+            //如果该角色有权限
+            sysMenuEntities = sysMenuService.list(new LambdaQueryWrapper<SysMenuEntity>()
+                    .in(SysMenuEntity::getId, menuIdS));
+            //需要过滤掉一级菜单
+            sysMenuEntities = sysMenuEntities.stream()
+                    .filter(sysMenuEntity -> sysMenuEntity.getParentId() != 0)
+                    .collect(Collectors.toList());
+            result.setSysMenuEntityList(sysMenuEntities);
+        }
         return result;
     }
 
 
     //移除角色和权限之间的关系
+    //roleDTO roleDTO 内含 id  menuIds（要移除的权限的id）
     private void removeRoleAndMenu(RoleDTO roleDTO) {
         LambdaQueryWrapper<SysRoleMenuEntity> sysRoleMenuEntityLambdaQueryWrapper
                 = new LambdaQueryWrapper<>();
@@ -161,6 +172,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRoleEntity> i
 
 
     //绑定角色和权限之间的关系
+    //添加了多字段联合唯一 保证接口幂等性。
     private void bindRoleAndMenu(RoleDTO roleDTO) {
         List<SysRoleMenuEntity> sysRoleMenuEntityListToBeSaved = new ArrayList<>();
         //获得其绑定的权限id
@@ -173,7 +185,16 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRoleEntity> i
             sysRoleMenuEntityListToBeSaved.add(sysRoleMenuEntity);
         });
         //批量保存
-        sysRoleMenuService.saveBatch(sysRoleMenuEntityListToBeSaved);
+        try {
+            sysRoleMenuService.saveBatch(sysRoleMenuEntityListToBeSaved);
+        } catch (Exception e) {
+            //给一个角色分配了重复的权限
+            throw new RuiJingException(
+                    RuiJingExceptionEnum.ADD_DUPLICATION_MENU_TO_ONE_ROLE.getMsg(),
+                    RuiJingExceptionEnum.ADD_DUPLICATION_MENU_TO_ONE_ROLE.getCode()
+            );
+        }
+
     }
 
 }

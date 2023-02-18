@@ -36,7 +36,7 @@ public class ContactUsController {
     }
 
     //修改简介图
-    @PostMapping("/updateImage")
+    @RequestMapping("/updateImage")
     public R updateImage(@RequestParam("file") MultipartFile file) {
         try {
             byte[] bytes = file.getBytes();

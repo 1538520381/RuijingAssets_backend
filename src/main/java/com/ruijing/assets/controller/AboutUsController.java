@@ -1,7 +1,7 @@
 package com.ruijing.assets.controller;
 
 
-import com.ruijing.assets.entity.dto.AboutUsDto;
+import com.ruijing.assets.entity.dto.AboutUsUpdateDto;
 import com.ruijing.assets.entity.result.R;
 import com.ruijing.assets.entity.vo.aboutUsVO.AboutUsVo;
 import com.ruijing.assets.service.AboutUsService;
@@ -32,13 +32,13 @@ public class AboutUsController {
     /*
      * @author: K0n9D1KuA
      * @description: 修改联系我们信息
-     * @param: aboutUsDto 要修改的实体类
+     * @param: aboutUsUpdateDto 要修改的实体类
      * @return: com.ruijing.assets.entity.result.R
      * @date: 2023/2/7 15:43
      */
     @PostMapping("/update")
-    public R update(@RequestBody AboutUsDto aboutUsDto) {
-        aboutUsService.updateInfo(aboutUsDto);
+    public R update(@RequestBody AboutUsUpdateDto aboutUsUpdateDto) {
+        aboutUsService.updateInfo(aboutUsUpdateDto);
         return R.ok();
     }
 }

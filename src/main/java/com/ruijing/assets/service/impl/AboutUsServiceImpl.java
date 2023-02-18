@@ -1,15 +1,18 @@
 package com.ruijing.assets.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ruijing.assets.dao.AboutUsDao;
-import com.ruijing.assets.entity.dto.AboutUsDto;
+import com.ruijing.assets.entity.dto.AboutUsUpdateDto;
 import com.ruijing.assets.entity.pojo.AboutUsCompanyEntity;
 import com.ruijing.assets.entity.pojo.AboutUsEntity;
 import com.ruijing.assets.entity.vo.aboutUsVO.AboutUsVo;
 import com.ruijing.assets.service.AboutUsCompanyService;
 import com.ruijing.assets.service.AboutUsService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
@@ -34,15 +37,14 @@ public class AboutUsServiceImpl extends ServiceImpl<AboutUsDao, AboutUsEntity> i
     }
 
     @Override
-    public void updateInfo(AboutUsDto aboutUsDto) {
-        AboutUsEntity aboutUsEntity = aboutUsDto.getAboutUsEntity();
+    @Transactional
+    public void updateInfo(AboutUsUpdateDto aboutUsUpdateDto) {
+        AboutUsEntity aboutUsEntity = new AboutUsEntity();
+        BeanUtils.copyProperties(aboutUsUpdateDto, aboutUsEntity);
         this.updateById(aboutUsEntity);
-        List<AboutUsCompanyEntity> aboutUsCompanyEntityList = aboutUsDto.getAboutUsCompanyEntityList();
-        //遍历修改
-        if (!CollectionUtils.isEmpty(aboutUsCompanyEntityList)) {
-            aboutUsCompanyEntityList.forEach(aboutUsCompanyEntity
-                    -> aboutUsCompanyService.updateById(aboutUsCompanyEntity
-            ));
-        }
+        //全部删除
+        aboutUsCompanyService.remove(new LambdaQueryWrapper<>());
+        //再全部新增
+        aboutUsCompanyService.saveBatch(aboutUsUpdateDto.getCompany());
     }
 }

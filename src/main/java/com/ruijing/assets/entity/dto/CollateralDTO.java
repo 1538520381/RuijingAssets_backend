@@ -29,4 +29,8 @@ public class CollateralDTO {
      * 抵押物类型
      */
     private Integer collateralType;
+    /**
+     * 抵押物类型 文字 前端不好处理 冗余字段
+     */
+    private String collateralTypeString;
 }

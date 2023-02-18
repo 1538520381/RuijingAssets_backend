@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
 /**
@@ -33,7 +35,13 @@ public class SysMenuController {
      */
     @GetMapping("/list")
     public R list() {
-        return R.success(sysMenuService.list());
+        List<SysMenuEntity> result = sysMenuService.list();
+        //过滤掉一级菜单
+        result = result
+                .stream()
+                .filter(sysMenuEntity -> sysMenuEntity.getParentId() != 0).collect(Collectors.toList());
+        return
+                R.success(result);
     }
 
 }

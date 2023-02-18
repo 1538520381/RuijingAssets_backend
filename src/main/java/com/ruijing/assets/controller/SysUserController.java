@@ -112,7 +112,7 @@ public class SysUserController {
      * @return: com.ruijing.assets.entity.result.R
      * @date: 2023/2/5 2:56
      */
-    @PostMapping("/removeRole/{userId}")
+    @PostMapping("/removeUser/{userId}")
     @SysLog(operationType = 2, operationName = "删除用户")
     public R removeUser(@PathVariable Long userId) {
         sysUserService.removeUser(userId);

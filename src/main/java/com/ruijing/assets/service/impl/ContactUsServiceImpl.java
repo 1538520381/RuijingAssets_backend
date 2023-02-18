@@ -16,8 +16,7 @@ import org.springframework.stereotype.Service;
 public class ContactUsServiceImpl extends ServiceImpl<ContactUsDao, ContactUsEntity> implements ContactUsService {
     @Autowired
     MinioUtil minioUtil;
-    @Autowired
-    UploadService uploadService;
+
 
     @Override
     public ContactUsEntity info() {
@@ -30,7 +29,7 @@ public class ContactUsServiceImpl extends ServiceImpl<ContactUsDao, ContactUsEnt
     @Override
     public String uploadAndDeleteImage(byte[] bytes, String originalFilename, String contentType) {
         try {
-            String originalUrl = uploadService.uploadFile(bytes, originalFilename, contentType);
+            String originalUrl = minioUtil.uploadFile(bytes, originalFilename, contentType);
             //上传文件成功
             //同时从minio中删除图片
             ContactUsEntity contactUsEntity = this.info();
@@ -40,7 +39,7 @@ public class ContactUsServiceImpl extends ServiceImpl<ContactUsDao, ContactUsEnt
             String objectName = convertImageUrlToObjectName(image);
             //从minio中删除图片
             try {
-                uploadService.deleteFileByObjectName(objectName);
+                minioUtil.deleteFileByObjectName(objectName);
             } catch (Exception e) {
                 //抛出异常 上传错误
                 throw new RuiJingException(

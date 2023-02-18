@@ -11,7 +11,9 @@ import com.ruijing.assets.entity.pojo.SysUserEntity;
 import com.ruijing.assets.entity.pojo.SysUserRoleEntity;
 import com.ruijing.assets.entity.vo.userVO.UserInfoVo;
 import com.ruijing.assets.entity.vo.userVO.UserVo;
+import com.ruijing.assets.enume.exception.RuiJingExceptionEnum;
 import com.ruijing.assets.enume.status.UserStatus;
+import com.ruijing.assets.exception.RuiJingException;
 import com.ruijing.assets.service.SysRoleService;
 import com.ruijing.assets.service.SysUserRoleService;
 import com.ruijing.assets.service.SysUserService;
@@ -22,8 +24,10 @@ import com.ruijing.assets.util.using.SpringSecurityUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.*;
@@ -43,6 +47,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserEntity> i
 
     @Autowired
     SysRoleService sysRoleService;
+
+
+    @Autowired
+    @Lazy
+    SysUserService sysUserService;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -105,18 +114,21 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserEntity> i
     //移除user和角色之间的关系
     @Override
     public void removeRole(UserDTO userDTO) {
-        //移除user和角色之间的关系
-        this.removeUserAndRole(userDTO);
+        if (!CollectionUtils.isEmpty(userDTO.getRoleIds())) {
+            //移除user和角色之间的关系
+            this.removeUserAndRole(userDTO);
+        }
     }
 
     @Override
+    @Transactional
     public void removeUser(Long userId) {
         //删除角色
         this.removeById(userId);
         UserDTO userDTO = new UserDTO();
         userDTO.setId(userId);
         //移除user和角色之间的关系
-        this.removeUserAndRole(userDTO);
+        sysUserService.removeUserAndRole(userDTO);
     }
 
     @Override
@@ -165,7 +177,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserEntity> i
     }
 
     //移除user和角色之间的关系
-    private void removeUserAndRole(UserDTO userDTO) {
+    @Transactional
+    public void removeUserAndRole(UserDTO userDTO) {
         LambdaQueryWrapper<SysUserRoleEntity> sysUserRoleEntityLambdaQueryWrapper
                 = new LambdaQueryWrapper<>();
         sysUserRoleEntityLambdaQueryWrapper
@@ -186,7 +199,15 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserEntity> i
             sysUserRoleEntityListToBeSaved.add(sysUserRoleEntity);
         });
         //批量添加
-        sysUserRoleService.saveBatch(sysUserRoleEntityListToBeSaved);
+        try {
+            sysUserRoleService.saveBatch(sysUserRoleEntityListToBeSaved);
+        } catch (Exception e) {
+            //给一个用户分配了重复的角色
+            throw new RuiJingException(
+                    RuiJingExceptionEnum.ADD_DUPLICATION_ROLE_TO_ONE_USER.getMsg(),
+                    RuiJingExceptionEnum.ADD_DUPLICATION_ROLE_TO_ONE_USER.getCode()
+            );
+        }
     }
 
     //根据访问者姓名查询其对应角色名称
@@ -201,21 +222,26 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserEntity> i
                 new LambdaQueryWrapper<SysUserRoleEntity>()
                         .eq(SysUserRoleEntity::getSysUserId, sysUserId));
 
-        //收集角色id
-        List<Long> roleIds = sysUserRoleEntityList
-                .stream()
-                .map(sysUserRoleEntity -> sysUserRoleEntity.getSysRoleId())
-                .collect(Collectors.toList());
+        if (!CollectionUtils.isEmpty(sysUserRoleEntityList)) {
+            //收集角色id
+            List<Long> roleIds = sysUserRoleEntityList
+                    .stream()
+                    .map(sysUserRoleEntity -> sysUserRoleEntity.getSysRoleId())
+                    .collect(Collectors.toList());
+            //获得角色id 获得角色实体类
+            Collection<SysRoleEntity> sysRoleEntities = sysRoleService.listByIds(roleIds);
 
-        //获得角色id 获得角色实体类
-        Collection<SysRoleEntity> sysRoleEntities = sysRoleService.listByIds(roleIds);
+            //映射
+            List<String> roleNames = sysRoleEntities.stream().map(
+                    sysRoleEntity -> sysRoleEntity.getName()
+            ).collect(Collectors.toList());
+            //返回角色名
+            return roleNames;
+        } else {
+            return Collections.emptyList();
+        }
 
-        //映射
-        List<String> roleNames = sysRoleEntities.stream().map(
-                sysRoleEntity -> sysRoleEntity.getName()
-        ).collect(Collectors.toList());
-        //返回角色名
-        return roleNames;
+
     }
 
 }

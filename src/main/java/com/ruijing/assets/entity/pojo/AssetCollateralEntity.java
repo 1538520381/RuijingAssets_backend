@@ -56,6 +56,6 @@ public class AssetCollateralEntity implements Serializable {
     /**
      * 抵押物字段 文字类型
      */
-    private String assetTypeString;
+    private String collateralTypeString;
 
 }

@@ -73,7 +73,7 @@ public class CarouselChartController {
      */
 
     @RequestMapping("/uploadCarouselChart")
-    @SysLog(operationType = 2, operationName = "添加轮播图")
+//    @SysLog(operationType = 2, operationName = "添加轮播图")
     public R uploadCarouselChart(@RequestParam("file") MultipartFile file) {
         try {
             byte[] bytes = file.getBytes();

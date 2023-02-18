@@ -12,13 +12,8 @@ import java.io.Serializable;
 
 @Data
 @TableName("asset_highlight")
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 public class AssetHighlight implements Serializable {
-
     private static final long serialVersionUID = 1L;
-
     //主键
     @TableId
     private Long id;

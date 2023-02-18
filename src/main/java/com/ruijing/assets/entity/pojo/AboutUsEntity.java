@@ -15,4 +15,6 @@ public class AboutUsEntity {
     private String fax;
     //邮箱
     private String email;
+    //电话
+    private String phone;
 }

@@ -2,6 +2,7 @@ package com.ruijing.assets.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ruijing.assets.entity.dto.AssetInsertDTO;
+import com.ruijing.assets.entity.dto.AssetUpdateDTO;
 import com.ruijing.assets.entity.pojo.AssetEntity;
 import com.ruijing.assets.entity.result.R;
 import com.ruijing.assets.util.using.PageUtils;
@@ -35,5 +36,9 @@ public interface AssetService extends IService<AssetEntity> {
     String upload(byte[] bytes, String originalFilename, String contentType, Long assetId);
 
     void deleteImage(Long assetImageId);
+
+    void deleteAsset(Long assetId);
+
+    void updateAsset(AssetUpdateDTO assetUpdateDTO);
 }
 

@@ -2,7 +2,6 @@ package com.ruijing.assets.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ruijing.assets.entity.pojo.AssetInquiryEntity;
-import com.ruijing.assets.entity.queryDTO.AssetInquiryDTO;
 import com.ruijing.assets.entity.vo.assetVO.AssetVoInHomePage;
 import com.ruijing.assets.util.using.PageUtils;
 
@@ -18,7 +17,7 @@ import java.util.Map;
  */
 public interface AssetInquiryService extends IService<AssetInquiryEntity> {
 
-    PageUtils queryPage(Map<String, Object> params, AssetInquiryDTO assetInquiryDTO);
+    PageUtils queryPage(Map<String, Object> params);
 
     /*
      * @author: K0n9D1KuA

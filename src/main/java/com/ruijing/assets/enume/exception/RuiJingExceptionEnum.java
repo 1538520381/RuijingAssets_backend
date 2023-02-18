@@ -22,7 +22,9 @@ public enum RuiJingExceptionEnum {
     ROLE_ALREADY_BIND("该角色已被用户绑定，请先移除绑定关系后再删除！", 100018),
     UNCLEAR_EXCEPTION("系统未知异常！", 100019),
     ADD_DUPLICATION("请勿重复收藏哦  亲~", 100020),
-    LOGOUT_FAILED("退出登录失败",100021);
+    LOGOUT_FAILED("退出登录失败", 100021),
+    ADD_DUPLICATION_ROLE_TO_ONE_USER("请勿重复给用户分配相同的角色  亲~", 100022),
+    ADD_DUPLICATION_MENU_TO_ONE_ROLE("请勿重复给角色分配相同的权限  亲~", 100022);
     //状态码
     private final int code;
     //状态消息
@@ -33,8 +35,6 @@ public enum RuiJingExceptionEnum {
         this.code = code;
         this.msg = msg;
     }
-
-    //getOpenID / set
 
     public int getCode() {
         return code;
