@@ -26,10 +26,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -190,42 +187,6 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRoleEntity> i
     @Transactional
     public void removeRoleAndMenu(RoleDTO roleDTO) {
 
-        //判断是否需要删除一级菜单
-        roleDTO.getMenuIds().forEach(menuId -> {
-            //查询该权限的父权限是否已经和该角色绑定
-            SysMenuEntity sysMenuEntity = sysMenuService.getById(menuId);
-            Long parentId = sysMenuEntity.getParentId();
-            //根据parentId获得其所有子菜单
-            List<SysMenuEntity> children = sysMenuService.list(new LambdaQueryWrapper<SysMenuEntity>()
-                    .eq(SysMenuEntity::getParentId, parentId)
-            );
-            if (!CollectionUtils.isEmpty(children)) {
-                //过滤掉menuId
-                //收集其他 menuId
-                List<Long> menuIds = children.stream()
-                        .filter(child -> !child.getId().equals(menuId))
-                        .map(child -> child.getId())
-                        .collect(Collectors.toList());
-                //说明该menuId是唯一的一个子菜单
-                if (CollectionUtils.isEmpty(menuIds)) {
-                    //说明该menuId是唯一的一个子菜单
-                    //那么删除唯一的子菜单 必定要删除其parent
-                    roleDTO.getMenuIds().add(parentId);
-                } else {
-                    //判断这些menuId是否都删除完了
-                    int count = sysRoleMenuService
-                            .count(
-                                    new LambdaQueryWrapper<SysRoleMenuEntity>()
-                                            .in(SysRoleMenuEntity::getSysMenuId, menuIds)
-                                            .eq(SysRoleMenuEntity::getSysRoleId, roleDTO.getId()));
-                    if (count == 0) {
-                        //说明这些menuId都被删除了  那么需要把父亲id都删掉
-                        roleDTO.getMenuIds().add(parentId);
-                    }
-                }
-
-            }
-        });
         LambdaQueryWrapper<SysRoleMenuEntity> sysRoleMenuEntityLambdaQueryWrapper
                 = new LambdaQueryWrapper<>();
 
@@ -241,6 +202,63 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRoleEntity> i
 
         //删除
         sysRoleMenuService.remove(sysRoleMenuEntityLambdaQueryWrapper);
+
+
+        //记录已经判断过的爹
+        Set<Long> alreadyChosenParentId = new HashSet<>();
+        //记录要删除的parentId集合
+        List<Long> parentIdsToBeDelete = new ArrayList<>();
+
+        //判断是否需要删除一级菜单
+        roleDTO.getMenuIds().forEach(menuId -> {
+            //查询该权限的父权限是否已经和该角色绑定
+            SysMenuEntity sysMenuEntity = sysMenuService.getById(menuId);
+            Long parentId = sysMenuEntity.getParentId();
+            if (!alreadyChosenParentId.contains(parentId)) {
+                //根据parentId获得其所有子菜单
+                List<SysMenuEntity> children = sysMenuService.list(new LambdaQueryWrapper<SysMenuEntity>()
+                        .eq(SysMenuEntity::getParentId, parentId)
+                );
+                if (!CollectionUtils.isEmpty(children)) {
+                    //过滤掉menuId
+                    //收集其他 menuId
+                    List<Long> menuIds = children.stream()
+                            .filter(child -> !child.getId().equals(menuId))
+                            .map(child -> child.getId())
+                            .collect(Collectors.toList());
+                    //说明该menuId是唯一的一个子菜单
+                    if (CollectionUtils.isEmpty(menuIds)) {
+                        //说明该menuId是唯一的一个子菜单
+                        //那么删除唯一的子菜单 必定要删除其parent
+                        parentIdsToBeDelete.add(parentId);
+                    } else {
+                        //判断这些menuId是否都删除完了
+                        int count = sysRoleMenuService
+                                .count(
+                                        new LambdaQueryWrapper<SysRoleMenuEntity>()
+                                                .in(SysRoleMenuEntity::getSysMenuId, menuIds)
+                                                .eq(SysRoleMenuEntity::getSysRoleId, roleDTO.getId()));
+                        if (count == 0) {
+                            //说明这些menuId都被删除了  那么需要把父亲id都删掉
+                            parentIdsToBeDelete.add(parentId);
+                        }
+                    }
+                }
+                alreadyChosenParentId.add(parentId);
+            }
+        });
+
+
+        //删除父权限和角色之间的绑定
+        sysRoleMenuService.remove(new LambdaQueryWrapper<SysRoleMenuEntity>()
+                .eq(
+                        roleDTO.getId() != 0,
+                        SysRoleMenuEntity::getSysRoleId,
+                        roleDTO.getId())
+                .in(
+                        !CollectionUtils.isEmpty(parentIdsToBeDelete),
+                        SysRoleMenuEntity::getSysMenuId,
+                        parentIdsToBeDelete));
 
     }
 
