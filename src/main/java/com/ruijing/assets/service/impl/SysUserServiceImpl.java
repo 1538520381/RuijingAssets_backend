@@ -149,14 +149,26 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserEntity> i
                             .stream()
                             .map(sysUserRoleEntity -> sysUserRoleEntity.getSysRoleId())
                             .collect(Collectors.toList());
-            //查询
+            //查询他有的角色
             List<SysRoleEntity> sysRoleEntities =
                     sysRoleService.list(new LambdaQueryWrapper<SysRoleEntity>()
                             .in(SysRoleEntity::getId, roleIds)
                     );
+
+            //查询他没有的角色
+            List<SysRoleEntity> noSysRoleEntities =
+                    sysRoleService.list(new LambdaQueryWrapper<SysRoleEntity>()
+                            .notIn(SysRoleEntity::getId, roleIds)
+                    );
+            //设置有的角色
             result.setRoles(sysRoleEntities);
+            //设置没有的角色
+            result.setNoRoles(noSysRoleEntities);
         } else {
+            //设置有的角色
             result.setRoles(Collections.emptyList());
+            //设置没有的角色
+            result.setNoRoles(sysRoleService.list());
         }
         //返回结果
         return result;

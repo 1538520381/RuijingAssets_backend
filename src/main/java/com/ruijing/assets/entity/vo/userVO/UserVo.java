@@ -11,4 +11,6 @@ import java.util.List;
 public class UserVo extends SysUserEntity {
     //该用户所对应的角色
     private List<SysRoleEntity> roles;
+    //该用户不具有的角色
+    private List<SysRoleEntity> noRoles;
 }

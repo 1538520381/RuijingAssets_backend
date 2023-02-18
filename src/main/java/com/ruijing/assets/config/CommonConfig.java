@@ -49,23 +49,23 @@ public class CommonConfig {
         return new PaginationInterceptor();
     }
 
-    /* ?
-     * 解决日期格式不符合的问题
-     * ?是否有用？ 我也忘了
-     */
-    @Bean
-    public MappingJackson2HttpMessageConverter getMappingJackson2HttpMessageConverter() {
-        MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter();
-        //日期格式
-        ObjectMapper objectMapper = new ObjectMapper();
-        SimpleDateFormat smt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        objectMapper.setDateFormat(smt);
-        mappingJackson2HttpMessageConverter.setObjectMapper(objectMapper);
-        //编码格式
-        List<MediaType> list = new ArrayList<MediaType>();
-        list.add(MediaType.APPLICATION_JSON_UTF8);
-        mappingJackson2HttpMessageConverter.setSupportedMediaTypes(list);
-        return mappingJackson2HttpMessageConverter;
-    }
+//    /* ?
+//     * 解决日期格式不符合的问题
+//     * ?是否有用？ 我也忘了
+//     */
+//    @Bean
+//    public MappingJackson2HttpMessageConverter getMappingJackson2HttpMessageConverter() {
+//        MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter();
+//        //日期格式
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        SimpleDateFormat smt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        objectMapper.setDateFormat(smt);
+//        mappingJackson2HttpMessageConverter.setObjectMapper(objectMapper);
+//        //编码格式
+//        List<MediaType> list = new ArrayList<MediaType>();
+//        list.add(MediaType.APPLICATION_JSON_UTF8);
+//        mappingJackson2HttpMessageConverter.setSupportedMediaTypes(list);
+//        return mappingJackson2HttpMessageConverter;
+//    }
 
 }
