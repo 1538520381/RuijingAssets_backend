@@ -2,8 +2,8 @@ package com.ruijing.assets.enume.status;
 
 public enum UserStatus {
 
-    NORMAL_STATUS("正常使用", 0),
-    FORBIDDEN_STATUS("已禁用", 1);
+    NORMAL_STATUS("正常使用", 1),
+    FORBIDDEN_STATUS("已禁用", 0);
     //状态码
     private final int code;
     //状态消息

@@ -1,6 +1,7 @@
 package com.ruijing.assets.controller;
 
 
+import com.ruijing.assets.annotation.SysLog;
 import com.ruijing.assets.entity.queryDTO.SysLogQueryDTO;
 import com.ruijing.assets.entity.result.R;
 import com.ruijing.assets.service.SysLogService;
@@ -8,6 +9,7 @@ import com.ruijing.assets.util.using.PageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -42,4 +44,18 @@ public class SystemLogController {
         return R.ok().put("page", page);
     }
 
+
+    /*
+     * @author: K0n9D1KuA
+     * @description: 批量删除日志
+     * @param: ids
+     * @return: com.ruijing.assets.entity.result.R
+     * @date: 2023/2/18 18:11
+     */
+    @PostMapping("/delete")
+    @SysLog(operationType = 2, operationName = "删除日志")
+    public R delete(@RequestBody List<Long> ids) {
+        sysLogService.removeByIds(ids);
+        return R.ok();
+    }
 }
