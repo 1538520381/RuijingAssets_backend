@@ -11,4 +11,6 @@ import java.util.List;
 public class SysRoleVo extends SysRoleEntity {
     //该角色所对应的全部权限
     private List<SysMenuEntity> sysMenuEntityList;
+    //该角色没有的全部权限
+    private List<SysMenuEntity> noSysMenuEntityList;
 }
