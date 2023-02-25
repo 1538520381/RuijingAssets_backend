@@ -10,7 +10,7 @@ import java.util.List;
 
 
 @Data
-public class AssetInsertDTO implements Serializable {
+public class AssetAddDTO implements Serializable {
     private static final long serialVersionUID = 1L;
     /**
      * 主键

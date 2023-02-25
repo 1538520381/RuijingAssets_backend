@@ -41,10 +41,14 @@ spring:
         wall:
           config:
             multi-statement-allow: true
-      url: jdbc:mysql://175.178.189.129:3306/ruijing?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
-      password: dsjaiodjasdsajdsadj213j14i1j451j423k5j1345jn12k5j,
+      #      url: jdbc:mysql://175.178.189.129:3306/ruijing?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8
+      #      password: dsjaiodjasdsajdsadj213j14i1j451j423k5j1345jn12k5j,
+      #      ruijingPassword
+      password: dwjioajdadjsaij23813123jdsiajdsa321,
       username: root
-  #      password: root
+      #      ruijingUrl
+      url: jdbc:mysql://10.10.61.40:3306/ruijing?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8
+    #      password: root
 
 
 

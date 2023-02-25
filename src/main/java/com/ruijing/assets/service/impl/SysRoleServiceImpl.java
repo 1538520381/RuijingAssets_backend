@@ -121,10 +121,10 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRoleEntity> i
         this.removeById(roleId);
 
         //删除角色和权限的绑定关系
-        RoleDTO roleDTO = new RoleDTO();
-        roleDTO.setId(roleId);
-        sysRoleService.removeRoleAndMenu(roleDTO);
+
+        sysRoleService.removeRoleAndMenu(roleId);
     }
+
 
     @Override
     public SysRoleVo getRoleInfo(Long roleId) {
@@ -262,6 +262,15 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRoleEntity> i
                             parentIdsToBeDelete));
         }
 
+
+    }
+
+
+    @Transactional
+    @Override
+    public void removeRoleAndMenu(Long roleId) {
+        sysRoleMenuService.remove(new LambdaQueryWrapper<SysRoleMenuEntity>()
+                .eq(SysRoleMenuEntity::getSysRoleId, roleId));
 
     }
 

@@ -1,7 +1,7 @@
 package com.ruijing.assets.controller;
 
 import com.ruijing.assets.annotation.SysLog;
-import com.ruijing.assets.entity.dto.AssetInsertDTO;
+import com.ruijing.assets.entity.dto.AssetAddDTO;
 import com.ruijing.assets.entity.dto.AssetUpdateDTO;
 import com.ruijing.assets.entity.dto.OnShelfDTO;
 import com.ruijing.assets.entity.pojo.AssetEntity;
@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 
-import java.io.File;
 import java.util.Date;
 import java.util.Map;
 
@@ -43,10 +42,10 @@ public class AssetController {
 
     /*
      * @author: K0n9D1KuA
-     * @description: 修改债权
-     * @param: assetUpdateDTO
+     * @description: 修改债权信息
+     * @param: assetUpdateDTO 债权基本信息 + 担保人 + 抵押物 + 亮点 修改
      * @return: com.ruijing.assets.entity.result.R
-     * @date: 2023/2/11 23:07
+     * @date: 2023/2/21 22:19
      */
     @PostMapping("/update")
     @SysLog(operationName = "修改债权", operationType = 2)
@@ -56,7 +55,13 @@ public class AssetController {
     }
 
 
-    //修改各种状态
+    /*
+     * @author: K0n9D1KuA
+     * @description: 修改债权基本信息
+     * @param: assetEntity
+     * @return: com.ruijing.assets.entity.result.R
+     * @date: 2023/2/21 22:23
+     */
     @PostMapping("/updateStatus")
     @SysLog(operationName = "修改债权状态", operationType = 2)
     public R updateStatus(@RequestBody AssetEntity assetEntity) {
@@ -65,7 +70,15 @@ public class AssetController {
     }
 
 
-    //债权上架
+    /*
+     * @author: K0n9D1KuA
+     * @description: 债权上架
+     * @param: onShelfDTO 债权id + 下架时间
+     * @return:
+     * @return: com.ruijing.assets.entity.result.R
+     * @date: 2023/2/21 22:24
+     */
+
     @PostMapping("/onShelf")
     public R onShelf(@RequestBody OnShelfDTO onShelfDTO) {
         AssetEntity assetEntity = new AssetEntity();
@@ -82,7 +95,7 @@ public class AssetController {
     /*
      * @author: K0n9D1KuA
      * @description: 查询资产列表
-     * @param: params  key 支持按照资产名字模糊查询
+     * @param: params  key 支持按照资产名字模糊查询 + 分页参数
      * @return: com.ruijing.assets.entity.result.R
      * @date: 2023/2/7 16:36
      */
@@ -96,13 +109,12 @@ public class AssetController {
     /*
      * @author: K0n9D1KuA
      * @description: 根据资产id获取资产所有信息
-     * @param: 资产id
+     * @param: assetId 资产id
      * @return: com.ruijing.assets.entity.result.R 结果
      * @date: 2022/12/16 15:07
      */
     @GetMapping("/assetInfo/{assetId}")
     public R getAssetInfo(@PathVariable Long assetId) {
-        File file = new File("s");
         return assetService.getAssetInfo(assetId);
     }
 
@@ -110,20 +122,20 @@ public class AssetController {
     /*
      * @author: K0n9D1KuA
      * @description: 添加债权信息
-     * @param: assetInsertDTO
+     * @param: assetAddDTO
      * @return: com.ruijing.assets.entity.result.R
      * @date: 2023/2/5 19:21
      */
     @PostMapping("/addAsset")
     @SysLog(operationName = "新增债权", operationType = 2)
-    public R addAsset(@RequestBody AssetInsertDTO assetInsertDTO) {
-        assetService.addAsset(assetInsertDTO);
+    public R addAsset(@RequestBody AssetAddDTO assetAddDTO) {
+        assetService.addAsset(assetAddDTO);
         return R.ok();
     }
 
     /*
      * @author: K0n9D1KuA
-     * @description:
+     * @description: 上传资产图片
      * @param: assetId 资产id
      * @param: file
      * @return: com.ruijing.assets.entity.result.R
@@ -150,9 +162,8 @@ public class AssetController {
 
     /*
      * @author: K0n9D1KuA
-     * @description:
-     * @param: assetId 资产id
-     * @param: file
+     * @description: 删除资产图片
+     * @param: assetImageId 要删除的资产图片id
      * @return: com.ruijing.assets.entity.result.R
      * @date: 2023/2/7 17:18
      */
@@ -164,7 +175,7 @@ public class AssetController {
             return R.ok();
         } catch (Exception e) {
             //删除文件失败
-            //抛出异常 上传错误
+            //抛出异常 删除文件失败
             throw new RuiJingException(
                     RuiJingExceptionEnum.DELETE_FILE_FAILED.getMsg()
                     , RuiJingExceptionEnum.DELETE_FILE_FAILED.getCode()
@@ -173,10 +184,19 @@ public class AssetController {
     }
 
 
-    //删除资产
+    /*
+     * @author: K0n9D1KuA
+     * @description:
+     * @param: 删除资产
+     * @param: assetId 资产id
+     * @return: com.ruijing.assets.entity.result.R
+     * @date: 2023/2/21 19:43
+     */
     @GetMapping("/deleteAsset/{assetId}")
     public R deleteAsset(@PathVariable Long assetId) {
         assetService.deleteAsset(assetId);
         return R.ok();
     }
+
+
 }

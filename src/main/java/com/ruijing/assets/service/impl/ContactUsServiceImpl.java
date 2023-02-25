@@ -48,7 +48,8 @@ public class ContactUsServiceImpl extends ServiceImpl<ContactUsDao, ContactUsEnt
                 );
             }
             //以上都成功 更新数据库
-            contactUsEntity.setImage(originalFilename);
+            contactUsEntity.setImage(originalUrl);
+            this.updateById(contactUsEntity);
             //返回结果
             return minioUtil.getEndpoint() + originalUrl;
         } catch (Exception e) {

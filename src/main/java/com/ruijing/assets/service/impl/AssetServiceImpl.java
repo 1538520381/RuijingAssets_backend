@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ruijing.assets.constant.ruiJingConstant.*;
 import com.ruijing.assets.dao.AssetDao;
-import com.ruijing.assets.entity.dto.AssetInsertDTO;
+import com.ruijing.assets.entity.dto.AssetAddDTO;
 import com.ruijing.assets.entity.dto.AssetUpdateDTO;
 import com.ruijing.assets.entity.pojo.*;
 import com.ruijing.assets.entity.result.R;
@@ -71,6 +71,11 @@ public class AssetServiceImpl extends ServiceImpl<AssetDao, AssetEntity> impleme
     public PageUtils queryPage(Map<String, Object> params) {
         //根据资产名字key模糊查询
         LambdaQueryWrapper<AssetEntity> assetEntityLambdaQueryWrapper = new LambdaQueryWrapper<>();
+
+
+        //按照id降序 保证新增加的排最前面
+        assetEntityLambdaQueryWrapper.orderByDesc(AssetEntity::getId);
+
         //获得需要查询的资产名字
         if (params.get("key") != null) {
             String key = params.get("key").toString();
@@ -138,7 +143,9 @@ public class AssetServiceImpl extends ServiceImpl<AssetDao, AssetEntity> impleme
                                 // 5, 处理他们的图片
                                 // ruijing/2023/02/06/a730488ecbb28a73a98f2e5281db6fb1.jpeg 变为
                                 // http://175.178.189.129:9000/ruijing/2023/02/06/a730488ecbb28a73a98f2e5281db6fb1.jpeg
-                                assetImageEntity.setImage(minioUtil.getEndpoint() + "/" + assetImageEntity.getImage());
+                                String imageUrl = MinioUtil.processImage(assetImageEntity.getImage());
+                                //处理他们的图片
+                                assetImageEntity.setImage(imageUrl);
                             }
                     )
                     .collect(Collectors.toList());
@@ -182,14 +189,20 @@ public class AssetServiceImpl extends ServiceImpl<AssetDao, AssetEntity> impleme
     }
 
 
-    //添加债权
+    /*
+     * @author: K0n9D1KuA
+     * @description: 添加债权信息
+     * @param: assetAddDTO
+     * @return: com.ruijing.assets.entity.result.R
+     * @date: 2023/2/5 19:21
+     */
     @Transactional
     @Override
-    public void addAsset(AssetInsertDTO assetInsertDTO) {
+    public void addAsset(AssetAddDTO assetAddDTO) {
 
 
         AssetEntity assetEntity = new AssetEntity();
-        BeanUtils.copyProperties(assetInsertDTO, assetEntity);
+        BeanUtils.copyProperties(assetAddDTO, assetEntity);
         //设置默认状态 默认状态为 1，拟处置
         assetEntity.setDisposalStatus(DisposalStatus.PROPOSED_DISPOSAL.getCode());
         //设置上架状态
@@ -198,7 +211,7 @@ public class AssetServiceImpl extends ServiceImpl<AssetDao, AssetEntity> impleme
         this.save(assetEntity);
 
         //插入亮点
-        List<Highlight> highlights = assetInsertDTO.getHighlights();
+        List<Highlight> highlights = assetAddDTO.getHighlights();
         if (!CollectionUtils.isEmpty(highlights)) {
             //待插入的亮点
             List<AssetHighlight> highlightEntitiesToBeSaved = new ArrayList<>();
@@ -214,10 +227,10 @@ public class AssetServiceImpl extends ServiceImpl<AssetDao, AssetEntity> impleme
         }
 
         //插入担保人
-        if (!CollectionUtils.isEmpty(assetInsertDTO.getGuarantees())) {
+        if (!CollectionUtils.isEmpty(assetAddDTO.getGuarantees())) {
             //待插入的抵押人
             List<AssetGuaranteeEntity> assetGuaranteeEntitiesToBeSaved = new ArrayList<>();
-            assetInsertDTO.getGuarantees().forEach(guaranteesDTO -> {
+            assetAddDTO.getGuarantees().forEach(guaranteesDTO -> {
                 AssetGuaranteeEntity assetGuaranteeEntity = new AssetGuaranteeEntity();
                 assetGuaranteeEntity.setAssetId(assetEntity.getId());
                 assetGuaranteeEntity.setGuaranteeName(guaranteesDTO.getGuaranteeName());
@@ -229,10 +242,10 @@ public class AssetServiceImpl extends ServiceImpl<AssetDao, AssetEntity> impleme
         }
 
         //插入抵押物
-        if (!CollectionUtils.isEmpty(assetInsertDTO.getCollateral())) {
+        if (!CollectionUtils.isEmpty(assetAddDTO.getCollateral())) {
             //待插入的抵押人
             List<AssetCollateralEntity> assetCollateralEntitiesToBeSaved = new ArrayList<>();
-            assetInsertDTO.getCollateral().forEach(collateralDTO -> {
+            assetAddDTO.getCollateral().forEach(collateralDTO -> {
                 AssetCollateralEntity assetGuaranteeEntity = new AssetCollateralEntity();
                 assetGuaranteeEntity.setAssetName(collateralDTO.getAssetName());
                 assetGuaranteeEntity.setArea(collateralDTO.getArea());
@@ -291,12 +304,18 @@ public class AssetServiceImpl extends ServiceImpl<AssetDao, AssetEntity> impleme
         assetImageService.removeById(assetImageId);
     }
 
-    //删除资产
+    /*
+     * @author: K0n9D1KuA
+     * @description:
+     * @param: 删除资产
+     * @param: assetId 资产id
+     * @return: com.ruijing.assets.entity.result.R
+     * @date: 2023/2/21 19:43
+     */
     @Transactional
     @Override
     public void deleteAsset(Long assetId) {
-        //首先获得资产实体
-        AssetEntity assetEntity = this.getById(assetId);
+
         //删除资产实体
         this.removeById(assetId);
 
@@ -332,13 +351,10 @@ public class AssetServiceImpl extends ServiceImpl<AssetDao, AssetEntity> impleme
                     .stream()
                     .map(assetImageEntity -> assetImageEntity.getId())
                     .collect(Collectors.toList());
-            Long[] ids = assetImagesIds.toArray(new Long[assetImagesIds.size()]);
-            //删除
-            for (Long id : ids
-            ) {
+            assetImagesIds.forEach(id -> {
                 //删除minio中的文件 且 删除数据库中的记录
                 deleteImage(id);
-            }
+            });
         }
 
 
@@ -358,15 +374,20 @@ public class AssetServiceImpl extends ServiceImpl<AssetDao, AssetEntity> impleme
 
     }
 
-    // 修改债权
-    // 前端要求先删除掉原来的 亮点  抵押物 担保人 再新增
-    // 效率较低
+
+    /*
+     * @author: K0n9D1KuA
+     * @description: 修改债权信息
+     * @param: assetUpdateDTO
+     * @return: com.ruijing.assets.entity.result.R
+     * @date: 2023/2/21 22:19
+     */
     @Override
     @Transactional
     public void updateAsset(AssetUpdateDTO assetUpdateDTO) {
 
         AssetEntity assetEntity = new AssetEntity();
-        //修改债权
+        //修改债权基本信息
         BeanUtils.copyProperties(assetUpdateDTO, assetEntity);
         this.updateById(assetEntity);
 

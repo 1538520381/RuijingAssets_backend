@@ -16,7 +16,6 @@ public class AssetUpdateDTO {
     /**
      * 主键
      */
-    @TableId
     private Long id;
     /**
      * 资产名字

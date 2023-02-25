@@ -45,9 +45,15 @@ public class CarouselChartController {
      */
     @PostMapping("/delete")
     @SysLog(operationType = 2, operationName = "删除轮播图")
-    public R delete( @RequestBody List<Long> ids) {
-        carouselChartService.deleteByIds(ids);
-        return R.ok();
+    public R delete(@RequestBody List<Long> ids) {
+        try {
+            carouselChartService.deleteByIds(ids);
+            return R.ok();
+        } catch (Exception e) {
+            //删除文件失败 抛出异常
+            throw new RuiJingException(RuiJingExceptionEnum.DELETE_FILE_FAILED.getMsg(),
+                    RuiJingExceptionEnum.DELETE_FILE_FAILED.getCode());
+        }
     }
 
 

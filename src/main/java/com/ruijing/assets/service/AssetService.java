@@ -1,7 +1,7 @@
 package com.ruijing.assets.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.ruijing.assets.entity.dto.AssetInsertDTO;
+import com.ruijing.assets.entity.dto.AssetAddDTO;
 import com.ruijing.assets.entity.dto.AssetUpdateDTO;
 import com.ruijing.assets.entity.pojo.AssetEntity;
 import com.ruijing.assets.entity.result.R;
@@ -31,14 +31,44 @@ public interface AssetService extends IService<AssetEntity> {
     R getAssetInfo(Long assetId);
 
 
-    void addAsset(AssetInsertDTO assetInsertDTO);
+    /*
+     * @author: K0n9D1KuA
+     * @description: 添加债权信息
+     * @param: assetAddDTO
+     * @return: com.ruijing.assets.entity.result.R
+     * @date: 2023/2/5 19:21
+     */
+    void addAsset(AssetAddDTO assetAddDTO);
 
     String upload(byte[] bytes, String originalFilename, String contentType, Long assetId);
 
+
+    /*
+     * @author: K0n9D1KuA
+     * @description: 删除资产图片
+     * @param: assetImageId 要删除的资产图片id
+     * @return: com.ruijing.assets.entity.result.R
+     * @date: 2023/2/7 17:18
+     */
     void deleteImage(Long assetImageId);
 
+    /*
+     * @author: K0n9D1KuA
+     * @description:
+     * @param: 删除资产
+     * @param: assetId 资产id
+     * @return: com.ruijing.assets.entity.result.R
+     * @date: 2023/2/21 19:43
+     */
     void deleteAsset(Long assetId);
 
+    /*
+     * @author: K0n9D1KuA
+     * @description: 修改债权信息
+     * @param: assetUpdateDTO
+     * @return: com.ruijing.assets.entity.result.R
+     * @date: 2023/2/21 22:19
+     */
     void updateAsset(AssetUpdateDTO assetUpdateDTO);
 }
 

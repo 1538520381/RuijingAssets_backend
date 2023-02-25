@@ -144,4 +144,11 @@ public class MinioUtil implements InitializingBean {
     public static MinioClient getMinioClient() {
         return minioClient;
     }
+
+    //处理图片url
+    // ruijing/2023/02/06/a730488ecbb28a73a98f2e5281db6fb1.jpeg 变为
+    // http://175.178.189.129:9000/ruijing/2023/02/06/a730488ecbb28a73a98f2e5281db6fb1.jpeg
+    public static String processImage(String originImage) {
+        return END_POINT + "/" + originImage;
+    }
 }
