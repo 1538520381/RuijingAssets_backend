@@ -23,6 +23,7 @@ public class DisposalMethodTypeConstant {
         disposalMethodType.put(6, "破产清算");
         disposalMethodType.put(7, "以物抵债");
         disposalMethodType.put(8, "委托处置");
-        disposalMethodType.put(9, "其他方式");
+        disposalMethodType.put(9, "诉讼追偿");
+        disposalMethodType.put(10, "其他方式");
     }
 }

@@ -1,5 +1,7 @@
 package com.ruijing.assets;
 
+import com.ruijing.assets.service.AboutUsCompanyService;
+import com.ruijing.assets.service.impl.AboutUsCompanyServiceImpl;
 import com.ruijing.assets.util.using.MinioUtil;
 import io.minio.GetObjectArgs;
 import io.minio.MinioClient;
@@ -17,6 +19,14 @@ import java.io.FilterInputStream;
 @SpringBootTest
 class RuijingAssetsAdminApplicationTests {
 
+//    @Autowired
+//    AboutUsCompanyService aboutUsCompanyService;
+//    @Test
+//    public void test(){
+//        //com.ruijing.assets.service.impl.AboutUsCompanyServiceImpl@1a4cbcc6
+//        //com.ruijing.assets.service.impl.AboutUsCompanyServiceImpl@5358c8fa
+//        System.out.println(aboutUsCompanyService);
+//    }
 
 //    @Autowired
 //    MinioUtil minioUtil;

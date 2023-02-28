@@ -12,5 +12,7 @@ public class AboutUsUpdateDto {
     private String fax;
     private String email;
     private String phone;
+    //联系电话
+    private String contactPhone;
     private List<AboutUsCompanyEntity> company;
 }

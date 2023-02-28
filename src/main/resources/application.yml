@@ -11,10 +11,10 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
   redis:
-    #    host: 175.178.189.129
+#    host: 175.178.189.129
     host: 10.10.61.40
     port: 6379
-    #    password: djsaiodjias4556564..3lk23o1dskja546dsaopj
+#    password: djsaiodjias4556564..3lk23o1dskja546dsaopj
     # 连接超时时间
     timeout: 10s
     lettuce:
@@ -61,7 +61,7 @@ logging:
       # 超过1MB重新创建日志文件
       max-file-size: 1MB
       # 重新创建的日志文件命名规则
-      file-name-pattern: ruijing.%d{yyyy-MM-dd}.%i.log
+      file-name-pattern: ruijing-admin.%d{yyyy-MM-dd}.%i.log
 
 
 

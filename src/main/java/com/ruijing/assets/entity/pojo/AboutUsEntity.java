@@ -17,4 +17,6 @@ public class AboutUsEntity {
     private String email;
     //电话
     private String phone;
+    //联系电话
+    private String contactPhone;
 }

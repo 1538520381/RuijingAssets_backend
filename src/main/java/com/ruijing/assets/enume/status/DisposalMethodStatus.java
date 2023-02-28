@@ -27,14 +27,16 @@ public enum DisposalMethodStatus {
     //8，委托处置
     ENTRUSTED_DISPOSAL("委托处置", 8),
     //9，其他方式
-    OTHER_METHOD("其他方式", 9);
-
+    LITIGATION_RECOVERY("诉讼追偿", 9),
+    //10，诉讼追偿
+    OTHER_METHOD("其他方式", 10);
 
     //处置方式
     // [1，折扣变现 2，债务更新
     // 3，以资抵债 4，资产置换
     // 5，收益权转让 6，破产清算
-    // 7，以物抵债 8，委托处置 9，其他方式]
+    // 7，以物抵债 8，委托处置
+    // 9，其他方式 10，诉讼追偿]
 
     //状态码
     private final int code;
