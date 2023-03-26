@@ -82,4 +82,9 @@ public class AssetEntity implements Serializable {
      * 债权种类[1, "金融债权" 2, "非金融债权"]
      */
     private Integer AssetType;
+
+    /*
+     * 资产排序顺序
+     */
+    private Integer position;
 }

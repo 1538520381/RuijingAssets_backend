@@ -73,8 +73,8 @@ public class AssetServiceImpl extends ServiceImpl<AssetDao, AssetEntity> impleme
         LambdaQueryWrapper<AssetEntity> assetEntityLambdaQueryWrapper = new LambdaQueryWrapper<>();
 
 
-        //按照id降序 保证新增加的排最前面
-        assetEntityLambdaQueryWrapper.orderByDesc(AssetEntity::getId);
+        //需要按照资产的顺序排序
+        assetEntityLambdaQueryWrapper.orderByAsc(AssetEntity::getPosition);
 
         //获得需要查询的资产名字
         if (params.get("key") != null) {
@@ -207,6 +207,8 @@ public class AssetServiceImpl extends ServiceImpl<AssetDao, AssetEntity> impleme
         assetEntity.setDisposalStatus(DisposalStatus.PROPOSED_DISPOSAL.getCode());
         //设置上架状态
         assetEntity.setOnShelfStatus(OnShelfStatus.TO_BE_PUT_ON_THE_SHELF.getCode());
+        //资产默认的排序顺序是1
+        assetEntity.setPosition(1);
         //插入
         this.save(assetEntity);
 

@@ -72,6 +72,21 @@ public class AssetController {
 
     /*
      * @author: K0n9D1KuA
+     * @description: 改变资产排序顺序
+     * @param: assetEntity
+     * @return: com.ruijing.assets.entity.result.R
+     * @date: 2023/2/21 22:23
+     */
+    @PostMapping("/changePosition")
+    @SysLog(operationName = "改变资产排序顺序", operationType = 2)
+    public R changePosition(@RequestBody AssetEntity assetEntity) {
+        assetService.updateById(assetEntity);
+        return R.ok();
+    }
+
+
+    /*
+     * @author: K0n9D1KuA
      * @description: 债权上架
      * @param: onShelfDTO 债权id + 下架时间
      * @return:
