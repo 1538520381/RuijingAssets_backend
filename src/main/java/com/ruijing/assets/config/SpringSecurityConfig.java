@@ -54,7 +54,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 // 对于登录接口 允许匿名访问
-                .antMatchers("/assets/customer/login"
+                .antMatchers(
+                        "/assets/customer/login"
                         , "/assets/carouselchart/uploadCarouselChart"
                         , "/assets/asset/upload/*"
                         , "/assets/contact_us/updateImage").anonymous()
