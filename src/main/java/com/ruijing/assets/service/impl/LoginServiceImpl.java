@@ -22,6 +22,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -43,6 +44,9 @@ public class LoginServiceImpl implements LoginService {
 
     @Autowired
     private SysMenuService sysMenuService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     /*
      * @author: K0n9D1KuA
@@ -102,5 +106,20 @@ public class LoginServiceImpl implements LoginService {
             throw new RuiJingException(RuiJingExceptionEnum.LOGIN_FAILED.getMsg(),
                     RuiJingExceptionEnum.LOGOUT_FAILED.getCode());
         }
+    }
+
+    /*
+     * @author Persolute
+     * @version 1.0
+     * @description 注册
+     * @email 1538520381@qq.com
+     * @date 2024/5/5 下午9:43
+     */
+    @Override
+    public R register(SysUserEntity sysUserEntity) {
+        sysUserEntity.setPassword(passwordEncoder.encode(sysUserEntity.getPassword()));
+        sysUserEntity.setUserStatus(1);
+        sysUserService.save(sysUserEntity);
+        return R.ok();
     }
 }

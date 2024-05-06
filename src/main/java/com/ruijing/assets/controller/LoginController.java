@@ -2,6 +2,7 @@ package com.ruijing.assets.controller;
 
 import com.ruijing.assets.annotation.SysLog;
 import com.ruijing.assets.entity.dto.LoginUserDTO;
+import com.ruijing.assets.entity.pojo.SysUserEntity;
 import com.ruijing.assets.entity.result.R;
 import com.ruijing.assets.service.LoginService;
 import lombok.extern.slf4j.Slf4j;
@@ -50,4 +51,15 @@ public class LoginController {
         return loginService.logout(token);
     }
 
+    /*
+     * @author Persolute
+     * @version 1.0
+     * @description 注册
+     * @email 1538520381@qq.com
+     * @date 2024/5/5 下午9:40
+     */
+    @PostMapping("/register")
+    public R register(@RequestBody SysUserEntity sysUserEntity) {
+        return loginService.register(sysUserEntity);
+    }
 }
