@@ -40,15 +40,6 @@ public class CommonConfig {
         source.registerCorsConfiguration("/**", corsConfiguration);
         return new CorsFilter(source);
     }
-
-    /*
-     * 分页插件
-     */
-    @Bean
-    public PaginationInterceptor paginationInterceptor() {
-        return new PaginationInterceptor();
-    }
-
 //    /* ?
 //     * 解决日期格式不符合的问题
 //     * ?是否有用？ 我也忘了

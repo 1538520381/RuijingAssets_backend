@@ -1,28 +1,599 @@
-2024-05-06 10:55:51.973  INFO 7724 --- [main] c.r.a.RuijingAssetsAdminApplication      : Starting RuijingAssetsAdminApplication using Java 9.0.4 on DESKTOP-R0TIG6Q with PID 7724 (C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin\target\classes started by 15385 in C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin)
-2024-05-06 10:55:51.978  INFO 7724 --- [main] c.r.a.RuijingAssetsAdminApplication      : The following 1 profile is active: "prod"
-2024-05-06 10:55:52.738  INFO 7724 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
-2024-05-06 10:55:52.741  INFO 7724 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2024-05-06 10:55:52.776  INFO 7724 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 21 ms. Found 0 Redis repository interfaces.
-2024-05-06 10:55:53.325  INFO 7724 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 12000 (http)
-2024-05-06 10:55:53.333  INFO 7724 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2024-05-06 10:55:53.333  INFO 7724 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.71]
-2024-05-06 10:55:53.428  INFO 7724 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2024-05-06 10:55:53.428  INFO 7724 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1412 ms
-2024-05-06 10:55:53.806  INFO 7724 --- [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
-2024-05-06 10:55:54.108  INFO 7724 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
-2024-05-06 10:55:55.512  INFO 7724 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@42805abe, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@2e7517aa, org.springframework.security.web.context.SecurityContextPersistenceFilter@66226ab, org.springframework.security.web.header.HeaderWriterFilter@65e92505, org.springframework.web.filter.CorsFilter@2abc55c4, com.ruijing.assets.filter.JwtAuthenticationTokenFilter@458031da, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@5cf33d25, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@541897c6, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@152035eb, org.springframework.security.web.session.SessionManagementFilter@2173e4d5, org.springframework.security.web.access.ExceptionTranslationFilter@6da9541c, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@470b5213]
-2024-05-06 10:55:55.590  INFO 7724 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 12000 (http) with context path ''
-2024-05-06 10:55:55.599  INFO 7724 --- [main] c.r.a.RuijingAssetsAdminApplication      : Started RuijingAssetsAdminApplication in 4.048 seconds (JVM running for 5.191)
-2024-05-06 10:57:33.597  INFO 7724 --- [http-nio-12000-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2024-05-06 10:57:33.597  INFO 7724 --- [http-nio-12000-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2024-05-06 10:57:33.598  INFO 7724 --- [http-nio-12000-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
-2024-05-06 10:57:34.778  INFO 7724 --- [http-nio-12000-exec-2] com.ruijing.assets.aspect.SysLogAspect   : 来自于ip: 0:0:0:0:0:0:0:1 的 Persolute 用户于: Mon May 06 10:57:33 CST 2024 时刻进行了: 登录 操作
-2024-05-06 10:57:34.781  INFO 7724 --- [http-nio-12000-exec-2] com.ruijing.assets.aspect.SysLogAspect   : 主线程结束了.............
-2024-05-06 10:57:34.781  INFO 7724 --- [http-nio-12000-exec-2] com.ruijing.assets.aspect.SysLogAspect   : =======End=======
+2024-05-16 10:05:47.687  INFO 19244 --- [main] c.r.a.RuijingAssetsAdminApplication      : Starting RuijingAssetsAdminApplication using Java 9.0.4 on DESKTOP-R0TIG6Q with PID 19244 (C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin\target\classes started by 15385 in C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin)
+2024-05-16 10:05:47.693  INFO 19244 --- [main] c.r.a.RuijingAssetsAdminApplication      : The following 1 profile is active: "prod"
+2024-05-16 10:05:48.797  INFO 19244 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-05-16 10:05:48.802  INFO 19244 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-05-16 10:05:48.855  INFO 19244 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 29 ms. Found 0 Redis repository interfaces.
+2024-05-16 10:05:49.588  INFO 19244 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 12000 (http)
+2024-05-16 10:05:49.600  INFO 19244 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-05-16 10:05:49.600  INFO 19244 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.71]
+2024-05-16 10:05:49.730  INFO 19244 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-05-16 10:05:49.730  INFO 19244 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1974 ms
+2024-05-16 10:05:50.198  INFO 19244 --- [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2024-05-16 10:05:50.722  INFO 19244 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2024-05-16 10:05:53.585  INFO 19244 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@103e9972, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@75dbe490, org.springframework.security.web.context.SecurityContextPersistenceFilter@4cb58e8b, org.springframework.security.web.header.HeaderWriterFilter@60b4d934, org.springframework.web.filter.CorsFilter@19ad75e5, com.ruijing.assets.filter.JwtAuthenticationTokenFilter@6af87130, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@35744f8, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@3d7caf9c, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@4c579b5b, org.springframework.security.web.session.SessionManagementFilter@438c0aaf, org.springframework.security.web.access.ExceptionTranslationFilter@574f9e36, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@20db19ff]
+2024-05-16 10:05:53.714  INFO 19244 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 12000 (http) with context path ''
+2024-05-16 10:05:53.729  INFO 19244 --- [main] c.r.a.RuijingAssetsAdminApplication      : Started RuijingAssetsAdminApplication in 6.598 seconds (JVM running for 8.04)
+2024-05-16 10:06:14.939  INFO 19244 --- [http-nio-12000-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-05-16 10:06:14.940  INFO 19244 --- [http-nio-12000-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-05-16 10:06:14.945  INFO 19244 --- [http-nio-12000-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 4 ms
+2024-05-16 10:06:21.325  INFO 19244 --- [http-nio-12000-exec-2] com.ruijing.assets.aspect.SysLogAspect   : 来自于ip: 0:0:0:0:0:0:0:1 的 Persolute 用户于: Thu May 16 10:06:15 CST 2024 时刻进行了: 登录 操作
+2024-05-16 10:06:21.335  INFO 19244 --- [http-nio-12000-exec-2] com.ruijing.assets.aspect.SysLogAspect   : 主线程结束了.............
+2024-05-16 10:06:21.337  INFO 19244 --- [http-nio-12000-exec-2] com.ruijing.assets.aspect.SysLogAspect   : =======End=======
 
-2024-05-06 10:57:34.785  INFO 7724 --- [task-1] c.r.a.service.impl.SystemLogServiceImpl  : 副线程开始啦-----------
-2024-05-06 10:57:34.801  INFO 7724 --- [task-1] c.r.a.service.impl.SystemLogServiceImpl  : 副线程结束啦-----------
-2024-05-06 12:52:01.122  INFO 7724 --- [lettuce-nioEventLoop-4-1] io.lettuce.core.protocol.CommandHandler  : null Unexpected exception during request: java.io.IOException: 杩滅▼涓绘満寮鸿揩鍏抽棴浜嗕竴涓幇鏈夌殑杩炴帴銆�
+2024-05-16 10:06:21.356  INFO 19244 --- [task-1] c.r.a.service.impl.SystemLogServiceImpl  : 副线程开始啦-----------
+2024-05-16 10:06:21.418  INFO 19244 --- [task-1] c.r.a.service.impl.SystemLogServiceImpl  : 副线程结束啦-----------
+2024-05-16 10:06:33.520  INFO 19244 --- [http-nio-12000-exec-4] com.ruijing.assets.aspect.SysLogAspect   : 来自于ip: 0:0:0:0:0:0:0:1 的 Persolute 用户于: Thu May 16 10:06:33 CST 2024 时刻进行了: 登录 操作
+2024-05-16 10:06:33.521  INFO 19244 --- [http-nio-12000-exec-4] com.ruijing.assets.aspect.SysLogAspect   : 主线程结束了.............
+2024-05-16 10:06:33.521  INFO 19244 --- [http-nio-12000-exec-4] com.ruijing.assets.aspect.SysLogAspect   : =======End=======
+
+2024-05-16 10:06:33.521  INFO 19244 --- [task-2] c.r.a.service.impl.SystemLogServiceImpl  : 副线程开始啦-----------
+2024-05-16 10:06:33.530  INFO 19244 --- [task-2] c.r.a.service.impl.SystemLogServiceImpl  : 副线程结束啦-----------
+2024-05-16 10:55:57.440  INFO 19244 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closing ...
+2024-05-16 10:55:57.454  INFO 19244 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closed
+2024-05-16 10:56:10.706  INFO 7780 --- [main] c.r.a.RuijingAssetsAdminApplication      : Starting RuijingAssetsAdminApplication using Java 9.0.4 on DESKTOP-R0TIG6Q with PID 7780 (C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin\target\classes started by 15385 in C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin)
+2024-05-16 10:56:10.708  INFO 7780 --- [main] c.r.a.RuijingAssetsAdminApplication      : The following 1 profile is active: "prod"
+2024-05-16 10:56:11.760  INFO 7780 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-05-16 10:56:11.763  INFO 7780 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-05-16 10:56:11.838  INFO 7780 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 58 ms. Found 0 Redis repository interfaces.
+2024-05-16 10:56:12.950  INFO 7780 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 12000 (http)
+2024-05-16 10:56:12.967  INFO 7780 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-05-16 10:56:12.967  INFO 7780 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.71]
+2024-05-16 10:56:13.119  INFO 7780 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-05-16 10:56:13.119  INFO 7780 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2362 ms
+2024-05-16 10:56:13.628  INFO 7780 --- [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2024-05-16 10:56:14.125  INFO 7780 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2024-05-16 10:56:16.931  INFO 7780 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@6c46dc02, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5606d537, org.springframework.security.web.context.SecurityContextPersistenceFilter@31b91435, org.springframework.security.web.header.HeaderWriterFilter@359fa722, org.springframework.web.filter.CorsFilter@5bec3e0, com.ruijing.assets.filter.JwtAuthenticationTokenFilter@47058864, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@5ba36c83, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@612bb755, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@b5390, org.springframework.security.web.session.SessionManagementFilter@1bbef3c7, org.springframework.security.web.access.ExceptionTranslationFilter@5401c6a8, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@578d5d02]
+2024-05-16 10:56:17.051  INFO 7780 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 12000 (http) with context path ''
+2024-05-16 10:56:17.066  INFO 7780 --- [main] c.r.a.RuijingAssetsAdminApplication      : Started RuijingAssetsAdminApplication in 6.81 seconds (JVM running for 8.068)
+2024-05-16 10:57:35.248  INFO 7780 --- [http-nio-12000-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-05-16 10:57:35.249  INFO 7780 --- [http-nio-12000-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-05-16 10:57:35.254  INFO 7780 --- [http-nio-12000-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 4 ms
+2024-05-16 11:12:34.641  INFO 7780 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closing ...
+2024-05-16 11:12:34.648  INFO 7780 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closed
+2024-05-16 11:12:48.820  INFO 6192 --- [main] c.r.a.RuijingAssetsAdminApplication      : Starting RuijingAssetsAdminApplication using Java 9.0.4 on DESKTOP-R0TIG6Q with PID 6192 (C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin\target\classes started by 15385 in C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin)
+2024-05-16 11:12:48.825  INFO 6192 --- [main] c.r.a.RuijingAssetsAdminApplication      : The following 1 profile is active: "prod"
+2024-05-16 11:12:49.966  INFO 6192 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-05-16 11:12:49.969  INFO 6192 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-05-16 11:12:50.029  INFO 6192 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 43 ms. Found 0 Redis repository interfaces.
+2024-05-16 11:12:50.921  INFO 6192 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 12000 (http)
+2024-05-16 11:12:50.933  INFO 6192 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-05-16 11:12:50.934  INFO 6192 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.71]
+2024-05-16 11:12:51.064  INFO 6192 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-05-16 11:12:51.064  INFO 6192 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2196 ms
+2024-05-16 11:12:51.764  INFO 6192 --- [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2024-05-16 11:12:52.295  INFO 6192 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2024-05-16 11:12:57.687  INFO 6192 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@77f04d1a, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@27682fa9, org.springframework.security.web.context.SecurityContextPersistenceFilter@2051a0ec, org.springframework.security.web.header.HeaderWriterFilter@67a3394c, org.springframework.web.filter.CorsFilter@5bec3e0, com.ruijing.assets.filter.JwtAuthenticationTokenFilter@47058864, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@35995029, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@51dbed72, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2fb70301, org.springframework.security.web.session.SessionManagementFilter@27b7204, org.springframework.security.web.access.ExceptionTranslationFilter@1eb52131, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@51da7b08]
+2024-05-16 11:12:57.999  INFO 6192 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 12000 (http) with context path ''
+2024-05-16 11:12:58.043  INFO 6192 --- [main] c.r.a.RuijingAssetsAdminApplication      : Started RuijingAssetsAdminApplication in 9.65 seconds (JVM running for 10.935)
+2024-05-16 11:12:58.231  INFO 6192 --- [http-nio-12000-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-05-16 11:12:58.233  INFO 6192 --- [http-nio-12000-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-05-16 11:12:58.237  INFO 6192 --- [http-nio-12000-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2024-05-16 11:13:03.155  WARN 6192 --- [http-nio-12000-exec-7] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Failed to convert value of type 'java.lang.String' to required type 'java.lang.Integer'; nested exception is java.lang.NumberFormatException: For input string: "null"]
+2024-05-16 11:13:04.062  WARN 6192 --- [http-nio-12000-exec-5] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Failed to convert value of type 'java.lang.String' to required type 'java.lang.Integer'; nested exception is java.lang.NumberFormatException: For input string: "null"]
+2024-05-16 11:13:52.732  INFO 6192 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closing ...
+2024-05-16 11:13:52.740  INFO 6192 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closed
+2024-05-16 11:14:05.445  INFO 17172 --- [main] c.r.a.RuijingAssetsAdminApplication      : Starting RuijingAssetsAdminApplication using Java 9.0.4 on DESKTOP-R0TIG6Q with PID 17172 (C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin\target\classes started by 15385 in C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin)
+2024-05-16 11:14:05.449  INFO 17172 --- [main] c.r.a.RuijingAssetsAdminApplication      : The following 1 profile is active: "prod"
+2024-05-16 11:14:06.585  INFO 17172 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-05-16 11:14:06.592  INFO 17172 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-05-16 11:14:06.663  INFO 17172 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 40 ms. Found 0 Redis repository interfaces.
+2024-05-16 11:14:07.834  INFO 17172 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 12000 (http)
+2024-05-16 11:14:07.853  INFO 17172 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-05-16 11:14:07.853  INFO 17172 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.71]
+2024-05-16 11:14:08.114  INFO 17172 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-05-16 11:14:08.114  INFO 17172 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2616 ms
+2024-05-16 11:14:09.029  INFO 17172 --- [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2024-05-16 11:14:09.729  INFO 17172 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2024-05-16 11:14:14.765  INFO 17172 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@6c4d0224, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@6f27730b, org.springframework.security.web.context.SecurityContextPersistenceFilter@38f63756, org.springframework.security.web.header.HeaderWriterFilter@4cb58e8b, org.springframework.web.filter.CorsFilter@7ec3a8bd, com.ruijing.assets.filter.JwtAuthenticationTokenFilter@33e3bd2e, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@510203de, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@7ca29311, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@32cec678, org.springframework.security.web.session.SessionManagementFilter@4c0930c4, org.springframework.security.web.access.ExceptionTranslationFilter@7577589, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@5a96f3cb]
+2024-05-16 11:14:14.904  INFO 17172 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 12000 (http) with context path ''
+2024-05-16 11:14:14.920  INFO 17172 --- [main] c.r.a.RuijingAssetsAdminApplication      : Started RuijingAssetsAdminApplication in 9.922 seconds (JVM running for 11.14)
+2024-05-16 11:14:26.698  INFO 17172 --- [http-nio-12000-exec-4] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-05-16 11:14:26.699  INFO 17172 --- [http-nio-12000-exec-4] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-05-16 11:14:26.701  INFO 17172 --- [http-nio-12000-exec-4] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2024-05-16 11:14:28.020  WARN 17172 --- [http-nio-12000-exec-3] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Failed to convert value of type 'java.lang.String' to required type 'java.lang.Integer'; nested exception is java.lang.NumberFormatException: For input string: "null"]
+2024-05-16 11:15:42.449  INFO 17172 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closing ...
+2024-05-16 11:15:42.454  INFO 17172 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closed
+2024-05-16 11:15:55.203  INFO 11000 --- [main] c.r.a.RuijingAssetsAdminApplication      : Starting RuijingAssetsAdminApplication using Java 9.0.4 on DESKTOP-R0TIG6Q with PID 11000 (C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin\target\classes started by 15385 in C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin)
+2024-05-16 11:15:55.207  INFO 11000 --- [main] c.r.a.RuijingAssetsAdminApplication      : The following 1 profile is active: "prod"
+2024-05-16 11:15:56.164  INFO 11000 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-05-16 11:15:56.166  INFO 11000 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-05-16 11:15:56.245  INFO 11000 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 64 ms. Found 0 Redis repository interfaces.
+2024-05-16 11:15:57.287  INFO 11000 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 12000 (http)
+2024-05-16 11:15:57.306  INFO 11000 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-05-16 11:15:57.306  INFO 11000 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.71]
+2024-05-16 11:15:57.466  INFO 11000 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-05-16 11:15:57.466  INFO 11000 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2205 ms
+2024-05-16 11:15:58.032  INFO 11000 --- [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2024-05-16 11:15:58.574  INFO 11000 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2024-05-16 11:16:04.375  INFO 11000 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@2560a7be, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@fabfc79, org.springframework.security.web.context.SecurityContextPersistenceFilter@359fa722, org.springframework.security.web.header.HeaderWriterFilter@67a3dd86, org.springframework.web.filter.CorsFilter@204d9edf, com.ruijing.assets.filter.JwtAuthenticationTokenFilter@6dd79214, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@bc4a9b0, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@5d75f90e, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@59aa2fba, org.springframework.security.web.session.SessionManagementFilter@a97a895, org.springframework.security.web.access.ExceptionTranslationFilter@5d20195b, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@4c8a9266]
+2024-05-16 11:16:04.732  INFO 11000 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 12000 (http) with context path ''
+2024-05-16 11:16:04.773  INFO 11000 --- [main] c.r.a.RuijingAssetsAdminApplication      : Started RuijingAssetsAdminApplication in 9.992 seconds (JVM running for 11.133)
+2024-05-16 11:16:05.129  INFO 11000 --- [http-nio-12000-exec-5] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-05-16 11:16:05.132  INFO 11000 --- [http-nio-12000-exec-5] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-05-16 11:16:05.135  INFO 11000 --- [http-nio-12000-exec-5] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2024-05-16 11:17:00.155  INFO 11000 --- [http-nio-12000-exec-1] com.ruijing.assets.aspect.SysLogAspect   : 来自于ip: 0:0:0:0:0:0:0:1 的 Persolute 用户于: Thu May 16 11:16:59 CST 2024 时刻进行了: 登录 操作
+2024-05-16 11:17:00.163  INFO 11000 --- [http-nio-12000-exec-1] com.ruijing.assets.aspect.SysLogAspect   : 主线程结束了.............
+2024-05-16 11:17:00.164  INFO 11000 --- [http-nio-12000-exec-1] com.ruijing.assets.aspect.SysLogAspect   : =======End=======
+
+2024-05-16 11:17:00.179  INFO 11000 --- [task-1] c.r.a.service.impl.SystemLogServiceImpl  : 副线程开始啦-----------
+2024-05-16 11:17:00.262  INFO 11000 --- [task-1] c.r.a.service.impl.SystemLogServiceImpl  : 副线程结束啦-----------
+2024-05-16 11:19:56.741  INFO 11000 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closing ...
+2024-05-16 11:19:56.748  INFO 11000 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closed
+2024-05-16 11:20:09.742  INFO 15912 --- [main] c.r.a.RuijingAssetsAdminApplication      : Starting RuijingAssetsAdminApplication using Java 9.0.4 on DESKTOP-R0TIG6Q with PID 15912 (C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin\target\classes started by 15385 in C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin)
+2024-05-16 11:20:09.745  INFO 15912 --- [main] c.r.a.RuijingAssetsAdminApplication      : The following 1 profile is active: "prod"
+2024-05-16 11:20:10.778  INFO 15912 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-05-16 11:20:10.781  INFO 15912 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-05-16 11:20:10.872  INFO 15912 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 68 ms. Found 0 Redis repository interfaces.
+2024-05-16 11:20:11.914  INFO 15912 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 12000 (http)
+2024-05-16 11:20:11.926  INFO 15912 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-05-16 11:20:11.926  INFO 15912 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.71]
+2024-05-16 11:20:12.049  INFO 15912 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-05-16 11:20:12.050  INFO 15912 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2249 ms
+2024-05-16 11:20:12.516  INFO 15912 --- [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2024-05-16 11:20:13.015  INFO 15912 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2024-05-16 11:20:15.800  INFO 15912 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@6c7f804c, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3e89f5bc, org.springframework.security.web.context.SecurityContextPersistenceFilter@6d7677d8, org.springframework.security.web.header.HeaderWriterFilter@7ca29311, org.springframework.web.filter.CorsFilter@7eaa2bc6, com.ruijing.assets.filter.JwtAuthenticationTokenFilter@4ee8051c, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@79631db0, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@33089426, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@259aec72, org.springframework.security.web.session.SessionManagementFilter@4f98ac31, org.springframework.security.web.access.ExceptionTranslationFilter@5dc7391e, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@7057dbda]
+2024-05-16 11:20:15.901  INFO 15912 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 12000 (http) with context path ''
+2024-05-16 11:20:15.912  INFO 15912 --- [main] c.r.a.RuijingAssetsAdminApplication      : Started RuijingAssetsAdminApplication in 6.708 seconds (JVM running for 7.873)
+2024-05-16 11:20:42.068  INFO 15912 --- [http-nio-12000-exec-10] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-05-16 11:20:42.070  INFO 15912 --- [http-nio-12000-exec-10] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-05-16 11:20:42.071  INFO 15912 --- [http-nio-12000-exec-10] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2024-05-16 11:21:06.868  INFO 15912 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closing ...
+2024-05-16 11:21:06.875  INFO 15912 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closed
+2024-05-16 11:21:11.820  INFO 12860 --- [main] c.r.a.RuijingAssetsAdminApplication      : Starting RuijingAssetsAdminApplication using Java 9.0.4 on DESKTOP-R0TIG6Q with PID 12860 (C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin\target\classes started by 15385 in C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin)
+2024-05-16 11:21:11.821  INFO 12860 --- [main] c.r.a.RuijingAssetsAdminApplication      : The following 1 profile is active: "prod"
+2024-05-16 11:21:13.031  INFO 12860 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-05-16 11:21:13.033  INFO 12860 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-05-16 11:21:13.097  INFO 12860 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 47 ms. Found 0 Redis repository interfaces.
+2024-05-16 11:21:14.274  INFO 12860 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 12000 (http)
+2024-05-16 11:21:14.292  INFO 12860 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-05-16 11:21:14.293  INFO 12860 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.71]
+2024-05-16 11:21:14.530  INFO 12860 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-05-16 11:21:14.532  INFO 12860 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2665 ms
+2024-05-16 11:21:15.237  INFO 12860 --- [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2024-05-16 11:21:15.813  INFO 12860 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2024-05-16 11:21:18.915  INFO 12860 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@4407fea2, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@64e3bc2, org.springframework.security.web.context.SecurityContextPersistenceFilter@176054b7, org.springframework.security.web.header.HeaderWriterFilter@4eace42b, org.springframework.web.filter.CorsFilter@1182413a, com.ruijing.assets.filter.JwtAuthenticationTokenFilter@582dcd35, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@9976b27, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@3bf40c74, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@54ed249f, org.springframework.security.web.session.SessionManagementFilter@6f95654c, org.springframework.security.web.access.ExceptionTranslationFilter@43549c6c, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@1ff23bd1]
+2024-05-16 11:21:19.060  INFO 12860 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 12000 (http) with context path ''
+2024-05-16 11:21:19.081  INFO 12860 --- [main] c.r.a.RuijingAssetsAdminApplication      : Started RuijingAssetsAdminApplication in 7.749 seconds (JVM running for 9.624)
+2024-05-16 11:21:43.998  INFO 12860 --- [http-nio-12000-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-05-16 11:21:43.998  INFO 12860 --- [http-nio-12000-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-05-16 11:21:44.000  INFO 12860 --- [http-nio-12000-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2024-05-16 11:26:11.983  INFO 12860 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closing ...
+2024-05-16 11:26:11.991  INFO 12860 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closed
+2024-05-16 11:26:25.381  INFO 22328 --- [main] c.r.a.RuijingAssetsAdminApplication      : Starting RuijingAssetsAdminApplication using Java 9.0.4 on DESKTOP-R0TIG6Q with PID 22328 (C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin\target\classes started by 15385 in C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin)
+2024-05-16 11:26:25.383  INFO 22328 --- [main] c.r.a.RuijingAssetsAdminApplication      : The following 1 profile is active: "prod"
+2024-05-16 11:26:26.922  INFO 22328 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-05-16 11:26:26.927  INFO 22328 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-05-16 11:26:27.027  INFO 22328 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 72 ms. Found 0 Redis repository interfaces.
+2024-05-16 11:26:28.412  INFO 22328 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 12000 (http)
+2024-05-16 11:26:28.425  INFO 22328 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-05-16 11:26:28.426  INFO 22328 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.71]
+2024-05-16 11:26:28.589  INFO 22328 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-05-16 11:26:28.590  INFO 22328 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3149 ms
+2024-05-16 11:26:29.298  INFO 22328 --- [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2024-05-16 11:26:30.228  INFO 22328 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2024-05-16 11:26:34.921  INFO 22328 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@4407fea2, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@64e3bc2, org.springframework.security.web.context.SecurityContextPersistenceFilter@176054b7, org.springframework.security.web.header.HeaderWriterFilter@4eace42b, org.springframework.web.filter.CorsFilter@4ff66917, com.ruijing.assets.filter.JwtAuthenticationTokenFilter@d108406, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@9976b27, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@3bf40c74, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@54ed249f, org.springframework.security.web.session.SessionManagementFilter@6f95654c, org.springframework.security.web.access.ExceptionTranslationFilter@43549c6c, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@1ff23bd1]
+2024-05-16 11:26:35.122  INFO 22328 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 12000 (http) with context path ''
+2024-05-16 11:26:35.139  INFO 22328 --- [main] c.r.a.RuijingAssetsAdminApplication      : Started RuijingAssetsAdminApplication in 10.269 seconds (JVM running for 11.478)
+2024-05-16 11:26:48.629  INFO 22328 --- [http-nio-12000-exec-7] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-05-16 11:26:48.630  INFO 22328 --- [http-nio-12000-exec-7] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-05-16 11:26:48.631  INFO 22328 --- [http-nio-12000-exec-7] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2024-05-16 11:28:14.921  INFO 22328 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closing ...
+2024-05-16 11:28:14.926  INFO 22328 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closed
+2024-05-16 11:28:28.261  INFO 3780 --- [main] c.r.a.RuijingAssetsAdminApplication      : Starting RuijingAssetsAdminApplication using Java 9.0.4 on DESKTOP-R0TIG6Q with PID 3780 (C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin\target\classes started by 15385 in C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin)
+2024-05-16 11:28:28.263  INFO 3780 --- [main] c.r.a.RuijingAssetsAdminApplication      : The following 1 profile is active: "prod"
+2024-05-16 11:28:29.301  INFO 3780 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-05-16 11:28:29.307  INFO 3780 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-05-16 11:28:29.406  INFO 3780 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 68 ms. Found 0 Redis repository interfaces.
+2024-05-16 11:28:30.625  INFO 3780 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 12000 (http)
+2024-05-16 11:28:30.639  INFO 3780 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-05-16 11:28:30.640  INFO 3780 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.71]
+2024-05-16 11:28:30.911  INFO 3780 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-05-16 11:28:30.912  INFO 3780 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2600 ms
+2024-05-16 11:28:31.644  INFO 3780 --- [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2024-05-16 11:28:32.251  INFO 3780 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2024-05-16 11:28:35.485  INFO 3780 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@261f5a45, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@76673ed, org.springframework.security.web.context.SecurityContextPersistenceFilter@361d8567, org.springframework.security.web.header.HeaderWriterFilter@af94b0b, org.springframework.web.filter.CorsFilter@597a7afa, com.ruijing.assets.filter.JwtAuthenticationTokenFilter@3a0896b3, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@43549c6c, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@13e0f380, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@6d41200c, org.springframework.security.web.session.SessionManagementFilter@38363e96, org.springframework.security.web.access.ExceptionTranslationFilter@627d5f1, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@61648dd2]
+2024-05-16 11:28:35.647  INFO 3780 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 12000 (http) with context path ''
+2024-05-16 11:28:35.661  INFO 3780 --- [main] c.r.a.RuijingAssetsAdminApplication      : Started RuijingAssetsAdminApplication in 7.862 seconds (JVM running for 9.205)
+2024-05-16 11:28:46.171  INFO 3780 --- [http-nio-12000-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-05-16 11:28:46.172  INFO 3780 --- [http-nio-12000-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-05-16 11:28:46.180  INFO 3780 --- [http-nio-12000-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 8 ms
+2024-05-16 11:29:24.418  INFO 3780 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closing ...
+2024-05-16 11:29:24.428  INFO 3780 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closed
+2024-05-16 11:29:39.049  INFO 788 --- [main] c.r.a.RuijingAssetsAdminApplication      : Starting RuijingAssetsAdminApplication using Java 9.0.4 on DESKTOP-R0TIG6Q with PID 788 (C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin\target\classes started by 15385 in C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin)
+2024-05-16 11:29:39.051  INFO 788 --- [main] c.r.a.RuijingAssetsAdminApplication      : The following 1 profile is active: "prod"
+2024-05-16 11:29:40.299  INFO 788 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-05-16 11:29:40.304  INFO 788 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-05-16 11:29:40.407  INFO 788 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 71 ms. Found 0 Redis repository interfaces.
+2024-05-16 11:29:41.297  INFO 788 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 12000 (http)
+2024-05-16 11:29:41.312  INFO 788 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-05-16 11:29:41.312  INFO 788 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.71]
+2024-05-16 11:29:41.461  INFO 788 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-05-16 11:29:41.462  INFO 788 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2364 ms
+2024-05-16 11:29:41.983  INFO 788 --- [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2024-05-16 11:29:42.533  INFO 788 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2024-05-16 11:29:46.615  INFO 788 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@632b96b8, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@544e6b, org.springframework.security.web.context.SecurityContextPersistenceFilter@451a4187, org.springframework.security.web.header.HeaderWriterFilter@cfc4601, org.springframework.web.filter.CorsFilter@7b91d9f, com.ruijing.assets.filter.JwtAuthenticationTokenFilter@2a8f8555, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7c6ab057, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@7c359808, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5b430541, org.springframework.security.web.session.SessionManagementFilter@8f374de, org.springframework.security.web.access.ExceptionTranslationFilter@2b4954a4, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@19f1f330]
+2024-05-16 11:29:46.987  INFO 788 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 12000 (http) with context path ''
+2024-05-16 11:29:47.025  INFO 788 --- [main] c.r.a.RuijingAssetsAdminApplication      : Started RuijingAssetsAdminApplication in 8.552 seconds (JVM running for 10.084)
+2024-05-16 11:29:49.067  INFO 788 --- [http-nio-12000-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-05-16 11:29:49.068  INFO 788 --- [http-nio-12000-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-05-16 11:29:49.073  INFO 788 --- [http-nio-12000-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 4 ms
+2024-05-16 11:33:02.771  INFO 788 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closing ...
+2024-05-16 11:33:02.777  INFO 788 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closed
+2024-05-16 11:33:06.672  INFO 14512 --- [main] c.r.a.RuijingAssetsAdminApplication      : Starting RuijingAssetsAdminApplication using Java 9.0.4 on DESKTOP-R0TIG6Q with PID 14512 (C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin\target\classes started by 15385 in C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin)
+2024-05-16 11:33:06.674  INFO 14512 --- [main] c.r.a.RuijingAssetsAdminApplication      : The following 1 profile is active: "prod"
+2024-05-16 11:33:08.030  INFO 14512 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-05-16 11:33:08.036  INFO 14512 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-05-16 11:33:08.137  INFO 14512 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 70 ms. Found 0 Redis repository interfaces.
+2024-05-16 11:33:09.354  INFO 14512 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 12000 (http)
+2024-05-16 11:33:09.365  INFO 14512 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-05-16 11:33:09.366  INFO 14512 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.71]
+2024-05-16 11:33:09.518  INFO 14512 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-05-16 11:33:09.519  INFO 14512 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2794 ms
+2024-05-16 11:33:10.097  INFO 14512 --- [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2024-05-16 11:33:10.730  INFO 14512 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2024-05-16 11:33:14.013  INFO 14512 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@14e93c46, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@89465d9, org.springframework.security.web.context.SecurityContextPersistenceFilter@49cd08f9, org.springframework.security.web.header.HeaderWriterFilter@53d2b827, org.springframework.web.filter.CorsFilter@72fb989b, com.ruijing.assets.filter.JwtAuthenticationTokenFilter@4601047, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2c451c4a, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@271a140c, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@6fdd3382, org.springframework.security.web.session.SessionManagementFilter@3ee68eb2, org.springframework.security.web.access.ExceptionTranslationFilter@4468c0ea, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@7320750c]
+2024-05-16 11:33:14.194  INFO 14512 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 12000 (http) with context path ''
+2024-05-16 11:33:14.224  INFO 14512 --- [main] c.r.a.RuijingAssetsAdminApplication      : Started RuijingAssetsAdminApplication in 8.039 seconds (JVM running for 9.332)
+2024-05-16 11:33:21.801  INFO 14512 --- [http-nio-12000-exec-6] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-05-16 11:33:21.802  INFO 14512 --- [http-nio-12000-exec-6] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-05-16 11:33:21.803  INFO 14512 --- [http-nio-12000-exec-6] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2024-05-16 11:36:55.248  INFO 14512 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closing ...
+2024-05-16 11:36:55.254  INFO 14512 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closed
+2024-05-16 11:37:07.445  INFO 18388 --- [main] c.r.a.RuijingAssetsAdminApplication      : Starting RuijingAssetsAdminApplication using Java 9.0.4 on DESKTOP-R0TIG6Q with PID 18388 (C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin\target\classes started by 15385 in C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin)
+2024-05-16 11:37:07.446  INFO 18388 --- [main] c.r.a.RuijingAssetsAdminApplication      : The following 1 profile is active: "prod"
+2024-05-16 11:37:08.815  INFO 18388 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-05-16 11:37:08.822  INFO 18388 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-05-16 11:37:08.907  INFO 18388 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 58 ms. Found 0 Redis repository interfaces.
+2024-05-16 11:37:09.959  INFO 18388 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 12000 (http)
+2024-05-16 11:37:09.976  INFO 18388 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-05-16 11:37:09.977  INFO 18388 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.71]
+2024-05-16 11:37:10.156  INFO 18388 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-05-16 11:37:10.156  INFO 18388 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2664 ms
+2024-05-16 11:37:10.932  INFO 18388 --- [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2024-05-16 11:37:11.720  INFO 18388 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2024-05-16 11:37:15.783  INFO 18388 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@63062eea, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7bad18f5, org.springframework.security.web.context.SecurityContextPersistenceFilter@271a140c, org.springframework.security.web.header.HeaderWriterFilter@43549c6c, org.springframework.web.filter.CorsFilter@2df3545d, com.ruijing.assets.filter.JwtAuthenticationTokenFilter@638afcaa, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7ade62a6, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@2f29e630, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@4407fea2, org.springframework.security.web.session.SessionManagementFilter@337c0ee4, org.springframework.security.web.access.ExceptionTranslationFilter@27e3dc9a, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@32245b66]
+2024-05-16 11:37:16.018  INFO 18388 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 12000 (http) with context path ''
+2024-05-16 11:37:16.037  INFO 18388 --- [main] c.r.a.RuijingAssetsAdminApplication      : Started RuijingAssetsAdminApplication in 9.093 seconds (JVM running for 10.564)
+2024-05-16 11:37:16.844  INFO 18388 --- [http-nio-12000-exec-4] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-05-16 11:37:16.845  INFO 18388 --- [http-nio-12000-exec-4] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-05-16 11:37:16.846  INFO 18388 --- [http-nio-12000-exec-4] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2024-05-16 11:39:24.030  INFO 18388 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closing ...
+2024-05-16 11:39:24.036  INFO 18388 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closed
+2024-05-16 11:39:36.809  INFO 5396 --- [main] c.r.a.RuijingAssetsAdminApplication      : Starting RuijingAssetsAdminApplication using Java 9.0.4 on DESKTOP-R0TIG6Q with PID 5396 (C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin\target\classes started by 15385 in C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin)
+2024-05-16 11:39:36.810  INFO 5396 --- [main] c.r.a.RuijingAssetsAdminApplication      : The following 1 profile is active: "prod"
+2024-05-16 11:39:37.850  INFO 5396 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-05-16 11:39:37.853  INFO 5396 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-05-16 11:39:37.935  INFO 5396 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 57 ms. Found 0 Redis repository interfaces.
+2024-05-16 11:39:39.003  INFO 5396 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 12000 (http)
+2024-05-16 11:39:39.023  INFO 5396 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-05-16 11:39:39.024  INFO 5396 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.71]
+2024-05-16 11:39:39.209  INFO 5396 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-05-16 11:39:39.209  INFO 5396 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2352 ms
+2024-05-16 11:39:39.985  INFO 5396 --- [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2024-05-16 11:39:40.614  INFO 5396 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2024-05-16 11:39:44.515  INFO 5396 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@5300694d, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7320750c, org.springframework.security.web.context.SecurityContextPersistenceFilter@4504a4ed, org.springframework.security.web.header.HeaderWriterFilter@1e7113f8, org.springframework.web.filter.CorsFilter@524f5ea5, com.ruijing.assets.filter.JwtAuthenticationTokenFilter@221b77d7, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@4d84688f, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@4eace42b, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2570851e, org.springframework.security.web.session.SessionManagementFilter@41cf4272, org.springframework.security.web.access.ExceptionTranslationFilter@4891d727, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@703e5614]
+2024-05-16 11:39:44.662  INFO 5396 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 12000 (http) with context path ''
+2024-05-16 11:39:44.693  INFO 5396 --- [main] c.r.a.RuijingAssetsAdminApplication      : Started RuijingAssetsAdminApplication in 8.453 seconds (JVM running for 10.12)
+2024-05-16 11:39:54.870  INFO 5396 --- [http-nio-12000-exec-6] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-05-16 11:39:54.870  INFO 5396 --- [http-nio-12000-exec-6] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-05-16 11:39:54.873  INFO 5396 --- [http-nio-12000-exec-6] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2024-05-16 11:48:09.453  INFO 5396 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closing ...
+2024-05-16 11:48:09.463  INFO 5396 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closed
+2024-05-16 11:48:23.722  INFO 13176 --- [main] c.r.a.RuijingAssetsAdminApplication      : Starting RuijingAssetsAdminApplication using Java 9.0.4 on DESKTOP-R0TIG6Q with PID 13176 (C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin\target\classes started by 15385 in C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin)
+2024-05-16 11:48:23.724  INFO 13176 --- [main] c.r.a.RuijingAssetsAdminApplication      : The following 1 profile is active: "prod"
+2024-05-16 11:48:24.839  INFO 13176 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-05-16 11:48:24.844  INFO 13176 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-05-16 11:48:24.945  INFO 13176 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 68 ms. Found 0 Redis repository interfaces.
+2024-05-16 11:48:25.970  INFO 13176 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 12000 (http)
+2024-05-16 11:48:25.988  INFO 13176 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-05-16 11:48:25.989  INFO 13176 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.71]
+2024-05-16 11:48:26.147  INFO 13176 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-05-16 11:48:26.149  INFO 13176 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2367 ms
+2024-05-16 11:48:26.692  INFO 13176 --- [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2024-05-16 11:48:27.162  INFO 13176 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2024-05-16 11:48:30.516  INFO 13176 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@44e3f3e5, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@6be1f37f, org.springframework.security.web.context.SecurityContextPersistenceFilter@af94b0b, org.springframework.security.web.header.HeaderWriterFilter@5c1687d1, org.springframework.web.filter.CorsFilter@586843bc, com.ruijing.assets.filter.JwtAuthenticationTokenFilter@5cd8d029, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@4769537a, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@3fd6dfbc, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@69ed96e1, org.springframework.security.web.session.SessionManagementFilter@787a4519, org.springframework.security.web.access.ExceptionTranslationFilter@104392ba, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@10553a61]
+2024-05-16 11:48:30.637  INFO 13176 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 12000 (http) with context path ''
+2024-05-16 11:48:30.648  INFO 13176 --- [main] c.r.a.RuijingAssetsAdminApplication      : Started RuijingAssetsAdminApplication in 7.557 seconds (JVM running for 9.026)
+2024-05-16 11:48:37.249  INFO 13176 --- [http-nio-12000-exec-3] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-05-16 11:48:37.250  INFO 13176 --- [http-nio-12000-exec-3] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-05-16 11:48:37.251  INFO 13176 --- [http-nio-12000-exec-3] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2024-05-16 11:49:27.264  INFO 13176 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closing ...
+2024-05-16 11:49:27.274  INFO 13176 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closed
+2024-05-16 11:49:40.305  INFO 14560 --- [main] c.r.a.RuijingAssetsAdminApplication      : Starting RuijingAssetsAdminApplication using Java 9.0.4 on DESKTOP-R0TIG6Q with PID 14560 (C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin\target\classes started by 15385 in C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin)
+2024-05-16 11:49:40.306  INFO 14560 --- [main] c.r.a.RuijingAssetsAdminApplication      : The following 1 profile is active: "prod"
+2024-05-16 11:49:41.576  INFO 14560 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-05-16 11:49:41.581  INFO 14560 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-05-16 11:49:41.685  INFO 14560 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 76 ms. Found 0 Redis repository interfaces.
+2024-05-16 11:49:42.995  INFO 14560 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 12000 (http)
+2024-05-16 11:49:43.008  INFO 14560 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-05-16 11:49:43.008  INFO 14560 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.71]
+2024-05-16 11:49:43.204  INFO 14560 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-05-16 11:49:43.204  INFO 14560 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2847 ms
+2024-05-16 11:49:44.057  INFO 14560 --- [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2024-05-16 11:49:44.705  INFO 14560 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2024-05-16 11:49:47.902  INFO 14560 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@1e4d93f7, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3d1b43d8, org.springframework.security.web.context.SecurityContextPersistenceFilter@749c0669, org.springframework.security.web.header.HeaderWriterFilter@27575bcd, org.springframework.web.filter.CorsFilter@7d8b66d9, com.ruijing.assets.filter.JwtAuthenticationTokenFilter@6e8f2094, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@3fd6dfbc, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@7348e75e, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@9f52eb7, org.springframework.security.web.session.SessionManagementFilter@37a0fc8c, org.springframework.security.web.access.ExceptionTranslationFilter@20a25f66, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@61607ff0]
+2024-05-16 11:49:48.041  INFO 14560 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 12000 (http) with context path ''
+2024-05-16 11:49:48.061  INFO 14560 --- [main] c.r.a.RuijingAssetsAdminApplication      : Started RuijingAssetsAdminApplication in 8.311 seconds (JVM running for 9.598)
+2024-05-16 11:49:50.890  INFO 14560 --- [http-nio-12000-exec-5] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-05-16 11:49:50.891  INFO 14560 --- [http-nio-12000-exec-5] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-05-16 11:49:50.892  INFO 14560 --- [http-nio-12000-exec-5] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2024-05-16 11:55:25.137 ERROR 14560 --- [http-nio-12000-exec-2] c.alibaba.druid.filter.stat.StatFilter   : slow sql 5856 millis. SELECT  id,name  FROM investment_type[]
+2024-05-16 11:56:23.413  INFO 14560 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closing ...
+2024-05-16 11:56:23.419  INFO 14560 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closed
+2024-05-16 11:56:36.570  INFO 18872 --- [main] c.r.a.RuijingAssetsAdminApplication      : Starting RuijingAssetsAdminApplication using Java 9.0.4 on DESKTOP-R0TIG6Q with PID 18872 (C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin\target\classes started by 15385 in C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin)
+2024-05-16 11:56:36.572  INFO 18872 --- [main] c.r.a.RuijingAssetsAdminApplication      : The following 1 profile is active: "prod"
+2024-05-16 11:56:37.870  INFO 18872 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-05-16 11:56:37.874  INFO 18872 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-05-16 11:56:37.969  INFO 18872 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 64 ms. Found 0 Redis repository interfaces.
+2024-05-16 11:56:39.062  INFO 18872 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 12000 (http)
+2024-05-16 11:56:39.074  INFO 18872 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-05-16 11:56:39.074  INFO 18872 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.71]
+2024-05-16 11:56:39.201  INFO 18872 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-05-16 11:56:39.202  INFO 18872 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2576 ms
+2024-05-16 11:56:39.942  INFO 18872 --- [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2024-05-16 11:56:40.571  INFO 18872 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2024-05-16 11:56:43.891  INFO 18872 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@6d41200c, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@522fb69, org.springframework.security.web.context.SecurityContextPersistenceFilter@4023d23f, org.springframework.security.web.header.HeaderWriterFilter@1831447c, org.springframework.web.filter.CorsFilter@2df3545d, com.ruijing.assets.filter.JwtAuthenticationTokenFilter@638afcaa, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@4eace42b, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@333efb51, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@593354fa, org.springframework.security.web.session.SessionManagementFilter@558aa1f1, org.springframework.security.web.access.ExceptionTranslationFilter@af94b0b, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@5e5d40ec]
+2024-05-16 11:56:44.050  INFO 18872 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 12000 (http) with context path ''
+2024-05-16 11:56:44.064  INFO 18872 --- [main] c.r.a.RuijingAssetsAdminApplication      : Started RuijingAssetsAdminApplication in 7.97 seconds (JVM running for 9.366)
+2024-05-16 11:58:02.768  INFO 18872 --- [http-nio-12000-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-05-16 11:58:02.768  INFO 18872 --- [http-nio-12000-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-05-16 11:58:02.770  INFO 18872 --- [http-nio-12000-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2024-05-16 11:59:32.897 ERROR 18872 --- [http-nio-12000-exec-5] c.alibaba.druid.filter.stat.StatFilter   : slow sql 2155 millis. SELECT  id,investor_id,value_added_service_id  FROM investor_value_added_service 
+ 
+ WHERE (investor_id = ?)[1]
+2024-05-16 11:59:32.897 ERROR 18872 --- [http-nio-12000-exec-10] c.alibaba.druid.filter.stat.StatFilter   : slow sql 2154 millis. SELECT 1 FROM DUAL[]
+2024-05-16 11:59:32.897 ERROR 18872 --- [http-nio-12000-exec-2] c.alibaba.druid.filter.stat.StatFilter   : slow sql 2152 millis. SELECT  id,name  FROM value_added_service[]
+2024-05-16 11:59:32.897 ERROR 18872 --- [http-nio-12000-exec-9] c.alibaba.druid.filter.stat.StatFilter   : slow sql 2156 millis. SELECT  id,name  FROM investment_type[]
+2024-05-16 12:00:25.333  INFO 18872 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closing ...
+2024-05-16 12:00:25.339  INFO 18872 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closed
+2024-05-16 12:00:39.054  INFO 12316 --- [main] c.r.a.RuijingAssetsAdminApplication      : Starting RuijingAssetsAdminApplication using Java 9.0.4 on DESKTOP-R0TIG6Q with PID 12316 (C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin\target\classes started by 15385 in C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin)
+2024-05-16 12:00:39.056  INFO 12316 --- [main] c.r.a.RuijingAssetsAdminApplication      : The following 1 profile is active: "prod"
+2024-05-16 12:00:40.301  INFO 12316 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-05-16 12:00:40.304  INFO 12316 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-05-16 12:00:40.398  INFO 12316 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 72 ms. Found 0 Redis repository interfaces.
+2024-05-16 12:00:41.583  INFO 12316 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 12000 (http)
+2024-05-16 12:00:41.598  INFO 12316 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-05-16 12:00:41.599  INFO 12316 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.71]
+2024-05-16 12:00:41.777  INFO 12316 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-05-16 12:00:41.778  INFO 12316 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2670 ms
+2024-05-16 12:00:42.269  INFO 12316 --- [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2024-05-16 12:00:42.828  INFO 12316 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2024-05-16 12:00:46.231  INFO 12316 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@6f7241c2, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@32245b66, org.springframework.security.web.context.SecurityContextPersistenceFilter@4eace42b, org.springframework.security.web.header.HeaderWriterFilter@7ee3a2ed, org.springframework.web.filter.CorsFilter@5b14f482, com.ruijing.assets.filter.JwtAuthenticationTokenFilter@394a6d2b, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@375ff309, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@531bec12, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@19355a56, org.springframework.security.web.session.SessionManagementFilter@49cd08f9, org.springframework.security.web.access.ExceptionTranslationFilter@4769537a, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@5667dd90]
+2024-05-16 12:00:46.353  INFO 12316 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 12000 (http) with context path ''
+2024-05-16 12:00:46.366  INFO 12316 --- [main] c.r.a.RuijingAssetsAdminApplication      : Started RuijingAssetsAdminApplication in 7.858 seconds (JVM running for 9.54)
+2024-05-16 12:00:50.957  INFO 12316 --- [http-nio-12000-exec-3] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-05-16 12:00:50.957  INFO 12316 --- [http-nio-12000-exec-3] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-05-16 12:00:50.958  INFO 12316 --- [http-nio-12000-exec-3] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2024-05-16 12:01:24.077  INFO 12316 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closing ...
+2024-05-16 12:01:24.083  INFO 12316 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closed
+2024-05-16 12:01:49.421  INFO 9740 --- [main] c.r.a.RuijingAssetsAdminApplication      : Starting RuijingAssetsAdminApplication using Java 9.0.4 on DESKTOP-R0TIG6Q with PID 9740 (C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin\target\classes started by 15385 in C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin)
+2024-05-16 12:01:49.423  INFO 9740 --- [main] c.r.a.RuijingAssetsAdminApplication      : The following 1 profile is active: "prod"
+2024-05-16 12:01:50.452  INFO 9740 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-05-16 12:01:50.460  INFO 9740 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-05-16 12:01:50.528  INFO 9740 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 34 ms. Found 0 Redis repository interfaces.
+2024-05-16 12:01:51.691  INFO 9740 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 12000 (http)
+2024-05-16 12:01:51.718  INFO 9740 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-05-16 12:01:51.719  INFO 9740 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.71]
+2024-05-16 12:01:52.005  INFO 9740 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-05-16 12:01:52.006  INFO 9740 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2531 ms
+2024-05-16 12:01:52.901  INFO 9740 --- [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2024-05-16 12:01:53.575  INFO 9740 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2024-05-16 12:01:59.780  INFO 9740 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@3e73f5e7, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@495bc9e7, org.springframework.security.web.context.SecurityContextPersistenceFilter@34e4fb39, org.springframework.security.web.header.HeaderWriterFilter@5b0835cb, org.springframework.web.filter.CorsFilter@47569167, com.ruijing.assets.filter.JwtAuthenticationTokenFilter@621f23ac, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@1ef5cde4, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@f837c11, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@51da7b08, org.springframework.security.web.session.SessionManagementFilter@1eb52131, org.springframework.security.web.access.ExceptionTranslationFilter@34e68840, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@6ad198c9]
+2024-05-16 12:02:00.147  INFO 9740 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 12000 (http) with context path ''
+2024-05-16 12:02:00.184  INFO 9740 --- [main] c.r.a.RuijingAssetsAdminApplication      : Started RuijingAssetsAdminApplication in 11.251 seconds (JVM running for 12.357)
+2024-05-16 12:02:04.010  INFO 9740 --- [http-nio-12000-exec-6] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-05-16 12:02:04.011  INFO 9740 --- [http-nio-12000-exec-6] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-05-16 12:02:04.014  INFO 9740 --- [http-nio-12000-exec-6] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2024-05-16 12:02:13.076  WARN 9740 --- [http-nio-12000-exec-1] c.b.m.e.p.i.PaginationInnerInterceptor   : optimize this sql to a count sql has exception, sql:"SELECT  id,name,type,certificate_id,location,scale,intention_region,contact,economic_type_id  FROM investor 
+ 
+ WHERE (id IN ())", exception:
+net.sf.jsqlparser.parser.ParseException: Encountered unexpected token: "IN" "IN"
+    at line 3, column 12.
+
+Was expecting one of:
+
+    "&"
+    "&&"
+    ")"
+    "::"
+    "<<"
+    ">>"
+    "AND"
+    "COLLATE"
+    "OR"
+    "["
+    "^"
+    "|"
+
+2024-05-16 12:02:29.851  WARN 9740 --- [http-nio-12000-exec-9] c.b.m.e.p.i.PaginationInnerInterceptor   : optimize this sql to a count sql has exception, sql:"SELECT  id,name,type,certificate_id,location,scale,intention_region,contact,economic_type_id  FROM investor 
+ 
+ WHERE (id IN ())", exception:
+net.sf.jsqlparser.parser.ParseException: Encountered unexpected token: "IN" "IN"
+    at line 3, column 12.
+
+Was expecting one of:
+
+    "&"
+    "&&"
+    ")"
+    "::"
+    "<<"
+    ">>"
+    "AND"
+    "COLLATE"
+    "OR"
+    "["
+    "^"
+    "|"
+
+2024-05-16 12:03:11.019  WARN 9740 --- [http-nio-12000-exec-7] c.b.m.e.p.i.PaginationInnerInterceptor   : optimize this sql to a count sql has exception, sql:"SELECT  id,name,type,certificate_id,location,scale,intention_region,contact,economic_type_id  FROM investor 
+ 
+ WHERE (id IN ())", exception:
+net.sf.jsqlparser.parser.ParseException: Encountered unexpected token: "IN" "IN"
+    at line 3, column 12.
+
+Was expecting one of:
+
+    "&"
+    "&&"
+    ")"
+    "::"
+    "<<"
+    ">>"
+    "AND"
+    "COLLATE"
+    "OR"
+    "["
+    "^"
+    "|"
+
+2024-05-16 12:03:16.642  INFO 9740 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closing ...
+2024-05-16 12:03:16.650  INFO 9740 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closed
+2024-05-16 12:03:20.650  INFO 9712 --- [main] c.r.a.RuijingAssetsAdminApplication      : Starting RuijingAssetsAdminApplication using Java 9.0.4 on DESKTOP-R0TIG6Q with PID 9712 (C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin\target\classes started by 15385 in C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin)
+2024-05-16 12:03:20.652  INFO 9712 --- [main] c.r.a.RuijingAssetsAdminApplication      : The following 1 profile is active: "prod"
+2024-05-16 12:03:21.852  INFO 9712 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-05-16 12:03:21.857  INFO 9712 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-05-16 12:03:21.952  INFO 9712 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 66 ms. Found 0 Redis repository interfaces.
+2024-05-16 12:03:22.955  INFO 9712 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 12000 (http)
+2024-05-16 12:03:22.970  INFO 9712 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-05-16 12:03:22.970  INFO 9712 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.71]
+2024-05-16 12:03:23.115  INFO 9712 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-05-16 12:03:23.115  INFO 9712 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2408 ms
+2024-05-16 12:03:23.833  INFO 9712 --- [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2024-05-16 12:03:24.367  INFO 9712 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2024-05-16 12:03:27.482  INFO 9712 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@5667dd90, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@261f5a45, org.springframework.security.web.context.SecurityContextPersistenceFilter@558aa1f1, org.springframework.security.web.header.HeaderWriterFilter@105fe81e, org.springframework.web.filter.CorsFilter@524f5ea5, com.ruijing.assets.filter.JwtAuthenticationTokenFilter@221b77d7, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@49cd08f9, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@418bdde9, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@76673ed, org.springframework.security.web.session.SessionManagementFilter@7ee3a2ed, org.springframework.security.web.access.ExceptionTranslationFilter@787a4519, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@69ed96e1]
+2024-05-16 12:03:27.593  INFO 9712 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 12000 (http) with context path ''
+2024-05-16 12:03:27.606  INFO 9712 --- [main] c.r.a.RuijingAssetsAdminApplication      : Started RuijingAssetsAdminApplication in 7.459 seconds (JVM running for 8.93)
+2024-05-16 12:03:36.770  INFO 9712 --- [http-nio-12000-exec-5] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-05-16 12:03:36.772  INFO 9712 --- [http-nio-12000-exec-5] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-05-16 12:03:36.775  INFO 9712 --- [http-nio-12000-exec-5] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2024-05-16 12:03:48.525  WARN 9712 --- [http-nio-12000-exec-6] c.b.m.e.p.i.PaginationInnerInterceptor   : optimize this sql to a count sql has exception, sql:"SELECT  id,name,type,certificate_id,location,scale,intention_region,contact,economic_type_id  FROM investor 
+ 
+ WHERE (id IN ())", exception:
+net.sf.jsqlparser.parser.ParseException: Encountered unexpected token: "IN" "IN"
+    at line 3, column 12.
+
+Was expecting one of:
+
+    "&"
+    "&&"
+    ")"
+    "::"
+    "<<"
+    ">>"
+    "AND"
+    "COLLATE"
+    "OR"
+    "["
+    "^"
+    "|"
+
+2024-05-16 12:04:23.945  WARN 9712 --- [http-nio-12000-exec-9] c.b.m.e.p.i.PaginationInnerInterceptor   : optimize this sql to a count sql has exception, sql:"SELECT  id,name,type,certificate_id,location,scale,intention_region,contact,economic_type_id  FROM investor 
+ 
+ WHERE (id IN ())", exception:
+net.sf.jsqlparser.parser.ParseException: Encountered unexpected token: "IN" "IN"
+    at line 3, column 12.
+
+Was expecting one of:
+
+    "&"
+    "&&"
+    ")"
+    "::"
+    "<<"
+    ">>"
+    "AND"
+    "COLLATE"
+    "OR"
+    "["
+    "^"
+    "|"
+
+2024-05-16 12:04:24.429  INFO 9712 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closing ...
+2024-05-16 12:04:24.439  INFO 9712 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closed
+2024-05-16 12:04:57.537  INFO 12780 --- [main] c.r.a.RuijingAssetsAdminApplication      : Starting RuijingAssetsAdminApplication using Java 9.0.4 on DESKTOP-R0TIG6Q with PID 12780 (C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin\target\classes started by 15385 in C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin)
+2024-05-16 12:04:57.539  INFO 12780 --- [main] c.r.a.RuijingAssetsAdminApplication      : The following 1 profile is active: "prod"
+2024-05-16 12:04:58.822  INFO 12780 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-05-16 12:04:58.826  INFO 12780 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-05-16 12:04:58.914  INFO 12780 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 55 ms. Found 0 Redis repository interfaces.
+2024-05-16 12:05:00.234  INFO 12780 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 12000 (http)
+2024-05-16 12:05:00.255  INFO 12780 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-05-16 12:05:00.256  INFO 12780 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.71]
+2024-05-16 12:05:00.491  INFO 12780 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-05-16 12:05:00.492  INFO 12780 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2907 ms
+2024-05-16 12:05:01.300  INFO 12780 --- [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2024-05-16 12:05:01.985  INFO 12780 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2024-05-16 12:05:05.448  INFO 12780 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@6f7241c2, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@32245b66, org.springframework.security.web.context.SecurityContextPersistenceFilter@4eace42b, org.springframework.security.web.header.HeaderWriterFilter@7ee3a2ed, org.springframework.web.filter.CorsFilter@19705650, com.ruijing.assets.filter.JwtAuthenticationTokenFilter@635ff2a5, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@375ff309, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@531bec12, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@19355a56, org.springframework.security.web.session.SessionManagementFilter@49cd08f9, org.springframework.security.web.access.ExceptionTranslationFilter@4769537a, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@5667dd90]
+2024-05-16 12:05:05.595  INFO 12780 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 12000 (http) with context path ''
+2024-05-16 12:05:05.614  INFO 12780 --- [main] c.r.a.RuijingAssetsAdminApplication      : Started RuijingAssetsAdminApplication in 8.571 seconds (JVM running for 10.358)
+2024-05-16 12:05:25.797  INFO 12780 --- [http-nio-12000-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-05-16 12:05:25.798  INFO 12780 --- [http-nio-12000-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-05-16 12:05:25.801  INFO 12780 --- [http-nio-12000-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2024-05-16 12:06:27.723  INFO 12780 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closing ...
+2024-05-16 12:06:27.737  INFO 12780 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closed
+2024-05-16 12:09:21.038  INFO 2508 --- [main] c.r.a.RuijingAssetsAdminApplication      : Starting RuijingAssetsAdminApplication using Java 9.0.4 on DESKTOP-R0TIG6Q with PID 2508 (C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin\target\classes started by 15385 in C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin)
+2024-05-16 12:09:21.042  INFO 2508 --- [main] c.r.a.RuijingAssetsAdminApplication      : The following 1 profile is active: "prod"
+2024-05-16 12:09:22.002  INFO 2508 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-05-16 12:09:22.008  INFO 2508 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-05-16 12:09:22.095  INFO 2508 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 58 ms. Found 0 Redis repository interfaces.
+2024-05-16 12:09:23.324  INFO 2508 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 12000 (http)
+2024-05-16 12:09:23.342  INFO 2508 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-05-16 12:09:23.343  INFO 2508 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.71]
+2024-05-16 12:09:23.554  INFO 2508 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-05-16 12:09:23.555  INFO 2508 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2467 ms
+2024-05-16 12:09:24.085  INFO 2508 --- [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2024-05-16 12:09:24.556  INFO 2508 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2024-05-16 12:09:27.447  INFO 2508 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@63ad5fe7, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3e73f5e7, org.springframework.security.web.context.SecurityContextPersistenceFilter@67a3394c, org.springframework.security.web.header.HeaderWriterFilter@510203de, org.springframework.web.filter.CorsFilter@3404e5c4, com.ruijing.assets.filter.JwtAuthenticationTokenFilter@9b2dc56, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@5401c6a8, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@79631db0, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@495bc9e7, org.springframework.security.web.session.SessionManagementFilter@430212cb, org.springframework.security.web.access.ExceptionTranslationFilter@7455204c, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@33b2ba25]
+2024-05-16 12:09:27.543  INFO 2508 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 12000 (http) with context path ''
+2024-05-16 12:09:27.556  INFO 2508 --- [main] c.r.a.RuijingAssetsAdminApplication      : Started RuijingAssetsAdminApplication in 6.996 seconds (JVM running for 8.078)
+2024-05-16 12:09:34.291  INFO 2508 --- [http-nio-12000-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-05-16 12:09:34.292  INFO 2508 --- [http-nio-12000-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-05-16 12:09:34.295  INFO 2508 --- [http-nio-12000-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2024-05-16 12:10:26.827  WARN 2508 --- [http-nio-12000-exec-3] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: private com.ruijing.assets.entity.result.R com.ruijing.assets.controller.InvestorController.addInvestor(com.ruijing.assets.entity.dto.InvestorDTO) throws java.lang.Exception]
+2024-05-16 12:10:52.165  WARN 2508 --- [http-nio-12000-exec-1] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: private com.ruijing.assets.entity.result.R com.ruijing.assets.controller.InvestorController.addInvestor(com.ruijing.assets.entity.dto.InvestorDTO) throws java.lang.Exception]
+2024-05-16 12:11:05.193  WARN 2508 --- [http-nio-12000-exec-9] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: private com.ruijing.assets.entity.result.R com.ruijing.assets.controller.InvestorController.addInvestor(com.ruijing.assets.entity.dto.InvestorDTO) throws java.lang.Exception]
+2024-05-16 12:11:19.701  INFO 2508 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closing ...
+2024-05-16 12:11:19.710  INFO 2508 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closed
+2024-05-16 12:11:33.683  INFO 12016 --- [main] c.r.a.RuijingAssetsAdminApplication      : Starting RuijingAssetsAdminApplication using Java 9.0.4 on DESKTOP-R0TIG6Q with PID 12016 (C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin\target\classes started by 15385 in C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin)
+2024-05-16 12:11:33.685  INFO 12016 --- [main] c.r.a.RuijingAssetsAdminApplication      : The following 1 profile is active: "prod"
+2024-05-16 12:11:34.919  INFO 12016 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-05-16 12:11:34.924  INFO 12016 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-05-16 12:11:34.996  INFO 12016 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 44 ms. Found 0 Redis repository interfaces.
+2024-05-16 12:11:36.151  INFO 12016 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 12000 (http)
+2024-05-16 12:11:36.168  INFO 12016 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-05-16 12:11:36.169  INFO 12016 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.71]
+2024-05-16 12:11:36.316  INFO 12016 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-05-16 12:11:36.317  INFO 12016 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2574 ms
+2024-05-16 12:11:36.956  INFO 12016 --- [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2024-05-16 12:11:37.446  INFO 12016 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2024-05-16 12:11:40.850  INFO 12016 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@61648dd2, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3ac326c0, org.springframework.security.web.context.SecurityContextPersistenceFilter@7741507c, org.springframework.security.web.header.HeaderWriterFilter@7872e91f, org.springframework.web.filter.CorsFilter@524f5ea5, com.ruijing.assets.filter.JwtAuthenticationTokenFilter@221b77d7, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@38363e96, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1a4ae53d, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5e5d40ec, org.springframework.security.web.session.SessionManagementFilter@af94b0b, org.springframework.security.web.access.ExceptionTranslationFilter@1504b493, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@42d7e8bc]
+2024-05-16 12:11:41.043  INFO 12016 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 12000 (http) with context path ''
+2024-05-16 12:11:41.071  INFO 12016 --- [main] c.r.a.RuijingAssetsAdminApplication      : Started RuijingAssetsAdminApplication in 7.868 seconds (JVM running for 9.268)
+2024-05-16 12:11:45.259  INFO 12016 --- [http-nio-12000-exec-3] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-05-16 12:11:45.261  INFO 12016 --- [http-nio-12000-exec-3] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-05-16 12:11:45.263  INFO 12016 --- [http-nio-12000-exec-3] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2024-05-16 12:12:54.371  INFO 12016 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closing ...
+2024-05-16 12:12:54.377  INFO 12016 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closed
+2024-05-16 12:13:08.509  INFO 7324 --- [main] c.r.a.RuijingAssetsAdminApplication      : Starting RuijingAssetsAdminApplication using Java 9.0.4 on DESKTOP-R0TIG6Q with PID 7324 (C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin\target\classes started by 15385 in C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin)
+2024-05-16 12:13:08.511  INFO 7324 --- [main] c.r.a.RuijingAssetsAdminApplication      : The following 1 profile is active: "prod"
+2024-05-16 12:13:09.886  INFO 7324 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-05-16 12:13:09.891  INFO 7324 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-05-16 12:13:10.003  INFO 7324 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 81 ms. Found 0 Redis repository interfaces.
+2024-05-16 12:13:11.406  INFO 7324 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 12000 (http)
+2024-05-16 12:13:11.424  INFO 7324 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-05-16 12:13:11.425  INFO 7324 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.71]
+2024-05-16 12:13:11.575  INFO 7324 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-05-16 12:13:11.575  INFO 7324 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3012 ms
+2024-05-16 12:13:12.143  INFO 7324 --- [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2024-05-16 12:13:12.752  INFO 7324 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2024-05-16 12:13:17.552  INFO 7324 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@1e4d93f7, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3d1b43d8, org.springframework.security.web.context.SecurityContextPersistenceFilter@749c0669, org.springframework.security.web.header.HeaderWriterFilter@27575bcd, org.springframework.web.filter.CorsFilter@4264beb8, com.ruijing.assets.filter.JwtAuthenticationTokenFilter@799c8758, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@3fd6dfbc, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@7348e75e, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@9f52eb7, org.springframework.security.web.session.SessionManagementFilter@37a0fc8c, org.springframework.security.web.access.ExceptionTranslationFilter@20a25f66, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@61607ff0]
+2024-05-16 12:13:17.738  INFO 7324 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 12000 (http) with context path ''
+2024-05-16 12:13:17.757  INFO 7324 --- [main] c.r.a.RuijingAssetsAdminApplication      : Started RuijingAssetsAdminApplication in 9.817 seconds (JVM running for 11.131)
+2024-05-16 12:13:19.672  INFO 7324 --- [http-nio-12000-exec-3] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-05-16 12:13:19.672  INFO 7324 --- [http-nio-12000-exec-3] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-05-16 12:13:19.673  INFO 7324 --- [http-nio-12000-exec-3] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2024-05-16 12:13:28.434  WARN 7324 --- [http-nio-12000-exec-3] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: private com.ruijing.assets.entity.result.R com.ruijing.assets.controller.InvestorController.addInvestor(com.ruijing.assets.entity.dto.InvestorDTO) throws java.lang.Exception]
+2024-05-16 12:59:18.372  INFO 7324 --- [lettuce-nioEventLoop-4-1] io.lettuce.core.protocol.CommandHandler  : null Unexpected exception during request: java.io.IOException: 杩滅▼涓绘満寮鸿揩鍏抽棴浜嗕竴涓幇鏈夌殑杩炴帴銆�
 
 java.io.IOException: 杩滅▼涓绘満寮鸿揩鍏抽棴浜嗕竴涓幇鏈夌殑杩炴帴銆�
 	at java.base/sun.nio.ch.SocketDispatcher.read0(Native Method) ~[na:na]
@@ -43,126 +614,79 @@ java.io.IOException: 杩滅▼涓绘満寮鸿揩鍏抽棴浜嗕竴涓幇鏈�
 	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30) [netty-common-4.1.87.Final.jar:4.1.87.Final]
 	at java.base/java.lang.Thread.run(Thread.java:844) [na:na]
 
-2024-05-06 12:52:01.565  INFO 7724 --- [lettuce-eventExecutorLoop-1-6] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was /192.168.213.128:6379
-2024-05-06 12:52:11.705  WARN 7724 --- [lettuce-nioEventLoop-4-2] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
-2024-05-06 12:52:11.735  INFO 7724 --- [lettuce-eventExecutorLoop-1-8] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
-2024-05-06 12:52:21.755  WARN 7724 --- [lettuce-nioEventLoop-4-3] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
-2024-05-06 12:52:21.834  INFO 7724 --- [lettuce-eventExecutorLoop-1-2] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
-2024-05-06 12:52:31.846  WARN 7724 --- [lettuce-nioEventLoop-4-4] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
-2024-05-06 12:52:31.943  INFO 7724 --- [lettuce-eventExecutorLoop-1-4] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
-2024-05-06 12:52:41.957  WARN 7724 --- [lettuce-nioEventLoop-4-5] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
-2024-05-06 12:52:42.035  INFO 7724 --- [lettuce-eventExecutorLoop-1-6] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
-2024-05-06 12:52:52.054  WARN 7724 --- [lettuce-nioEventLoop-4-6] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
-2024-05-06 12:52:52.132  INFO 7724 --- [lettuce-eventExecutorLoop-1-8] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
-2024-05-06 12:53:02.151  WARN 7724 --- [lettuce-nioEventLoop-4-7] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
-2024-05-06 12:53:02.232  INFO 7724 --- [lettuce-eventExecutorLoop-1-2] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
-2024-05-06 12:53:12.241  WARN 7724 --- [lettuce-nioEventLoop-4-8] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
-2024-05-06 12:53:12.433  INFO 7724 --- [lettuce-eventExecutorLoop-1-4] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
-2024-05-06 12:53:22.443  WARN 7724 --- [lettuce-nioEventLoop-4-1] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
-2024-05-06 12:53:22.733  INFO 7724 --- [lettuce-eventExecutorLoop-1-6] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
-2024-05-06 12:53:32.740  WARN 7724 --- [lettuce-nioEventLoop-4-2] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
-2024-05-06 12:53:33.335  INFO 7724 --- [lettuce-eventExecutorLoop-1-8] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
-2024-05-06 12:53:43.363  WARN 7724 --- [lettuce-nioEventLoop-4-3] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
-2024-05-06 12:53:44.432  INFO 7724 --- [lettuce-eventExecutorLoop-1-2] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
-2024-05-06 12:53:54.437  WARN 7724 --- [lettuce-nioEventLoop-4-4] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
-2024-05-06 12:53:56.532  INFO 7724 --- [lettuce-eventExecutorLoop-1-4] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
-2024-05-06 12:54:06.542  WARN 7724 --- [lettuce-nioEventLoop-4-5] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
-2024-05-06 12:54:10.733  INFO 7724 --- [lettuce-eventExecutorLoop-1-6] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
-2024-05-06 12:54:20.756  WARN 7724 --- [lettuce-nioEventLoop-4-6] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
-2024-05-06 12:54:29.032  INFO 7724 --- [lettuce-eventExecutorLoop-1-8] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
-2024-05-06 12:54:39.059  WARN 7724 --- [lettuce-nioEventLoop-4-7] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
-2024-05-06 12:54:55.537  INFO 7724 --- [lettuce-eventExecutorLoop-1-2] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
-2024-05-06 12:55:05.570  WARN 7724 --- [lettuce-nioEventLoop-4-8] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
-2024-05-06 12:55:35.640  INFO 7724 --- [lettuce-eventExecutorLoop-1-4] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
-2024-05-06 12:55:45.646  WARN 7724 --- [lettuce-nioEventLoop-4-1] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
-2024-05-06 12:56:15.735  INFO 7724 --- [lettuce-eventExecutorLoop-1-6] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
-2024-05-06 12:56:25.744  WARN 7724 --- [lettuce-nioEventLoop-4-2] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
-2024-05-06 12:56:55.838  INFO 7724 --- [lettuce-eventExecutorLoop-1-8] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
-2024-05-06 12:57:05.855  WARN 7724 --- [lettuce-nioEventLoop-4-3] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
-2024-05-06 12:57:35.932  INFO 7724 --- [lettuce-eventExecutorLoop-1-2] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
-2024-05-06 12:57:45.949  WARN 7724 --- [lettuce-nioEventLoop-4-4] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
-2024-05-06 12:58:16.034  INFO 7724 --- [lettuce-eventExecutorLoop-1-4] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
-2024-05-06 12:58:26.055  WARN 7724 --- [lettuce-nioEventLoop-4-5] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
-2024-05-06 12:58:56.133  INFO 7724 --- [lettuce-eventExecutorLoop-1-6] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
-2024-05-06 12:59:06.140  WARN 7724 --- [lettuce-nioEventLoop-4-6] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
-2024-05-06 12:59:36.232  INFO 7724 --- [lettuce-eventExecutorLoop-1-8] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
-2024-05-06 12:59:46.248  WARN 7724 --- [lettuce-nioEventLoop-4-7] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
-2024-05-06 13:00:16.332  INFO 7724 --- [lettuce-eventExecutorLoop-1-2] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
-2024-05-06 13:00:26.358  WARN 7724 --- [lettuce-nioEventLoop-4-8] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
-2024-05-06 13:00:56.432  INFO 7724 --- [lettuce-eventExecutorLoop-1-4] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
-2024-05-06 13:01:06.460  WARN 7724 --- [lettuce-nioEventLoop-4-1] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
-2024-05-06 13:01:36.532  INFO 7724 --- [lettuce-eventExecutorLoop-1-6] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
-2024-05-06 13:01:46.539  WARN 7724 --- [lettuce-nioEventLoop-4-2] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
-2024-05-06 13:02:16.633  INFO 7724 --- [lettuce-eventExecutorLoop-1-8] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
-2024-05-06 13:02:26.663  WARN 7724 --- [lettuce-nioEventLoop-4-3] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
-2024-05-06 13:02:56.732  INFO 7724 --- [lettuce-eventExecutorLoop-1-2] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
-2024-05-06 13:03:06.762  WARN 7724 --- [lettuce-nioEventLoop-4-4] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
-2024-05-06 13:03:36.837  INFO 7724 --- [lettuce-eventExecutorLoop-1-4] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
-2024-05-06 13:03:46.849  WARN 7724 --- [lettuce-nioEventLoop-4-5] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
-2024-05-06 13:04:16.932  INFO 7724 --- [lettuce-eventExecutorLoop-1-6] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
-2024-05-06 13:04:26.939  WARN 7724 --- [lettuce-nioEventLoop-4-6] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
-2024-05-06 13:04:57.033  INFO 7724 --- [lettuce-eventExecutorLoop-1-8] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
-2024-05-06 13:05:07.043  WARN 7724 --- [lettuce-nioEventLoop-4-7] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
-2024-05-06 13:05:37.132  INFO 7724 --- [lettuce-eventExecutorLoop-1-2] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
-2024-05-06 13:05:47.149  WARN 7724 --- [lettuce-nioEventLoop-4-8] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
-2024-05-06 13:06:17.232  INFO 7724 --- [lettuce-eventExecutorLoop-1-4] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
-2024-05-06 13:06:27.259  WARN 7724 --- [lettuce-nioEventLoop-4-1] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
-2024-05-06 13:06:57.334  INFO 7724 --- [lettuce-eventExecutorLoop-1-6] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
-2024-05-06 13:07:07.350  WARN 7724 --- [lettuce-nioEventLoop-4-2] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
-2024-05-06 13:07:37.433  INFO 7724 --- [lettuce-eventExecutorLoop-1-8] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
-2024-05-06 13:07:47.448  WARN 7724 --- [lettuce-nioEventLoop-4-3] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
-2024-05-06 13:08:17.538  INFO 7724 --- [lettuce-eventExecutorLoop-1-2] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
-2024-05-06 13:08:27.552  WARN 7724 --- [lettuce-nioEventLoop-4-4] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
-2024-05-06 13:08:57.635  INFO 7724 --- [lettuce-eventExecutorLoop-1-4] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
-2024-05-06 13:09:07.658  WARN 7724 --- [lettuce-nioEventLoop-4-5] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
-2024-05-06 13:09:37.732  INFO 7724 --- [lettuce-eventExecutorLoop-1-6] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
-2024-05-06 13:09:47.745  WARN 7724 --- [lettuce-nioEventLoop-4-6] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
-2024-05-06 13:10:17.832  INFO 7724 --- [lettuce-eventExecutorLoop-1-8] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
-2024-05-06 13:10:27.836  WARN 7724 --- [lettuce-nioEventLoop-4-7] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
-2024-05-06 13:10:57.937  INFO 7724 --- [lettuce-eventExecutorLoop-1-2] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
-2024-05-06 13:11:07.968  WARN 7724 --- [lettuce-nioEventLoop-4-8] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
-2024-05-06 13:11:38.033  INFO 7724 --- [lettuce-eventExecutorLoop-1-4] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
-2024-05-06 13:11:48.040  WARN 7724 --- [lettuce-nioEventLoop-4-1] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
-2024-05-06 13:12:18.132  INFO 7724 --- [lettuce-eventExecutorLoop-1-6] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
-2024-05-06 13:12:28.148  WARN 7724 --- [lettuce-nioEventLoop-4-2] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
-2024-05-06 13:12:58.232  INFO 7724 --- [lettuce-eventExecutorLoop-1-8] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
-2024-05-06 13:13:08.254  WARN 7724 --- [lettuce-nioEventLoop-4-3] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
-2024-05-06 13:13:38.331  INFO 7724 --- [lettuce-eventExecutorLoop-1-2] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
-2024-05-06 13:13:48.336  WARN 7724 --- [lettuce-nioEventLoop-4-4] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
-2024-05-06 13:14:18.437  INFO 7724 --- [lettuce-eventExecutorLoop-1-4] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
-2024-05-06 13:14:28.441  WARN 7724 --- [lettuce-nioEventLoop-4-5] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
-2024-05-06 13:14:58.533  INFO 7724 --- [lettuce-eventExecutorLoop-1-6] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
-2024-05-06 13:15:08.543  WARN 7724 --- [lettuce-nioEventLoop-4-6] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
-2024-05-06 13:15:38.642  INFO 7724 --- [lettuce-eventExecutorLoop-1-8] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
-2024-05-06 13:15:48.653  WARN 7724 --- [lettuce-nioEventLoop-4-7] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
-2024-05-06 13:16:18.733  INFO 7724 --- [lettuce-eventExecutorLoop-1-2] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
-2024-05-06 13:16:28.756  WARN 7724 --- [lettuce-nioEventLoop-4-8] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
-2024-05-06 13:16:58.837  INFO 7724 --- [lettuce-eventExecutorLoop-1-4] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
-2024-05-06 13:17:08.841  WARN 7724 --- [lettuce-nioEventLoop-4-1] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
-2024-05-06 13:17:38.932  INFO 7724 --- [lettuce-eventExecutorLoop-1-6] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
-2024-05-06 13:17:48.947  WARN 7724 --- [lettuce-nioEventLoop-4-2] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
-2024-05-06 13:18:19.033  INFO 7724 --- [lettuce-eventExecutorLoop-1-8] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
-2024-05-06 13:18:19.080  INFO 7724 --- [lettuce-nioEventLoop-4-3] i.l.core.protocol.ReconnectionHandler    : Reconnected to 192.168.213.128:6379
-2024-05-06 16:35:23.166  INFO 7724 --- [lettuce-nioEventLoop-4-3] io.lettuce.core.protocol.CommandHandler  : null Unexpected exception during request: java.io.IOException: 杩滅▼涓绘満寮鸿揩鍏抽棴浜嗕竴涓幇鏈夌殑杩炴帴銆�
-
-java.io.IOException: 杩滅▼涓绘満寮鸿揩鍏抽棴浜嗕竴涓幇鏈夌殑杩炴帴銆�
-	at java.base/sun.nio.ch.SocketDispatcher.read0(Native Method) ~[na:na]
-	at java.base/sun.nio.ch.SocketDispatcher.read(SocketDispatcher.java:43) ~[na:na]
-	at java.base/sun.nio.ch.IOUtil.readIntoNativeBuffer(IOUtil.java:223) ~[na:na]
-	at java.base/sun.nio.ch.IOUtil.read(IOUtil.java:192) ~[na:na]
-	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:382) ~[na:na]
-	at io.netty.buffer.PooledByteBuf.setBytes(PooledByteBuf.java:259) ~[netty-buffer-4.1.87.Final.jar:4.1.87.Final]
-	at io.netty.buffer.AbstractByteBuf.writeBytes(AbstractByteBuf.java:1132) ~[netty-buffer-4.1.87.Final.jar:4.1.87.Final]
-	at io.netty.channel.socket.nio.NioSocketChannel.doReadBytes(NioSocketChannel.java:357) ~[netty-transport-4.1.87.Final.jar:4.1.87.Final]
-	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:151) ~[netty-transport-4.1.87.Final.jar:4.1.87.Final]
-	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:788) [netty-transport-4.1.87.Final.jar:4.1.87.Final]
-	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:724) [netty-transport-4.1.87.Final.jar:4.1.87.Final]
-	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:650) [netty-transport-4.1.87.Final.jar:4.1.87.Final]
-	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:562) [netty-transport-4.1.87.Final.jar:4.1.87.Final]
-	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:997) [netty-common-4.1.87.Final.jar:4.1.87.Final]
-	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74) [netty-common-4.1.87.Final.jar:4.1.87.Final]
-	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30) [netty-common-4.1.87.Final.jar:4.1.87.Final]
-	at java.base/java.lang.Thread.run(Thread.java:844) [na:na]
-
-2024-05-06 16:35:23.577  INFO 7724 --- [lettuce-eventExecutorLoop-1-1] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was /192.168.213.128:6379
-2024-05-06 16:35:29.665  INFO 7724 --- [lettuce-nioEventLoop-4-4] i.l.core.protocol.ReconnectionHandler    : Reconnected to 192.168.213.128:6379
+2024-05-16 12:59:18.446  INFO 7324 --- [lettuce-eventExecutorLoop-1-8] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was /192.168.213.128:6379
+2024-05-16 12:59:28.547  WARN 7324 --- [lettuce-nioEventLoop-4-2] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
+2024-05-16 12:59:28.638  INFO 7324 --- [lettuce-eventExecutorLoop-1-1] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
+2024-05-16 12:59:38.652  WARN 7324 --- [lettuce-nioEventLoop-4-3] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
+2024-05-16 12:59:38.736  INFO 7324 --- [lettuce-eventExecutorLoop-1-4] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
+2024-05-16 12:59:48.755  WARN 7324 --- [lettuce-nioEventLoop-4-4] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
+2024-05-16 12:59:48.836  INFO 7324 --- [lettuce-eventExecutorLoop-1-1] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
+2024-05-16 12:59:58.852  WARN 7324 --- [lettuce-nioEventLoop-4-5] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
+2024-05-16 12:59:58.944  INFO 7324 --- [lettuce-eventExecutorLoop-1-4] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
+2024-05-16 13:00:08.965  WARN 7324 --- [lettuce-nioEventLoop-4-6] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
+2024-05-16 13:00:09.042  INFO 7324 --- [lettuce-eventExecutorLoop-1-2] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
+2024-05-16 13:00:19.047  WARN 7324 --- [lettuce-nioEventLoop-4-7] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
+2024-05-16 13:00:19.140  INFO 7324 --- [lettuce-eventExecutorLoop-1-8] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
+2024-05-16 13:00:29.153  WARN 7324 --- [lettuce-nioEventLoop-4-8] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
+2024-05-16 13:00:29.340  INFO 7324 --- [lettuce-eventExecutorLoop-1-1] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
+2024-05-16 13:00:39.345  WARN 7324 --- [lettuce-nioEventLoop-4-1] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
+2024-05-16 13:00:39.637  INFO 7324 --- [lettuce-eventExecutorLoop-1-4] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
+2024-05-16 13:00:49.646  WARN 7324 --- [lettuce-nioEventLoop-4-2] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
+2024-05-16 13:00:50.239  INFO 7324 --- [lettuce-eventExecutorLoop-1-2] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
+2024-05-16 13:01:00.244  WARN 7324 --- [lettuce-nioEventLoop-4-3] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
+2024-05-16 13:01:01.337  INFO 7324 --- [lettuce-eventExecutorLoop-1-8] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
+2024-05-16 13:01:11.356  WARN 7324 --- [lettuce-nioEventLoop-4-4] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
+2024-05-16 13:01:13.437  INFO 7324 --- [lettuce-eventExecutorLoop-1-1] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
+2024-05-16 13:01:23.450  WARN 7324 --- [lettuce-nioEventLoop-4-5] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
+2024-05-16 13:01:27.651  INFO 7324 --- [lettuce-eventExecutorLoop-1-4] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
+2024-05-16 13:01:37.668  WARN 7324 --- [lettuce-nioEventLoop-4-6] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
+2024-05-16 13:01:45.938  INFO 7324 --- [lettuce-eventExecutorLoop-1-2] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
+2024-05-16 13:01:55.956  WARN 7324 --- [lettuce-nioEventLoop-4-7] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
+2024-05-16 13:02:12.440  INFO 7324 --- [lettuce-eventExecutorLoop-1-8] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
+2024-05-16 13:02:22.453  WARN 7324 --- [lettuce-nioEventLoop-4-8] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
+2024-05-16 13:02:52.539  INFO 7324 --- [lettuce-eventExecutorLoop-1-1] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
+2024-05-16 13:03:02.553  WARN 7324 --- [lettuce-nioEventLoop-4-1] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
+2024-05-16 13:03:32.639  INFO 7324 --- [lettuce-eventExecutorLoop-1-4] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
+2024-05-16 13:03:42.647  WARN 7324 --- [lettuce-nioEventLoop-4-2] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
+2024-05-16 13:04:12.736  INFO 7324 --- [lettuce-eventExecutorLoop-1-4] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
+2024-05-16 13:04:22.747  WARN 7324 --- [lettuce-nioEventLoop-4-3] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
+2024-05-16 13:04:52.836  INFO 7324 --- [lettuce-eventExecutorLoop-1-2] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
+2024-05-16 13:05:02.844  WARN 7324 --- [lettuce-nioEventLoop-4-4] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
+2024-05-16 13:05:32.937  INFO 7324 --- [lettuce-eventExecutorLoop-1-8] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
+2024-05-16 13:05:42.945  WARN 7324 --- [lettuce-nioEventLoop-4-5] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
+2024-05-16 13:06:13.041  INFO 7324 --- [lettuce-eventExecutorLoop-1-1] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
+2024-05-16 13:06:23.053  WARN 7324 --- [lettuce-nioEventLoop-4-6] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
+2024-05-16 13:06:53.143  INFO 7324 --- [lettuce-eventExecutorLoop-1-4] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
+2024-05-16 13:07:03.160  WARN 7324 --- [lettuce-nioEventLoop-4-7] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
+2024-05-16 13:07:33.235  INFO 7324 --- [lettuce-eventExecutorLoop-1-2] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
+2024-05-16 13:07:43.244  WARN 7324 --- [lettuce-nioEventLoop-4-8] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
+2024-05-16 13:08:13.341  INFO 7324 --- [lettuce-eventExecutorLoop-1-8] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
+2024-05-16 13:08:23.355  WARN 7324 --- [lettuce-nioEventLoop-4-1] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
+2024-05-16 13:08:53.436  INFO 7324 --- [lettuce-eventExecutorLoop-1-1] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
+2024-05-16 13:09:03.448  WARN 7324 --- [lettuce-nioEventLoop-4-2] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
+2024-05-16 13:09:33.535  INFO 7324 --- [lettuce-eventExecutorLoop-1-4] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
+2024-05-16 13:09:43.549  WARN 7324 --- [lettuce-nioEventLoop-4-3] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
+2024-05-16 13:10:13.637  INFO 7324 --- [lettuce-eventExecutorLoop-1-2] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
+2024-05-16 13:10:23.649  WARN 7324 --- [lettuce-nioEventLoop-4-4] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
+2024-05-16 13:10:53.736  INFO 7324 --- [lettuce-eventExecutorLoop-1-8] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
+2024-05-16 13:11:03.755  WARN 7324 --- [lettuce-nioEventLoop-4-5] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
+2024-05-16 13:11:33.840  INFO 7324 --- [lettuce-eventExecutorLoop-1-1] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
+2024-05-16 13:11:43.849  WARN 7324 --- [lettuce-nioEventLoop-4-6] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
+2024-05-16 13:12:13.940  INFO 7324 --- [lettuce-eventExecutorLoop-1-4] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
+2024-05-16 13:12:23.953  WARN 7324 --- [lettuce-nioEventLoop-4-7] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
+2024-05-16 13:12:54.043  INFO 7324 --- [lettuce-eventExecutorLoop-1-4] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
+2024-05-16 13:13:04.063  WARN 7324 --- [lettuce-nioEventLoop-4-8] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
+2024-05-16 13:13:34.136  INFO 7324 --- [lettuce-eventExecutorLoop-1-2] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
+2024-05-16 13:13:44.155  WARN 7324 --- [lettuce-nioEventLoop-4-1] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
+2024-05-16 13:14:14.235  INFO 7324 --- [lettuce-eventExecutorLoop-1-2] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
+2024-05-16 13:14:24.242  WARN 7324 --- [lettuce-nioEventLoop-4-2] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
+2024-05-16 13:14:54.346  INFO 7324 --- [lettuce-eventExecutorLoop-1-1] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
+2024-05-16 13:15:04.348  WARN 7324 --- [lettuce-nioEventLoop-4-3] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
+2024-05-16 13:15:34.435  INFO 7324 --- [lettuce-eventExecutorLoop-1-8] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
+2024-05-16 13:15:44.446  WARN 7324 --- [lettuce-nioEventLoop-4-4] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
+2024-05-16 13:16:14.536  INFO 7324 --- [lettuce-eventExecutorLoop-1-8] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
+2024-05-16 13:16:24.547  WARN 7324 --- [lettuce-nioEventLoop-4-5] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
+2024-05-16 13:16:54.640  INFO 7324 --- [lettuce-eventExecutorLoop-1-2] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
+2024-05-16 13:17:04.648  WARN 7324 --- [lettuce-nioEventLoop-4-6] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [192.168.213.128:6379]: connection timed out: /192.168.213.128:6379
+2024-05-16 13:17:34.737  INFO 7324 --- [lettuce-eventExecutorLoop-1-8] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was 192.168.213.128:6379
+2024-05-16 13:17:41.789  INFO 7324 --- [lettuce-nioEventLoop-4-7] i.l.core.protocol.ReconnectionHandler    : Reconnected to 192.168.213.128:6379
