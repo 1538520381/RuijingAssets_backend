@@ -5,6 +5,7 @@ import com.ruijing.assets.entity.vo.assetVO.Highlight;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -17,13 +18,49 @@ public class AssetAddDTO implements Serializable {
      */
     private Long id;
     /**
+     * 债务人名称
+     */
+    private String name;
+    /**
+     * 债务人属性
+     */
+    private Integer type;
+    /**
+     * 证件号码
+     */
+    private String certificateId;
+    /**
+     * 省份区域
+     */
+    private String region;
+    /**
+     * 行业
+     */
+    private String profession;
+    /**
+     * 规模
+     */
+    private Integer scale;
+    /**
+     * 经营状态
+     */
+    private Boolean OperatingState;
+    /**
+     * 债券本息
+     */
+    private BigDecimal bondPrincipalInterest;
+    /**
+     * 拟转让金额
+     */
+    private BigDecimal transferredAmount;
+    /**
      * 资产名字
      */
     private String assetName;
     /**
      * 债权本金
      */
-    private Long creditRightFare;
+    private BigDecimal creditRightFare;
     /**
      * 所属省份
      */
@@ -78,7 +115,7 @@ public class AssetAddDTO implements Serializable {
     /*
      * 债权种类[1, "金融债权" 2, "非金融债权"]
      */
-    private Integer AssetType;
+    private Integer assetType;
     /*
      * 债权担保人
      */
