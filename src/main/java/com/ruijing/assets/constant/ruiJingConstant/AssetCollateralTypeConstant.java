@@ -20,20 +20,22 @@ public class AssetCollateralTypeConstant {
 
     static {
         assetCollateralTypeMap = new HashMap<>();
-        assetCollateralTypeMap.put(1, "光地(工业)");
-        assetCollateralTypeMap.put(2, "光地(商业)");
-        assetCollateralTypeMap.put(3, "光地(商住)");
-        assetCollateralTypeMap.put(4, "工业房地产");
-        assetCollateralTypeMap.put(5, "住宅");
-        assetCollateralTypeMap.put(6, "商业");
-        assetCollateralTypeMap.put(7, "办公楼");
-        assetCollateralTypeMap.put(8, "在建工程");
-        assetCollateralTypeMap.put(9, "机器设备");
-        assetCollateralTypeMap.put(10, "林权");
-        assetCollateralTypeMap.put(11, "大宗物资");
-        assetCollateralTypeMap.put(12, "运输设备");
-        assetCollateralTypeMap.put(13, "生产用设");
-        assetCollateralTypeMap.put(14, "股权");
+        assetCollateralTypeMap.put(1, "土地");
+        assetCollateralTypeMap.put(2, "在建工程");
+        assetCollateralTypeMap.put(3, "厂房");
+        assetCollateralTypeMap.put(4, "酒店");
+        assetCollateralTypeMap.put(5, "商业综合体");
+        assetCollateralTypeMap.put(6, "办公楼");
+        assetCollateralTypeMap.put(7, "住宅");
+        assetCollateralTypeMap.put(8, "股权/股票");
+        assetCollateralTypeMap.put(9, "收益权");
+        assetCollateralTypeMap.put(10, "设备");
+        assetCollateralTypeMap.put(11, "矿权");
+        assetCollateralTypeMap.put(12, "林权");
+        assetCollateralTypeMap.put(13, "机动车");
+        assetCollateralTypeMap.put(14, "知识产权");
+        assetCollateralTypeMap.put(15, "无形资产");
+        assetCollateralTypeMap.put(16, "其他资产");
     }
 
 }

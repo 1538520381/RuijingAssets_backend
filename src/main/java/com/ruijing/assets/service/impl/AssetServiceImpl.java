@@ -468,4 +468,68 @@ public class AssetServiceImpl extends ServiceImpl<AssetDao, AssetEntity> impleme
         return originalUrl.substring(cutSubString.length());
     }
 
+    /*
+     * @author Persolute
+     * @version 1.0
+     * @description 债权匹配
+     * @email 1538520381@qq.com
+     * @date 2024/5/23 下午9:09
+     */
+    public List<AssetEntity> match(String intentionRegion, List<Integer> investmentType, List<Integer> investmentAmount) {
+        LambdaQueryWrapper<AssetEntity> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(AssetEntity::getRegion, intentionRegion);
+        lambdaQueryWrapper.and(wq -> {
+            boolean flag = false;
+            if (investmentAmount.contains(1)) {
+                wq.between(AssetEntity::getCreditRightFare, 0, 10000000);
+                flag = true;
+            }
+            if (investmentAmount.contains(2)) {
+                if (flag) {
+                    wq.or();
+                }
+                wq.between(AssetEntity::getCreditRightFare, 10000000, 30000000);
+                flag = true;
+            }
+            if (investmentAmount.contains(3)) {
+                if (flag) {
+                    wq.or();
+                }
+                wq.between(AssetEntity::getCreditRightFare, 30000000, 60000000);
+            }
+            if (investmentAmount.contains(4)) {
+                if (flag) {
+                    wq.or();
+                }
+                wq.between(AssetEntity::getCreditRightFare, 60000000, 100000000);
+            }
+            if (investmentAmount.contains(5)) {
+                if (flag) {
+                    wq.or();
+                }
+                wq.between(AssetEntity::getCreditRightFare, 100000000, 300000000);
+            }
+            if (investmentAmount.contains(6)) {
+                if (flag) {
+                    wq.or();
+                }
+                wq.gt(AssetEntity::getCreditRightFare, 300000000);
+            }
+        });
+        List<AssetEntity> list = list(lambdaQueryWrapper);
+        for (AssetEntity assetEntity : list) {
+            List<AssetCollateralEntity> assetCollateralEntities = assetCollateralService.list(new LambdaQueryWrapper<AssetCollateralEntity>().eq(AssetCollateralEntity::getAssetId, assetEntity.getId()));
+            boolean flag = false;
+            for (AssetCollateralEntity assetCollateralEntity : assetCollateralEntities) {
+                if (investmentType.contains(assetCollateralEntity.getCollateralType())) {
+                    flag = true;
+                    break;
+                }
+            }
+            if (!flag) {
+                list.remove(assetEntity);
+            }
+        }
+        return list;
+    }
 }

@@ -20,8 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 
-import java.util.Date;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -213,5 +212,25 @@ public class AssetController {
         return R.ok();
     }
 
-
+    /*
+     * @author Persolute
+     * @version 1.0
+     * @description 债权匹配
+     * @email 1538520381@qq.com
+     * @date 2024/5/23 下午9:21
+     */
+    @GetMapping("/match")
+    public R match(@RequestParam String intentionRegion, @RequestParam String investmentType, @RequestParam String investmentAmount) {
+        List<Integer> list1 = new ArrayList<>();
+        String[] split = investmentType.substring(1, investmentType.length() - 1).split(",");
+        for (String s : split) {
+            list1.add(Integer.parseInt(s));
+        }
+        List<Integer> list2 = new ArrayList<>();
+        split = investmentAmount.substring(1, investmentAmount.length() - 1).split(",");
+        for (String s : split) {
+            list2.add(Integer.parseInt(s));
+        }
+        return R.ok().put("data", assetService.match(intentionRegion, list1, list2));
+    }
 }

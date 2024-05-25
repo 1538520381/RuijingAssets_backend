@@ -7,6 +7,7 @@ import com.ruijing.assets.entity.pojo.AssetEntity;
 import com.ruijing.assets.entity.result.R;
 import com.ruijing.assets.util.using.PageUtils;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -70,5 +71,14 @@ public interface AssetService extends IService<AssetEntity> {
      * @date: 2023/2/21 22:19
      */
     void updateAsset(AssetUpdateDTO assetUpdateDTO);
+
+    /*
+     * @author Persolute
+     * @version 1.0
+     * @description 债权匹配
+     * @email 1538520381@qq.com
+     * @date 2024/5/23 下午9:20
+     */
+    List<AssetEntity> match(String intentionRegion, List<Integer> investmentType, List<Integer> investmentAmount);
 }
 

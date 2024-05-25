@@ -157,4 +157,33 @@ public class InvestorController {
         investorInvestmentAmountService.remove(new LambdaQueryWrapper<InvestorInvestmentAmountEntity>().eq(InvestorInvestmentAmountEntity::getInvestorId, investorId));
         return R.success("删除成功");
     }
+
+    /*
+     * @author Persolute
+     * @version 1.0
+     * @description 投资人匹配
+     * @email 1538520381@qq.com
+     * @date 2024/5/24 上午11:42
+     */
+    @GetMapping("/match/{assetId}")
+    public R match(@PathVariable Long assetId) {
+        List<InvestorEntity> investorEntityList = investorService.match(assetId);
+        List<InvestorDTO> investorDTOList = investorEntityList.stream().map(investorEntity -> {
+            InvestorDTO investorDTO = new InvestorDTO();
+            BeanUtils.copyProperties(investorEntity, investorDTO);
+
+            List<Long> investorInvestmentAmountId = investorInvestmentAmountService.list(new LambdaQueryWrapper<InvestorInvestmentAmountEntity>().eq(InvestorInvestmentAmountEntity::getInvestorId, investorEntity.getId())).stream().map(InvestorInvestmentAmountEntity::getInvestmentAmountId).collect(Collectors.toList());
+            List<Long> investorInvestmentTypeId = investorInvestmentTypeService.list(new LambdaQueryWrapper<InvestorInvestmentTypeEntity>().eq(InvestorInvestmentTypeEntity::getInvestorId, investorEntity.getId())).stream().map(InvestorInvestmentTypeEntity::getInvestmentTypeId).collect(Collectors.toList());
+            List<Long> investorAssetOperationModelId = investorAssetOperationModelService.list(new LambdaQueryWrapper<InvestorAssetOperationModelEntity>().eq(InvestorAssetOperationModelEntity::getInvestorId, investorEntity.getId())).stream().map(InvestorAssetOperationModelEntity::getAssetOperationModelId).collect(Collectors.toList());
+            List<Long> investorValueAddedServiceId = investorValueAddedServiceService.list(new LambdaQueryWrapper<InvestorValueAddedServiceEntity>().eq(InvestorValueAddedServiceEntity::getInvestorId, investorEntity.getId())).stream().map(InvestorValueAddedServiceEntity::getValueAddedServiceId).collect(Collectors.toList());
+
+            investorDTO.setInvestmentAmount(investorInvestmentAmountId);
+            investorDTO.setInvestmentType(investorInvestmentTypeId);
+            investorDTO.setAssetOperationModel(investorAssetOperationModelId);
+            investorDTO.setValueAddedService(investorValueAddedServiceId);
+
+            return investorDTO;
+        }).collect(Collectors.toList());
+        return R.success("获取成功").put("investor", investorDTOList);
+    }
 }
