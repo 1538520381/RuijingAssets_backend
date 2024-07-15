@@ -44,11 +44,12 @@ spring:
       #      url: jdbc:mysql://175.178.189.129:3306/ruijing?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8
       #      password: dsjaiodjasdsajdsadj213j14i1j451j423k5j1345jn12k5j,
       #      ruijingPassword
-      password: dwjioajdadjsaij23813123jdsiajdsa321,
-      username: root
-      #      ruijingUrl
-      url: jdbc:mysql://10.10.61.40:3306/ruijing?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8
-    #      password: root
+      password: mYsQl9572580729
+      username: Persolute
+      url: jdbc:mysql://192.168.213.128:3306/ruijing_assets_admin?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8
+#      password: Doit#2024
+#      username: root
+#      url: jdbc:mysql://localhost:3306/ruijing_assets_admin?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8
 
 
 

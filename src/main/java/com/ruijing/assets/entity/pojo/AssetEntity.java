@@ -1,11 +1,14 @@
 package com.ruijing.assets.entity.pojo;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -25,6 +28,8 @@ public class AssetEntity implements Serializable {
      */
     @TableId
     private Long id;
+
+    private String operator;
     /**
      * 债务人名称
      */
@@ -124,4 +129,12 @@ public class AssetEntity implements Serializable {
      * 资产排序顺序
      */
     private Integer position;
+
+    /**
+     * 创建用户
+     */
+    private Long createUser;
+
+    @TableField(fill = FieldFill.INSERT)
+    private LocalDateTime createTime;
 }

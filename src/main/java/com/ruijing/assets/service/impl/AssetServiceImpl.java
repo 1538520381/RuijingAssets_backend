@@ -2,10 +2,12 @@ package com.ruijing.assets.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ruijing.assets.constant.ruiJingConstant.*;
 import com.ruijing.assets.dao.AssetDao;
 import com.ruijing.assets.entity.dto.AssetAddDTO;
+import com.ruijing.assets.entity.dto.AssetDto;
 import com.ruijing.assets.entity.dto.AssetUpdateDTO;
 import com.ruijing.assets.entity.pojo.*;
 import com.ruijing.assets.entity.result.R;
@@ -66,6 +68,8 @@ public class AssetServiceImpl extends ServiceImpl<AssetDao, AssetEntity> impleme
     @Lazy
     @Autowired
     private AssetInquiryService assetInquiryService;
+    @Autowired
+    private SysUserServiceImpl sysUserService;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -83,11 +87,62 @@ public class AssetServiceImpl extends ServiceImpl<AssetDao, AssetEntity> impleme
                 assetEntityLambdaQueryWrapper.like(AssetEntity::getAssetName, key);
             }
         }
+        String userId = params.get("userId").toString();
+        SysUserEntity sysUserEntity = sysUserService.getById(userId);
+        if (!sysUserEntity.getAdmin()) {
+            assetEntityLambdaQueryWrapper.eq(AssetEntity::getCreateUser, userId);
+        }
         IPage<AssetEntity> page = this.page(
                 new Query<AssetEntity>().getPage(params),
                 assetEntityLambdaQueryWrapper
         );
-        return new PageUtils(page);
+
+        IPage<AssetDto> page1 = new Page<>();
+        BeanUtils.copyProperties(page, page1, "records");
+        List<AssetEntity> assetEntities = page.getRecords();
+        List<AssetDto> assetDtos = assetEntities.stream().map(assetEntity -> {
+            AssetDto assetDto = new AssetDto();
+            BeanUtils.copyProperties(assetEntity, assetDto);
+            List<AssetCollateralEntity> assetCollateralEntities = assetCollateralService.list(new LambdaQueryWrapper<AssetCollateralEntity>().eq(AssetCollateralEntity::getAssetId, assetEntity.getId()));
+            List<AssetGuaranteeEntity> assetGuaranteeEntities = assetGuaranteeService.list(new LambdaQueryWrapper<AssetGuaranteeEntity>().eq(AssetGuaranteeEntity::getAssetId, assetEntity.getId()));
+            List<AssetHighlight> assetHighlights = assetHighlightService.list(new LambdaQueryWrapper<AssetHighlight>().eq(AssetHighlight::getAssetId, assetEntity.getId()));
+            assetDto.setAssetCollateralEntities(assetCollateralEntities);
+            assetDto.setAssetGuaranteeEntities(assetGuaranteeEntities);
+            assetDto.setAssetHighlights(assetHighlights);
+            SysUserEntity sysUserEntity1 = sysUserService.getById(assetEntity.getCreateUser());
+            assetDto.setCreateUserName(sysUserEntity1.getName());
+            return assetDto;
+        }).collect(Collectors.toList());
+        page1.setRecords(assetDtos);
+        return new PageUtils(page1);
+    }
+
+    @Override
+    public List<AssetDto> listByUserId(Long userId) {
+        SysUserEntity sysUserEntity = sysUserService.getById(userId);
+        List<AssetEntity> assetEntities;
+        if (sysUserEntity.getAdmin()) {
+            assetEntities = list();
+        } else {
+            LambdaQueryWrapper<AssetEntity> assetEntityLambdaQueryWrapper = new LambdaQueryWrapper<>();
+            assetEntityLambdaQueryWrapper.eq(AssetEntity::getCreateUser, userId);
+            assetEntities = list(assetEntityLambdaQueryWrapper);
+        }
+        List<AssetDto> assetDtos = new ArrayList<>();
+        for (AssetEntity assetEntity : assetEntities) {
+            AssetDto assetDto = new AssetDto();
+            BeanUtils.copyProperties(assetEntity, assetDto);
+            List<AssetCollateralEntity> assetCollateralEntities = assetCollateralService.list(
+                    new LambdaQueryWrapper<AssetCollateralEntity>().eq(AssetCollateralEntity::getAssetId, assetEntity.getId())
+            );
+            List<AssetGuaranteeEntity> assetGuaranteeEntities = assetGuaranteeService.list(new LambdaQueryWrapper<AssetGuaranteeEntity>().eq(AssetGuaranteeEntity::getAssetId, assetEntity.getId()));
+            List<AssetHighlight> assetHighlights = assetHighlightService.list(new LambdaQueryWrapper<AssetHighlight>().eq(AssetHighlight::getAssetId, assetEntity.getId()));
+            assetDto.setAssetCollateralEntities(assetCollateralEntities);
+            assetDto.setAssetGuaranteeEntities(assetGuaranteeEntities);
+            assetDto.setAssetHighlights(assetHighlights);
+            assetDtos.add(assetDto);
+        }
+        return assetDtos;
     }
 
 
@@ -475,9 +530,9 @@ public class AssetServiceImpl extends ServiceImpl<AssetDao, AssetEntity> impleme
      * @email 1538520381@qq.com
      * @date 2024/5/23 下午9:09
      */
-    public List<AssetEntity> match(String intentionRegion, List<Integer> investmentType, List<Integer> investmentAmount) {
+    public List<AssetDto> match(List<String> intentionRegion, List<Integer> investmentType, List<Integer> investmentAmount) {
         LambdaQueryWrapper<AssetEntity> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.eq(AssetEntity::getRegion, intentionRegion);
+        lambdaQueryWrapper.in(AssetEntity::getRegion, intentionRegion);
         lambdaQueryWrapper.and(wq -> {
             boolean flag = false;
             if (investmentAmount.contains(1)) {
@@ -517,8 +572,8 @@ public class AssetServiceImpl extends ServiceImpl<AssetDao, AssetEntity> impleme
             }
         });
         List<AssetEntity> list = list(lambdaQueryWrapper);
-        for (AssetEntity assetEntity : list) {
-            List<AssetCollateralEntity> assetCollateralEntities = assetCollateralService.list(new LambdaQueryWrapper<AssetCollateralEntity>().eq(AssetCollateralEntity::getAssetId, assetEntity.getId()));
+        for (int i = 0; i < list.size(); i++) {
+            List<AssetCollateralEntity> assetCollateralEntities = assetCollateralService.list(new LambdaQueryWrapper<AssetCollateralEntity>().eq(AssetCollateralEntity::getAssetId, list.get(i).getId()));
             boolean flag = false;
             for (AssetCollateralEntity assetCollateralEntity : assetCollateralEntities) {
                 if (investmentType.contains(assetCollateralEntity.getCollateralType())) {
@@ -527,9 +582,22 @@ public class AssetServiceImpl extends ServiceImpl<AssetDao, AssetEntity> impleme
                 }
             }
             if (!flag) {
-                list.remove(assetEntity);
+                list.remove(list.get(i));
+                i--;
             }
         }
-        return list;
+        List<AssetDto> list1 = new ArrayList<>();
+        for (AssetEntity assetEntity : list) {
+            AssetDto assetDto = new AssetDto();
+            BeanUtils.copyProperties(assetEntity, assetDto);
+            List<AssetCollateralEntity> assetCollateralEntities = assetCollateralService.list(new LambdaQueryWrapper<AssetCollateralEntity>().eq(AssetCollateralEntity::getAssetId, assetEntity.getId()));
+            List<AssetGuaranteeEntity> assetGuaranteeEntities = assetGuaranteeService.list(new LambdaQueryWrapper<AssetGuaranteeEntity>().eq(AssetGuaranteeEntity::getAssetId, assetEntity.getId()));
+            List<AssetHighlight> assetHighlights = assetHighlightService.list(new LambdaQueryWrapper<AssetHighlight>().eq(AssetHighlight::getAssetId, assetEntity.getId()));
+            assetDto.setAssetCollateralEntities(assetCollateralEntities);
+            assetDto.setAssetGuaranteeEntities(assetGuaranteeEntities);
+            assetDto.setAssetHighlights(assetHighlights);
+            list1.add(assetDto);
+        }
+        return list1;
     }
 }

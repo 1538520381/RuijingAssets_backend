@@ -1,12 +1,19 @@
 package com.ruijing.assets.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.ruijing.assets.annotation.SysLog;
 import com.ruijing.assets.entity.dto.UpdatePasswordDTO;
 import com.ruijing.assets.entity.dto.UserDTO;
+import com.ruijing.assets.entity.pojo.AssetEntity;
+import com.ruijing.assets.entity.pojo.InvestorEntity;
 import com.ruijing.assets.entity.pojo.SysUserEntity;
+import com.ruijing.assets.entity.pojo.TraceEntity;
 import com.ruijing.assets.entity.result.R;
 import com.ruijing.assets.entity.vo.userVO.UserVo;
+import com.ruijing.assets.service.AssetService;
+import com.ruijing.assets.service.InvestorService;
 import com.ruijing.assets.service.SysUserService;
+import com.ruijing.assets.service.TraceService;
 import com.ruijing.assets.util.using.PageUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 
@@ -31,6 +39,12 @@ public class SysUserController {
     private SysUserService sysUserService;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private InvestorService investorService;
+    @Autowired
+    private AssetService assetService;
+    @Autowired
+    private TraceService traceService;
 
     /*
      * @author: K0n9D1KuA
@@ -115,6 +129,21 @@ public class SysUserController {
     @PostMapping("/removeUser/{userId}")
     @SysLog(operationType = 2, operationName = "删除用户")
     public R removeUser(@PathVariable Long userId) {
+        List<InvestorEntity> list = investorService.list(new LambdaQueryWrapper<InvestorEntity>().eq(InvestorEntity::getCreateUser, userId));
+        if (!list.isEmpty()) {
+            return R.error("该用户导入过投资人，无法删除");
+        } else {
+            List<AssetEntity> list1 = assetService.list(new LambdaQueryWrapper<AssetEntity>().eq(AssetEntity::getCreateUser, userId));
+            if(!list1.isEmpty()) {
+                return R.error("该用户导入过债权，无法删除");
+            }else {
+                List<TraceEntity> list2 = traceService.list(new LambdaQueryWrapper<TraceEntity>().eq(TraceEntity::getUserId,userId));
+                if(!list1.isEmpty()) {
+                    return R.error("该用户进行过追踪操作，无法删除");
+                }
+            }
+        }
+
         sysUserService.removeUser(userId);
         return R.ok();
     }

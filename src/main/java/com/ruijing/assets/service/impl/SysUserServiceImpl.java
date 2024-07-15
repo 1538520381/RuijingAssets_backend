@@ -74,8 +74,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserEntity> i
                     UserInfoVo userInfoVo = new UserInfoVo();
                     BeanUtils.copyProperties(sysUserEntity, userInfoVo);
                     //查询对应角色列表
-                    List<String> userRoleName = this.getUserRoleName(userInfoVo.getUserName());
-                    userInfoVo.setRoleNames(userRoleName);
+//                    List<String> userRoleName = this.getUserRoleName(userInfoVo.getUserName());
+//                    userInfoVo.setRoleNames(userRoleName);
                     return userInfoVo;
                 })
                 .collect(Collectors.toList());

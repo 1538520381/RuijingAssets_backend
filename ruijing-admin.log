@@ -1,80 +1,24 @@
-2024-05-25 00:02:04.539  INFO 6672 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closing ...
-2024-05-25 00:02:04.555  INFO 6672 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closed
-2024-05-25 13:10:34.018  INFO 14684 --- [main] c.r.a.RuijingAssetsAdminApplication      : Starting RuijingAssetsAdminApplication using Java 9.0.4 on DESKTOP-R0TIG6Q with PID 14684 (C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin\target\classes started by 15385 in C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin)
-2024-05-25 13:10:34.020  INFO 14684 --- [main] c.r.a.RuijingAssetsAdminApplication      : The following 1 profile is active: "prod"
-2024-05-25 13:10:34.932  INFO 14684 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
-2024-05-25 13:10:34.934  INFO 14684 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2024-05-25 13:10:34.976  INFO 14684 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 27 ms. Found 0 Redis repository interfaces.
-2024-05-25 13:10:35.673  INFO 14684 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 12000 (http)
-2024-05-25 13:10:35.683  INFO 14684 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2024-05-25 13:10:35.683  INFO 14684 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.71]
-2024-05-25 13:10:35.790  INFO 14684 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2024-05-25 13:10:35.790  INFO 14684 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1724 ms
-2024-05-25 13:10:36.237  INFO 14684 --- [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
-2024-05-25 13:10:36.576  INFO 14684 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
-2024-05-25 13:10:38.754  INFO 14684 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@73fe7483, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@11577ab8, org.springframework.security.web.context.SecurityContextPersistenceFilter@767cc126, org.springframework.security.web.header.HeaderWriterFilter@4088702d, org.springframework.web.filter.CorsFilter@1cba0321, com.ruijing.assets.filter.JwtAuthenticationTokenFilter@1002d192, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@19540247, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@3fcc7f5c, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5513a46b, org.springframework.security.web.session.SessionManagementFilter@e3275d3, org.springframework.security.web.access.ExceptionTranslationFilter@22b10124, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@230d013b]
-2024-05-25 13:10:38.835  INFO 14684 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 12000 (http) with context path ''
-2024-05-25 13:10:38.845  INFO 14684 --- [main] c.r.a.RuijingAssetsAdminApplication      : Started RuijingAssetsAdminApplication in 5.752 seconds (JVM running for 7.624)
-2024-05-25 13:11:18.889  INFO 14684 --- [http-nio-12000-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2024-05-25 13:11:18.890  INFO 14684 --- [http-nio-12000-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2024-05-25 13:11:18.891  INFO 14684 --- [http-nio-12000-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
-2024-05-25 13:11:19.217  INFO 14684 --- [http-nio-12000-exec-2] com.ruijing.assets.aspect.SysLogAspect   : =======End=======
+2024-07-15 20:26:34.189  INFO 16592 --- [main] c.r.a.RuijingAssetsAdminApplication      : Starting RuijingAssetsAdminApplication using Java 1.8.0_321 on DESKTOP-R0TIG6Q with PID 16592 (C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin\target\classes started by 15385 in C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin)
+2024-07-15 20:26:34.193  INFO 16592 --- [main] c.r.a.RuijingAssetsAdminApplication      : The following 1 profile is active: "prod"
+2024-07-15 20:26:35.181  INFO 16592 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-07-15 20:26:35.184  INFO 16592 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-07-15 20:26:35.239  INFO 16592 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 36 ms. Found 0 Redis repository interfaces.
+2024-07-15 20:26:35.967  INFO 16592 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 12000 (http)
+2024-07-15 20:26:36.010  INFO 16592 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-07-15 20:26:36.011  INFO 16592 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.71]
+2024-07-15 20:26:36.264  INFO 16592 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-07-15 20:26:36.264  INFO 16592 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2021 ms
+2024-07-15 20:26:36.825  INFO 16592 --- [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2024-07-15 20:26:37.236  INFO 16592 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2024-07-15 20:26:39.910  INFO 16592 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@3605ab16, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@30cb223b, org.springframework.security.web.context.SecurityContextPersistenceFilter@2157889c, org.springframework.security.web.header.HeaderWriterFilter@63636de0, org.springframework.web.filter.CorsFilter@61b60600, com.ruijing.assets.filter.JwtAuthenticationTokenFilter@37e7c4cc, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@63b58ff4, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@66226ab, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@24d0c6a4, org.springframework.security.web.session.SessionManagementFilter@4e614370, org.springframework.security.web.access.ExceptionTranslationFilter@41581c3f, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@1f6d7e7c]
+2024-07-15 20:26:39.997  INFO 16592 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 12000 (http) with context path ''
+2024-07-15 20:26:40.006  INFO 16592 --- [main] c.r.a.RuijingAssetsAdminApplication      : Started RuijingAssetsAdminApplication in 6.409 seconds (JVM running for 9.736)
+2024-07-15 20:27:07.108  INFO 16592 --- [http-nio-12000-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-07-15 20:27:07.108  INFO 16592 --- [http-nio-12000-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-07-15 20:27:07.110  INFO 16592 --- [http-nio-12000-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2024-07-15 20:27:09.652  INFO 16592 --- [http-nio-12000-exec-1] com.ruijing.assets.aspect.SysLogAspect   : 来自于ip: 0:0:0:0:0:0:0:1 的 root 用户于: Mon Jul 15 20:27:07 CST 2024 时刻进行了: 登录 操作
+2024-07-15 20:27:09.656  INFO 16592 --- [http-nio-12000-exec-1] com.ruijing.assets.aspect.SysLogAspect   : 主线程结束了.............
+2024-07-15 20:27:09.657  INFO 16592 --- [http-nio-12000-exec-1] com.ruijing.assets.aspect.SysLogAspect   : =======End=======
 
-2024-05-25 13:11:19.220 ERROR 14684 --- [http-nio-12000-exec-2] c.r.a.e.RuiJingExceptionHandler          : 出现异常，异常信息 ：用户名不存在！ , 异常状态码 ：100012
-2024-05-25 13:11:47.497  INFO 14684 --- [http-nio-12000-exec-5] com.ruijing.assets.aspect.SysLogAspect   : 来自于ip: 0:0:0:0:0:0:0:1 的 Persolute 用户于: Sat May 25 13:11:46 CST 2024 时刻进行了: 登录 操作
-2024-05-25 13:11:47.500  INFO 14684 --- [http-nio-12000-exec-5] com.ruijing.assets.aspect.SysLogAspect   : 主线程结束了.............
-2024-05-25 13:11:47.500  INFO 14684 --- [http-nio-12000-exec-5] com.ruijing.assets.aspect.SysLogAspect   : =======End=======
-
-2024-05-25 13:11:47.505  INFO 14684 --- [task-1] c.r.a.service.impl.SystemLogServiceImpl  : 副线程开始啦-----------
-2024-05-25 13:11:47.551  INFO 14684 --- [task-1] c.r.a.service.impl.SystemLogServiceImpl  : 副线程结束啦-----------
-2024-05-25 13:12:16.850  INFO 14684 --- [http-nio-12000-exec-6] com.ruijing.assets.aspect.SysLogAspect   : 来自于ip: 0:0:0:0:0:0:0:1 的 Persolute 用户于: Sat May 25 13:12:16 CST 2024 时刻进行了: 新增债权 操作
-2024-05-25 13:12:16.850  INFO 14684 --- [http-nio-12000-exec-8] com.ruijing.assets.aspect.SysLogAspect   : 来自于ip: 0:0:0:0:0:0:0:1 的 Persolute 用户于: Sat May 25 13:12:16 CST 2024 时刻进行了: 新增债权 操作
-2024-05-25 13:12:16.850  INFO 14684 --- [http-nio-12000-exec-6] com.ruijing.assets.aspect.SysLogAspect   : 主线程结束了.............
-2024-05-25 13:12:16.850  INFO 14684 --- [http-nio-12000-exec-8] com.ruijing.assets.aspect.SysLogAspect   : 主线程结束了.............
-2024-05-25 13:12:16.850  INFO 14684 --- [http-nio-12000-exec-6] com.ruijing.assets.aspect.SysLogAspect   : =======End=======
-
-2024-05-25 13:12:16.850  INFO 14684 --- [http-nio-12000-exec-8] com.ruijing.assets.aspect.SysLogAspect   : =======End=======
-
-2024-05-25 13:12:16.850  INFO 14684 --- [task-2] c.r.a.service.impl.SystemLogServiceImpl  : 副线程开始啦-----------
-2024-05-25 13:12:16.850  INFO 14684 --- [task-3] c.r.a.service.impl.SystemLogServiceImpl  : 副线程开始啦-----------
-2024-05-25 13:12:16.855  INFO 14684 --- [task-3] c.r.a.service.impl.SystemLogServiceImpl  : 副线程结束啦-----------
-2024-05-25 13:12:16.855  INFO 14684 --- [task-2] c.r.a.service.impl.SystemLogServiceImpl  : 副线程结束啦-----------
-2024-05-25 13:14:05.993  INFO 14684 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closing ...
-2024-05-25 13:14:05.997  INFO 14684 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closed
-2024-05-25 13:14:12.684  INFO 3776 --- [main] c.r.a.RuijingAssetsAdminApplication      : Starting RuijingAssetsAdminApplication using Java 9.0.4 on DESKTOP-R0TIG6Q with PID 3776 (C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin\target\classes started by 15385 in C:\Users\15385\Desktop\代码\ruijing-assets-admin\ruijing-assets-admin)
-2024-05-25 13:14:12.686  INFO 3776 --- [main] c.r.a.RuijingAssetsAdminApplication      : The following 1 profile is active: "prod"
-2024-05-25 13:14:13.394  INFO 3776 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
-2024-05-25 13:14:13.395  INFO 3776 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2024-05-25 13:14:13.450  INFO 3776 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 27 ms. Found 0 Redis repository interfaces.
-2024-05-25 13:14:14.036  INFO 3776 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 12000 (http)
-2024-05-25 13:14:14.044  INFO 3776 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2024-05-25 13:14:14.044  INFO 3776 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.71]
-2024-05-25 13:14:14.144  INFO 3776 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2024-05-25 13:14:14.144  INFO 3776 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1419 ms
-2024-05-25 13:14:14.490  INFO 3776 --- [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
-2024-05-25 13:14:14.822  INFO 3776 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
-2024-05-25 13:14:17.314  INFO 3776 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@6f7241c2, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@32245b66, org.springframework.security.web.context.SecurityContextPersistenceFilter@4eace42b, org.springframework.security.web.header.HeaderWriterFilter@7ee3a2ed, org.springframework.web.filter.CorsFilter@1d1bf7bf, com.ruijing.assets.filter.JwtAuthenticationTokenFilter@1c68d0db, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@375ff309, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@531bec12, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@19355a56, org.springframework.security.web.session.SessionManagementFilter@49cd08f9, org.springframework.security.web.access.ExceptionTranslationFilter@4769537a, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@5667dd90]
-2024-05-25 13:14:17.406  INFO 3776 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 12000 (http) with context path ''
-2024-05-25 13:14:17.417  INFO 3776 --- [main] c.r.a.RuijingAssetsAdminApplication      : Started RuijingAssetsAdminApplication in 5.141 seconds (JVM running for 6.094)
-2024-05-25 13:15:10.451  INFO 3776 --- [http-nio-12000-exec-4] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2024-05-25 13:15:10.452  INFO 3776 --- [http-nio-12000-exec-4] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2024-05-25 13:15:10.453  INFO 3776 --- [http-nio-12000-exec-4] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
-2024-05-25 13:15:27.741  WARN 3776 --- [http-nio-12000-exec-2] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Failed to convert value of type 'java.lang.String' to required type 'java.lang.Long'; nested exception is java.lang.NumberFormatException: For input string: "undefined"]
-2024-05-25 13:32:52.205  INFO 3776 --- [http-nio-12000-exec-3] com.ruijing.assets.aspect.SysLogAspect   : 来自于ip: 0:0:0:0:0:0:0:1 的 Persolute 用户于: Sat May 25 13:32:52 CST 2024 时刻进行了: 新增债权 操作
-2024-05-25 13:32:52.205  INFO 3776 --- [http-nio-12000-exec-1] com.ruijing.assets.aspect.SysLogAspect   : 来自于ip: 0:0:0:0:0:0:0:1 的 Persolute 用户于: Sat May 25 13:32:52 CST 2024 时刻进行了: 新增债权 操作
-2024-05-25 13:32:52.205  INFO 3776 --- [http-nio-12000-exec-4] com.ruijing.assets.aspect.SysLogAspect   : 来自于ip: 0:0:0:0:0:0:0:1 的 Persolute 用户于: Sat May 25 13:32:52 CST 2024 时刻进行了: 新增债权 操作
-2024-05-25 13:32:52.208  INFO 3776 --- [http-nio-12000-exec-3] com.ruijing.assets.aspect.SysLogAspect   : 主线程结束了.............
-2024-05-25 13:32:52.208  INFO 3776 --- [http-nio-12000-exec-4] com.ruijing.assets.aspect.SysLogAspect   : 主线程结束了.............
-2024-05-25 13:32:52.208  INFO 3776 --- [http-nio-12000-exec-1] com.ruijing.assets.aspect.SysLogAspect   : 主线程结束了.............
-2024-05-25 13:32:52.208  INFO 3776 --- [http-nio-12000-exec-3] com.ruijing.assets.aspect.SysLogAspect   : =======End=======
-
-2024-05-25 13:32:52.208  INFO 3776 --- [http-nio-12000-exec-4] com.ruijing.assets.aspect.SysLogAspect   : =======End=======
-
-2024-05-25 13:32:52.208  INFO 3776 --- [http-nio-12000-exec-1] com.ruijing.assets.aspect.SysLogAspect   : =======End=======
-
-2024-05-25 13:32:52.212  INFO 3776 --- [task-1] c.r.a.service.impl.SystemLogServiceImpl  : 副线程开始啦-----------
-2024-05-25 13:32:52.212  INFO 3776 --- [task-2] c.r.a.service.impl.SystemLogServiceImpl  : 副线程开始啦-----------
-2024-05-25 13:32:52.212  INFO 3776 --- [task-3] c.r.a.service.impl.SystemLogServiceImpl  : 副线程开始啦-----------
-2024-05-25 13:32:52.219  INFO 3776 --- [task-1] c.r.a.service.impl.SystemLogServiceImpl  : 副线程结束啦-----------
-2024-05-25 13:32:52.220  INFO 3776 --- [task-3] c.r.a.service.impl.SystemLogServiceImpl  : 副线程结束啦-----------
-2024-05-25 13:32:52.221  INFO 3776 --- [task-2] c.r.a.service.impl.SystemLogServiceImpl  : 副线程结束啦-----------
+2024-07-15 20:27:09.666  INFO 16592 --- [task-1] c.r.a.service.impl.SystemLogServiceImpl  : 副线程开始啦-----------
+2024-07-15 20:27:09.728  INFO 16592 --- [task-1] c.r.a.service.impl.SystemLogServiceImpl  : 副线程结束啦-----------

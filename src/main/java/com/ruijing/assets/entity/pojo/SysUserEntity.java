@@ -28,10 +28,16 @@ public class SysUserEntity implements Serializable {
 	 * 用户名
 	 */
 	private String userName;
+
+	private String name;
 	/**
 	 * 密码
 	 */
 	private String password;
+	/**
+	 * 是否管理员
+	 */
+	private Boolean admin;
 	/**
 	 * 账号状态（0正常 1停用）
 	 */

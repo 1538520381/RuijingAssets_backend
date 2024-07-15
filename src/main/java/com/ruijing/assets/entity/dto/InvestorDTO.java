@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.ruijing.assets.entity.pojo.*;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -19,6 +20,8 @@ public class InvestorDTO {
     @TableId
     private Long id;
 
+    private String operator;
+
     // 投资人名称
     private String name;
 
@@ -33,9 +36,6 @@ public class InvestorDTO {
 
     // 规模大小
     private Integer scale;
-
-    // 投资意向区域
-    private String intentionRegion;
 
     // 联系方式
     private String contact;
@@ -54,4 +54,14 @@ public class InvestorDTO {
 
     // 增值服务
     private List<Long> valueAddedService;
+
+    // 意向投资区域
+    private List<String> intentionRegion;
+
+    // 创建用户
+    private Long createUser;
+
+    private String createUserName;
+
+    private LocalDateTime createTime;
 }

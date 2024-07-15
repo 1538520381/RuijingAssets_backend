@@ -1,6 +1,7 @@
 package com.ruijing.assets.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.ruijing.assets.entity.dto.TraceDto;
 import com.ruijing.assets.entity.pojo.InvestorEntity;
 
 import java.util.List;
@@ -13,5 +14,5 @@ import java.util.List;
  * @date 2024/05/06 18:35
  */
 public interface InvestorService extends IService<InvestorEntity> {
-    List<InvestorEntity> match(Long assetId);
+//    List<TraceDto> match(Long assetId, Long userId);
 }

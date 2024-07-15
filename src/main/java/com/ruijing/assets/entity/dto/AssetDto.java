@@ -1,21 +1,29 @@
 package com.ruijing.assets.entity.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.ruijing.assets.entity.vo.assetVO.Highlight;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.ruijing.assets.entity.pojo.AssetCollateralEntity;
+import com.ruijing.assets.entity.pojo.AssetGuaranteeEntity;
+import com.ruijing.assets.entity.pojo.AssetHighlight;
 import lombok.Data;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
-
+/**
+ * @author Persolute
+ * @version 1.0
+ * @description
+ * @email 1538520381@qq.com
+ * @date 2024/06/14 14:36
+ */
 @Data
-public class AssetAddDTO implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class AssetDto {
     /**
      * 主键
      */
+    @TableId
     private Long id;
     /**
      * 债务人名称
@@ -62,10 +70,6 @@ public class AssetAddDTO implements Serializable {
      */
     private BigDecimal creditRightFare;
     /**
-     * 所属省份
-     */
-    private Integer province;
-    /**
      * 资产所在地址
      */
     private String address;
@@ -94,37 +98,45 @@ public class AssetAddDTO implements Serializable {
      */
     private Integer recommend;
     /**
+     * 所属省份
+     */
+    private Integer province;
+    /**
      * 开始日期 格式yyyy-MM-dd
      */
-    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date startTime;
     /**
      * 截至日期 格式yyyy-MM-dd
      */
-    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date endTime;
 
     /*
      *  处置状态[1，拟处置  2，处置中  3，处置完毕  4，待核销  5，已核销  6，作废]
      */
     private Integer DisposalStatus;
-    /*
-     * 资产亮点
-     */
-    private List<Highlight> highlights;
+
     /*
      * 债权种类[1, "金融债权" 2, "非金融债权"]
      */
     private Integer assetType;
-    /*
-     * 债权担保人
-     */
-    private List<GuaranteesDTO> guarantees;
-    /*
-     * 抵押物
-     */
-    private List<CollateralDTO> collateral;
 
+    /*
+     * 资产排序顺序
+     */
+    private Integer position;
+
+    /**
+     * 创建用户
+     */
     private Long createUser;
 
+    private String createUserName;
+
+    private List<AssetCollateralEntity> assetCollateralEntities;
+
+    private List<AssetGuaranteeEntity> assetGuaranteeEntities;
+
+    private List<AssetHighlight> assetHighlights;
+
+    private LocalDateTime createTime;
 }

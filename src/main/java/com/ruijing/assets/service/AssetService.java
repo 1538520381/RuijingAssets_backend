@@ -2,6 +2,7 @@ package com.ruijing.assets.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ruijing.assets.entity.dto.AssetAddDTO;
+import com.ruijing.assets.entity.dto.AssetDto;
 import com.ruijing.assets.entity.dto.AssetUpdateDTO;
 import com.ruijing.assets.entity.pojo.AssetEntity;
 import com.ruijing.assets.entity.result.R;
@@ -20,6 +21,8 @@ import java.util.Map;
 public interface AssetService extends IService<AssetEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    List<AssetDto> listByUserId(Long userId);
 
 
     /*
@@ -79,6 +82,6 @@ public interface AssetService extends IService<AssetEntity> {
      * @email 1538520381@qq.com
      * @date 2024/5/23 下午9:20
      */
-    List<AssetEntity> match(String intentionRegion, List<Integer> investmentType, List<Integer> investmentAmount);
+    List<AssetDto> match(List<String> intentionRegion, List<Integer> investmentType, List<Integer> investmentAmount);
 }
 

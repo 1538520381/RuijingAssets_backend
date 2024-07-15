@@ -1,16 +1,16 @@
 package com.ruijing.assets.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.ruijing.assets.annotation.SysLog;
-import com.ruijing.assets.entity.dto.AssetAddDTO;
-import com.ruijing.assets.entity.dto.AssetUpdateDTO;
-import com.ruijing.assets.entity.dto.OnShelfDTO;
-import com.ruijing.assets.entity.pojo.AssetEntity;
+import com.ruijing.assets.entity.dto.*;
+import com.ruijing.assets.entity.pojo.*;
 import com.ruijing.assets.entity.result.R;
 import com.ruijing.assets.enume.exception.RuiJingExceptionEnum;
 import com.ruijing.assets.enume.status.OnShelfStatus;
 import com.ruijing.assets.exception.RuiJingException;
-import com.ruijing.assets.service.AssetService;
+import com.ruijing.assets.service.*;
 
+import com.ruijing.assets.service.impl.InvestorServiceImpl;
 import com.ruijing.assets.util.using.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +20,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.YearMonth;
 import java.util.*;
 
 
@@ -37,6 +41,19 @@ import java.util.*;
 public class AssetController {
     @Autowired
     private AssetService assetService;
+    @Autowired
+    private TraceService traceService;
+
+    @Autowired
+    private SysUserService sysUserService;
+    @Autowired
+    private InvestorService investorService;
+    @Autowired
+    private InvestorIntentionRegionService investorIntentionRegionService;
+    @Autowired
+    private InvestorInvestmentTypeService investorInvestmentTypeService;
+    @Autowired
+    private InvestorInvestmentAmountService investorInvestmentAmountService;
 
 
     /*
@@ -117,6 +134,11 @@ public class AssetController {
     public R list(@RequestParam Map<String, Object> params) {
         PageUtils page = assetService.queryPage(params);
         return R.ok().put("page", page);
+    }
+
+    @GetMapping("/list/{userId}")
+    public R listByUserId(@PathVariable Long userId) {
+        return R.ok().put("data", assetService.listByUserId(userId));
     }
 
 
@@ -208,7 +230,41 @@ public class AssetController {
      */
     @GetMapping("/deleteAsset/{assetId}")
     public R deleteAsset(@PathVariable Long assetId) {
+        List<TraceEntity> list = traceService.list(new LambdaQueryWrapper<TraceEntity>().eq(TraceEntity::getAssetId, assetId));
+        if (!list.isEmpty()) {
+            return R.error("该资产已被匹配，无法删除");
+        }
         assetService.deleteAsset(assetId);
+        return R.ok();
+    }
+
+    @GetMapping("/matchAll")
+    public R matchAll(@RequestParam Long userId) {
+        SysUserEntity sysUserEntity = sysUserService.getById(userId);
+        List<InvestorEntity> list;
+        if (!sysUserEntity.getAdmin()) {
+            list = investorService.list(new LambdaQueryWrapper<InvestorEntity>().eq(InvestorEntity::getCreateUser, userId));
+        } else {
+            list = investorService.list();
+        }
+        for (InvestorEntity investorEntity : list) {
+            List<InvestorIntentionRegionEntity> list1 = investorIntentionRegionService.list(new LambdaQueryWrapper<InvestorIntentionRegionEntity>().eq(InvestorIntentionRegionEntity::getInvestorId, investorEntity.getId()));
+            List<InvestorInvestmentTypeEntity> list2 = investorInvestmentTypeService.list(new LambdaQueryWrapper<InvestorInvestmentTypeEntity>().eq(InvestorInvestmentTypeEntity::getInvestorId, investorEntity.getId()));
+            List<InvestorInvestmentAmountEntity> list3 = investorInvestmentAmountService.list(new LambdaQueryWrapper<InvestorInvestmentAmountEntity>().eq(InvestorInvestmentAmountEntity::getInvestorId, investorEntity.getId()));
+            StringBuilder str1 = new StringBuilder(" ");
+            for (InvestorIntentionRegionEntity investorIntentionRegion : list1) {
+                str1.append(investorIntentionRegion.getValue()).append(",");
+            }
+            StringBuilder str2 = new StringBuilder(" ");
+            for (InvestorInvestmentTypeEntity investorInvestmentType : list2) {
+                str2.append(investorInvestmentType.getInvestmentTypeId()).append(",");
+            }
+            StringBuilder str3 = new StringBuilder(" ");
+            for (InvestorInvestmentAmountEntity investorInvestmentAmount : list3) {
+                str3.append(investorInvestmentAmount.getInvestmentAmountId()).append(",");
+            }
+            match(investorEntity.getId(), str1.toString(), str2.toString(), str3.toString(), userId);
+        }
         return R.ok();
     }
 
@@ -220,7 +276,7 @@ public class AssetController {
      * @date 2024/5/23 下午9:21
      */
     @GetMapping("/match")
-    public R match(@RequestParam String intentionRegion, @RequestParam String investmentType, @RequestParam String investmentAmount) {
+    public R match(@RequestParam Long investorId, @RequestParam String intentionRegion, @RequestParam String investmentType, @RequestParam String investmentAmount, @RequestParam Long userId) {
         List<Integer> list1 = new ArrayList<>();
         String[] split = investmentType.substring(1, investmentType.length() - 1).split(",");
         for (String s : split) {
@@ -231,6 +287,46 @@ public class AssetController {
         for (String s : split) {
             list2.add(Integer.parseInt(s));
         }
-        return R.ok().put("data", assetService.match(intentionRegion, list1, list2));
+        List<AssetDto> match = assetService.match(Arrays.asList(intentionRegion.substring(1, intentionRegion.length() - 1).split(",")), list1, list2);
+        List<TraceDto> list = new ArrayList<>();
+        for (AssetDto assetDto : match) {
+            TraceEntity trace = new TraceEntity();
+            trace.setInvestorId(investorId);
+            trace.setAssetId(assetDto.getId());
+            trace.setType(0);
+            trace.setUserId(userId);
+            Long l = traceService.addByUnique(trace);
+            TraceDto traceDto = new TraceDto();
+            traceDto.setId(l);
+            traceDto.setInvestorId(investorId);
+            traceDto.setInvestorName(investorService.getById(investorId).getName());
+            traceDto.setAssetId(assetDto.getId());
+            traceDto.setAssetName(assetDto.getAssetName());
+            traceDto.setAssetUserName(assetDto.getName());
+            SysUserEntity sysUserEntity1 = sysUserService.getById(assetDto.getCreateUser());
+            traceDto.setCreateAssetName(sysUserEntity1.getName());
+            SysUserEntity sysUserEntity2 = sysUserService.getById(investorService.getById(investorId).getCreateUser());
+            traceDto.setCreateInvestorName(sysUserEntity2.getName());
+            list.add(traceDto);
+
+        }
+        return R.ok().put("data", list);
+    }
+
+    @GetMapping("/count")
+    public R count() {
+        LocalDate currentDate = LocalDate.now();
+        List<String> xData = new ArrayList<>();
+        List<Integer> yData = new ArrayList<>();
+        for (int i = 11; i >= 0; i--) {
+            YearMonth yearMonth = YearMonth.from(currentDate.minusMonths(i));
+            LocalDate firstDayOfMonth = yearMonth.atDay(1);
+            LocalDate lastDayOfMonth = yearMonth.atEndOfMonth();
+            LocalDateTime startOfMonth = LocalDateTime.of(firstDayOfMonth, LocalTime.MIN);
+            LocalDateTime endOfMonth = LocalDateTime.of(lastDayOfMonth, LocalTime.MAX);
+            xData.add(yearMonth.getMonthValue() + "月");
+            yData.add(assetService.count(new LambdaQueryWrapper<AssetEntity>().between(AssetEntity::getCreateTime, startOfMonth, endOfMonth)));
+        }
+        return R.ok().put("xData", xData).put("yData", yData);
     }
 }

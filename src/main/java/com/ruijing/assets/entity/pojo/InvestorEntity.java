@@ -1,8 +1,12 @@
 package com.ruijing.assets.entity.pojo;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+
+import java.time.LocalDateTime;
 
 /**
  * @author Persolute
@@ -17,6 +21,8 @@ public class InvestorEntity {
     // 主键
     @TableId
     private Long id;
+
+    private String operator;
 
     // 投资人名称
     private String name;
@@ -33,12 +39,15 @@ public class InvestorEntity {
     // 规模大小
     private Integer scale;
 
-    // 投资意向区域
-    private String intentionRegion;
-
     // 联系方式
     private String contact;
 
     // 经济类型id
     private Long economicTypeId;
+
+    // 创建用户
+    private Long createUser;
+
+    @TableField(fill = FieldFill.INSERT)
+    private LocalDateTime createTime;
 }
