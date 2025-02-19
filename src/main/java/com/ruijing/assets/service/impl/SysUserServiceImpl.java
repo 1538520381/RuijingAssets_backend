@@ -30,6 +30,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -56,6 +57,12 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserEntity> i
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
         LambdaQueryWrapper<SysUserEntity> lambaWrapper = new LambdaQueryWrapper<>();
+        if (params.get("id") != null) {
+            SysUserEntity sysUserEntity = this.getById(Long.parseLong((String) params.get("id")));
+            if (sysUserEntity.getAdmin() == 2) {
+                lambaWrapper.eq(SysUserEntity::getAdmin, 3).eq(SysUserEntity::getCaptain, sysUserEntity.getId());
+            }
+        }
         //按照用户名模糊查询
         if (params.get("key") != null) {
             String key = params.get("key").toString();
@@ -89,10 +96,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserEntity> i
         SysUserEntity sysUserEntity = new SysUserEntity();
         BeanUtils.copyProperties(userDTO, sysUserEntity);
         //创建用户都是正常使用
-        sysUserEntity.setUserStatus(UserStatus.NORMAL_STATUS.getCode());
+        sysUserEntity.setStatus(true);
         //修改时间 创建时间
-        sysUserEntity.setCreateTime(new Date());
-        sysUserEntity.setUpdateTime(new Date());
+        sysUserEntity.setCreateTime(LocalDateTime.now());
         //需要对密码进行加密
         sysUserEntity.setPassword(passwordEncoder.encode(sysUserEntity.getPassword()));
         //插入

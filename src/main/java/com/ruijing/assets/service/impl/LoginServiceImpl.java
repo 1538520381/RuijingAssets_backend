@@ -118,7 +118,7 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public R register(SysUserEntity sysUserEntity) {
         sysUserEntity.setPassword(passwordEncoder.encode(sysUserEntity.getPassword()));
-        sysUserEntity.setUserStatus(1);
+        sysUserEntity.setStatus(true);
         sysUserService.save(sysUserEntity);
         return R.ok();
     }

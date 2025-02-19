@@ -12,11 +12,11 @@ spring:
     time-zone: GMT+8
   redis:
     database: 1
-#    host: 175.178.189.129
-    host: 192.168.213.128
-#    host: 10.10.61.40
+#    host: 192.168.213.128
+    host: localhost
+    #    host: 10.10.61.40
     port: 6379
-#    password: djsaiodjias4556564..3lk23o1dskja546dsaopj
+    #    password: djsaiodjias4556564..3lk23o1dskja546dsaopj
     # 连接超时时间
     timeout: 10s
     lettuce:
@@ -30,7 +30,7 @@ spring:
         # #连接池最大阻塞等待时间（使用负值表示没有限制）
         max-wait: -1ms
     #      ruijing服务器redis密码
-#    password: sdkoadjsaidjasdisa,djsiaodjsai231232
+  #    password: sdkoadjsaidjasdisa,djsiaodjsai231232
   servlet:
     multipart:
       max-file-size: 50MB

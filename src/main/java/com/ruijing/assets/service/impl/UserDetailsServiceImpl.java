@@ -37,7 +37,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             );
         }
         //全局异常捕捉
-        if (sysUserEntity.getUserStatus().equals(UserStatus.FORBIDDEN_STATUS.getCode())) {
+        if (!sysUserEntity.getStatus()) {
             //该用户已经被禁用
             throw new RuiJingException(
                     RuiJingExceptionEnum.THE_USER_FORBIDDEN.getMsg(),

@@ -1,10 +1,13 @@
 package com.ruijing.assets.entity.pojo;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -17,57 +20,42 @@ import java.util.Date;
 @Data
 @TableName("sys_user")
 public class SysUserEntity implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * 主键
-	 */
-	@TableId
-	private Long id;
-	/**
-	 * 用户名
-	 */
-	private String userName;
+    /**
+     * 主键
+     */
+    @TableId
+    private Long id;
+    /**
+     * 用户名
+     */
+    private String userName;
 
-	private String name;
-	/**
-	 * 密码
-	 */
-	private String password;
-	/**
-	 * 是否管理员
-	 */
-	private Boolean admin;
-	/**
-	 * 账号状态（0正常 1停用）
-	 */
-	private Integer userStatus;
-	/**
-	 * 邮箱
-	 */
-	private String email;
-	/**
-	 * 头像
-	 */
-	private String avatar;
-	/**
-	 * 创建时间
-	 */
-	private Date createTime;
-	/**
-	 * 更新时间
-	 */
-	private Date updateTime;
-	/**
-	 * 城市
-	 */
-	private String city;
-	/**
-	 * 上一次登录时间
-	 */
-	private Date lastLogin;
-	/**
-	 * 手机号
-	 */
-	private String phone;
+    private String name;
+    /**
+     * 密码
+     */
+    private String password;
+    /**
+     * 是否管理员
+     */
+    private Integer admin;
+    private Long captain;
+    /**
+     * 账号状态（0正常 1停用）
+     */
+    private Boolean status;
+    /**
+     * 邮箱
+     */
+    private String email;
+
+    private String phone;
+
+    /**
+     * 创建时间
+     */
+    @TableField(fill = FieldFill.INSERT)
+    private LocalDateTime createTime;
 }

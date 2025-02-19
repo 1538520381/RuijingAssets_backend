@@ -52,8 +52,12 @@ public class TraceServiceImpl extends ServiceImpl<TraceDao, TraceEntity> impleme
     public List<TraceDto> getAllByUser(Long userId) {
         LambdaQueryWrapper<TraceEntity> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         SysUserEntity sysUserEntity = sysUserService.getById(userId);
-        if (!sysUserEntity.getAdmin()) {
+        if (sysUserEntity.getAdmin() == 3) {
             lambdaQueryWrapper.eq(TraceEntity::getUserId, userId);
+        } else if (sysUserEntity.getAdmin() == 2) {
+            List<Long> ids = sysUserService.list(new LambdaQueryWrapper<SysUserEntity>().eq(SysUserEntity::getAdmin, 3).eq(SysUserEntity::getCaptain, sysUserEntity.getId())).stream().map((SysUserEntity::getId)).collect(Collectors.toList());
+            ids.add(sysUserEntity.getId());
+            lambdaQueryWrapper.in(TraceEntity::getUserId, ids);
         }
         lambdaQueryWrapper.orderByDesc(TraceEntity::getDate);
         List<TraceEntity> list = list(lambdaQueryWrapper);
@@ -65,12 +69,12 @@ public class TraceServiceImpl extends ServiceImpl<TraceDao, TraceEntity> impleme
                 BeanUtils.copyProperties(item, traceDto);
                 AssetEntity assetEntity = assetService.getById(item.getAssetId());
                 SysUserEntity sysUserEntity1 = sysUserService.getById(assetEntity.getCreateUser());
-                traceDto.setCreateAssetName(sysUserEntity1.getName());
+                traceDto.setCreateAssetName(assetEntity.getOperator());
                 traceDto.setInvestorName(investorService.getById(item.getInvestorId()).getName());
                 traceDto.setAssetUserName(assetEntity.getName());
-                traceDto.setAssetName(assetEntity.getAssetName());
+//                traceDto.setAssetName(assetEntity.getAssetInformation());
                 SysUserEntity sysUserEntity2 = sysUserService.getById(investorService.getById(item.getInvestorId()).getCreateUser());
-                traceDto.setCreateInvestorName(sysUserEntity2.getName());
+                traceDto.setCreateInvestorName(investorService.getById(item.getInvestorId()).getOperator());
                 return traceDto;
             } else {
                 return null;
@@ -95,8 +99,12 @@ public class TraceServiceImpl extends ServiceImpl<TraceDao, TraceEntity> impleme
             lambdaQueryWrapper.eq(TraceEntity::getAssetId, assetId);
         }
         SysUserEntity sysUserEntity = sysUserService.getById(userId);
-        if (!sysUserEntity.getAdmin()) {
+        if (sysUserEntity.getAdmin() == 3) {
             lambdaQueryWrapper.eq(TraceEntity::getUserId, userId);
+        } else if (sysUserEntity.getAdmin() == 2) {
+            List<Long> ids = sysUserService.list(new LambdaQueryWrapper<SysUserEntity>().eq(SysUserEntity::getAdmin, 3).eq(SysUserEntity::getCaptain, sysUserEntity.getId())).stream().map((SysUserEntity::getId)).collect(Collectors.toList());
+            ids.add(sysUserEntity.getId());
+            lambdaQueryWrapper.in(TraceEntity::getUserId, ids);
         }
         lambdaQueryWrapper.orderByDesc(TraceEntity::getDate);
         lambdaQueryWrapper.ne(TraceEntity::getType, 0);
@@ -160,8 +168,12 @@ public class TraceServiceImpl extends ServiceImpl<TraceDao, TraceEntity> impleme
     public List<TraceDto> getUnend(Long userId) {
         LambdaQueryWrapper<TraceEntity> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         SysUserEntity sysUserEntity = sysUserService.getById(userId);
-        if (!sysUserEntity.getAdmin()) {
+        if (sysUserEntity.getAdmin() == 3) {
             lambdaQueryWrapper.eq(TraceEntity::getUserId, userId);
+        } else if (sysUserEntity.getAdmin() == 2) {
+            List<Long> ids = sysUserService.list(new LambdaQueryWrapper<SysUserEntity>().eq(SysUserEntity::getAdmin, 3).eq(SysUserEntity::getCaptain, sysUserEntity.getId())).stream().map((SysUserEntity::getId)).collect(Collectors.toList());
+            ids.add(sysUserEntity.getId());
+            lambdaQueryWrapper.in(TraceEntity::getUserId, ids);
         }
         lambdaQueryWrapper.ne(TraceEntity::getType, 2);
         lambdaQueryWrapper.ne(TraceEntity::getType, 3);
@@ -174,7 +186,7 @@ public class TraceServiceImpl extends ServiceImpl<TraceDao, TraceEntity> impleme
                 TraceDto traceDto = new TraceDto();
                 BeanUtils.copyProperties(item, traceDto);
                 AssetEntity assetEntity = assetService.getById(item.getAssetId());
-                traceDto.setAssetName(assetEntity.getAssetName());
+//                traceDto.setAssetName(assetEntity.getAssetInformation());
                 SysUserEntity sysUserEntity1 = sysUserService.getById(assetEntity.getCreateUser());
                 traceDto.setCreateAssetName(sysUserEntity1.getName());
                 traceDto.setInvestorName(investorService.getById(item.getInvestorId()).getName());
@@ -200,6 +212,7 @@ public class TraceServiceImpl extends ServiceImpl<TraceDao, TraceEntity> impleme
         LambdaQueryWrapper<TraceEntity> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.eq(TraceEntity::getInvestorId, traceEntity.getInvestorId());
         lambdaQueryWrapper.eq(TraceEntity::getAssetId, traceEntity.getAssetId());
+        lambdaQueryWrapper.eq(TraceEntity::getUserId, traceEntity.getUserId());
         List<TraceEntity> traceEntities = list(lambdaQueryWrapper);
         if (traceEntities.isEmpty()) {
             save(traceEntity);
@@ -213,32 +226,32 @@ public class TraceServiceImpl extends ServiceImpl<TraceDao, TraceEntity> impleme
         AssetEntity assetEntity = assetService.getById(assetId);
         List<AssetCollateralEntity> assetCollateralEntities = assetCollateralService.list(new LambdaQueryWrapper<AssetCollateralEntity>().eq(AssetCollateralEntity::getAssetId, assetId));
         List<InvestorEntity> investorEntityList = investorService.list();
-        for (int i = 0;i < investorEntityList.size(); i++) {
-            List<InvestorIntentionRegionEntity> investorIntentionRegionEntities = investorIntentionRegionService.list(new LambdaQueryWrapper<InvestorIntentionRegionEntity>().eq(InvestorIntentionRegionEntity::getInvestorId,investorEntityList.get(i).getId()));
+        for (int i = 0; i < investorEntityList.size(); i++) {
+            List<InvestorIntentionRegionEntity> investorIntentionRegionEntities = investorIntentionRegionService.list(new LambdaQueryWrapper<InvestorIntentionRegionEntity>().eq(InvestorIntentionRegionEntity::getInvestorId, investorEntityList.get(i).getId()));
             boolean flag0 = false;
-            for (InvestorIntentionRegionEntity investorIntentionRegion: investorIntentionRegionEntities) {
-                if(investorIntentionRegion.getValue().equals(assetEntity.getRegion())){
+            for (InvestorIntentionRegionEntity investorIntentionRegion : investorIntentionRegionEntities) {
+                if (investorIntentionRegion.getValue().equals(assetEntity.getRegion())) {
                     flag0 = true;
                     break;
                 }
             }
-            if (!flag0){
+            if (!flag0) {
                 investorEntityList.remove(i);
                 i--;
                 continue;
             }
 
             List<InvestorInvestmentAmountEntity> investorInvestmentAmountEntities = investorInvestmentAmountService.list(new LambdaQueryWrapper<InvestorInvestmentAmountEntity>().eq(InvestorInvestmentAmountEntity::getInvestorId, investorEntityList.get(i).getId()));
-            List<Long> investmentAmountList = new ArrayList<>();
+            List<String> investmentAmountList = new ArrayList<>();
             for (InvestorInvestmentAmountEntity investmentAmountEntity : investorInvestmentAmountEntities) {
-                investmentAmountList.add(investmentAmountEntity.getInvestmentAmountId());
+                investmentAmountList.add(investmentAmountEntity.getValue());
             }
-            if (assetEntity.getCreditRightFare().compareTo(new BigDecimal(10000000)) >= 0 || !investmentAmountList.contains(1L)) {
-                if (assetEntity.getCreditRightFare().compareTo(new BigDecimal(10000000)) < 0 || assetEntity.getCreditRightFare().compareTo(new BigDecimal(30000000)) >= 0 || !investmentAmountList.contains(2L)) {
-                    if (assetEntity.getCreditRightFare().compareTo(new BigDecimal(30000000)) < 0 || assetEntity.getCreditRightFare().compareTo(new BigDecimal(60000000)) >= 0 || !investmentAmountList.contains(3L)) {
-                        if (assetEntity.getCreditRightFare().compareTo(new BigDecimal(60000000)) < 0 || assetEntity.getCreditRightFare().compareTo(new BigDecimal(100000000)) >= 0 || !investmentAmountList.contains(4L)) {
-                            if (assetEntity.getCreditRightFare().compareTo(new BigDecimal(100000000)) < 0 || assetEntity.getCreditRightFare().compareTo(new BigDecimal(300000000)) >= 0 || !investmentAmountList.contains(5L)) {
-                                if (assetEntity.getCreditRightFare().compareTo(new BigDecimal(300000000)) < 0) {
+            if (assetEntity.getCreditRightFare().compareTo(new BigDecimal(1000)) > 0 || !investmentAmountList.contains("1000万以下")) {
+                if (assetEntity.getCreditRightFare().compareTo(new BigDecimal(1000)) < 0 || assetEntity.getCreditRightFare().compareTo(new BigDecimal(3000)) > 0 || !investmentAmountList.contains("1000万-3000万")) {
+                    if (assetEntity.getCreditRightFare().compareTo(new BigDecimal(3000)) < 0 || assetEntity.getCreditRightFare().compareTo(new BigDecimal(6000)) > 0 || !investmentAmountList.contains("3000万-6000万")) {
+                        if (assetEntity.getCreditRightFare().compareTo(new BigDecimal(6000)) < 0 || assetEntity.getCreditRightFare().compareTo(new BigDecimal(10000)) > 0 || !investmentAmountList.contains("6000万-1亿")) {
+                            if (assetEntity.getCreditRightFare().compareTo(new BigDecimal(10000)) < 0 || assetEntity.getCreditRightFare().compareTo(new BigDecimal(30000)) > 0 || !investmentAmountList.contains("1亿-3亿")) {
+                                if (assetEntity.getCreditRightFare().compareTo(new BigDecimal(30000)) < 0) {
                                     investorEntityList.remove(i);
                                     i--;
                                     continue;
@@ -249,13 +262,16 @@ public class TraceServiceImpl extends ServiceImpl<TraceDao, TraceEntity> impleme
                 }
             }
             List<InvestorInvestmentTypeEntity> investorInvestmentTypeEntities = investorInvestmentTypeService.list(new LambdaQueryWrapper<InvestorInvestmentTypeEntity>().eq(InvestorInvestmentTypeEntity::getInvestorId, investorEntityList.get(i).getId()));
-            List<Long> investmentTypeList = new ArrayList<>();
+            List<String> investmentTypeList = new ArrayList<>();
             for (InvestorInvestmentTypeEntity investorInvestmentType : investorInvestmentTypeEntities) {
-                investmentTypeList.add(investorInvestmentType.getInvestmentTypeId());
+                investmentTypeList.add(investorInvestmentType.getValue());
             }
+
+
             boolean flag = false;
+
             for (AssetCollateralEntity assetCollateralEntity : assetCollateralEntities) {
-                if (investmentTypeList.contains(Long.valueOf(assetCollateralEntity.getCollateralType()))) {
+                if (investmentTypeList.contains(assetCollateralEntity.getCollateralType())) {
                     flag = true;
                     break;
                 }
@@ -277,13 +293,13 @@ public class TraceServiceImpl extends ServiceImpl<TraceDao, TraceEntity> impleme
             traceDto.setId(l);
             traceDto.setInvestorId(investorEntity.getId());
             traceDto.setInvestorName(investorEntity.getName());
-            SysUserEntity sysUserEntity1 = sysUserService.getById(investorEntity.getCreateUser());
-            traceDto.setCreateInvestorName(sysUserEntity1.getName());
+//            SysUserEntity sysUserEntity1 = sysUserService.getById(investorEntity.getCreateUser());
+            traceDto.setCreateInvestorName(investorEntity.getOperator());
             traceDto.setAssetId(assetId);
-            traceDto.setAssetName(assetEntity.getAssetName());
+//            traceDto.setAssetName(assetEntity.getAssetInformation());
             traceDto.setAssetUserName(assetEntity.getName());
-            SysUserEntity sysUserEntity2 = sysUserService.getById(assetEntity.getCreateUser());
-            traceDto.setCreateAssetName(sysUserEntity2.getName());
+//            SysUserEntity sysUserEntity2 = sysUserService.getById(assetEntity.getCreateUser());
+            traceDto.setCreateAssetName(assetEntity.getOperator());
             list.add(traceDto);
         }
         return list;

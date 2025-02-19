@@ -22,5 +22,5 @@ public class InvestorInvestmentTypeEntity {
     private Long investorId;
 
     // 拟投资类型id
-    private Long investmentTypeId;
+    private String value;
 }

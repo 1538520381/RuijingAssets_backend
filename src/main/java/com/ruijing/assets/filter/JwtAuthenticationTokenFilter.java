@@ -26,8 +26,7 @@ import java.io.IOException;
 /**
  * @author K0n9D1KuA
  * @version 1.0
- * @description:
- * 过滤链：
+ * @description: 过滤链：
  * 1，通过解析token,将redis里面的用户信息封装到SpringSecurityUtil中
  * 2，控制接口的访问权限
  * @email 3161788646@qq.com
@@ -71,7 +70,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             //token超时  token非法
             //响应告诉前端需要重新登录
             R errorResult = R.error(RuiJingExceptionEnum.INVALID_TOKEN.getCode()
-                    , RuiJingExceptionEnum.INVALID_TOKEN.getMsg());
+                    , "服务器异常，请联系管理员");
             WebUtil.renderString(response, JSON.toJSONString(errorResult));
         }
     }

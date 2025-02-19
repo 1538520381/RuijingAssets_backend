@@ -17,8 +17,6 @@ public class AssetHighlight implements Serializable {
     //主键
     @TableId
     private Long id;
-    //债权亮点标题
-    private String highlightTitle;
     //债权亮点内容
     private String highlightContent;
     //债权id

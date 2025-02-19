@@ -62,7 +62,8 @@ public class AssetServiceImpl extends ServiceImpl<AssetDao, AssetEntity> impleme
 
     @Autowired
     private MinioUtil minioUtil;
-
+    @Autowired
+    private AssetFileService assetFileService;
 
     //循环依赖 延迟加载
     @Lazy
@@ -71,48 +72,96 @@ public class AssetServiceImpl extends ServiceImpl<AssetDao, AssetEntity> impleme
     @Autowired
     private SysUserServiceImpl sysUserService;
 
+
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
-        //根据资产名字key模糊查询
-        LambdaQueryWrapper<AssetEntity> assetEntityLambdaQueryWrapper = new LambdaQueryWrapper<>();
-
-
-        //需要按照资产的顺序排序
-        assetEntityLambdaQueryWrapper.orderByAsc(AssetEntity::getPosition);
-
-        //获得需要查询的资产名字
-        if (params.get("key") != null) {
-            String key = params.get("key").toString();
-            if (!StringUtils.isEmpty(key)) {
-                assetEntityLambdaQueryWrapper.like(AssetEntity::getAssetName, key);
-            }
-        }
+        LambdaQueryWrapper<AssetEntity> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.orderByDesc(AssetEntity::getCreateTime);
         String userId = params.get("userId").toString();
         SysUserEntity sysUserEntity = sysUserService.getById(userId);
-        if (!sysUserEntity.getAdmin()) {
-            assetEntityLambdaQueryWrapper.eq(AssetEntity::getCreateUser, userId);
+        if (sysUserEntity.getAdmin() == 3) {
+            lambdaQueryWrapper.eq(AssetEntity::getCreateUser, userId);
+        } else if (sysUserEntity.getAdmin() == 2) {
+            List<Long> ids = sysUserService.list(new LambdaQueryWrapper<SysUserEntity>().eq(SysUserEntity::getAdmin, 3).eq(SysUserEntity::getCaptain, sysUserEntity.getId())).stream().map((SysUserEntity::getId)).collect(Collectors.toList());
+            ids.add(sysUserEntity.getId());
+            lambdaQueryWrapper.in(AssetEntity::getCreateUser, ids);
         }
-        IPage<AssetEntity> page = this.page(
-                new Query<AssetEntity>().getPage(params),
-                assetEntityLambdaQueryWrapper
-        );
 
-        IPage<AssetDto> page1 = new Page<>();
-        BeanUtils.copyProperties(page, page1, "records");
-        List<AssetEntity> assetEntities = page.getRecords();
-        List<AssetDto> assetDtos = assetEntities.stream().map(assetEntity -> {
+        Page<AssetEntity> page = new Page<>(Long.parseLong(params.get("current").toString()), Long.parseLong(params.get("size").toString()));
+
+        if (params.get("name") != null && !params.get("name").toString().isEmpty()) {
+            lambdaQueryWrapper.like(AssetEntity::getName, params.get("name").toString());
+        }
+        if (params.get("creditRightBank") != null && !params.get("creditRightBank").toString().isEmpty()) {
+            lambdaQueryWrapper.like(AssetEntity::getCreditRightBank, params.get("creditRightBank").toString());
+        }
+        if (params.get("guarantee") != null && !params.get("guarantee").toString().isEmpty()) {
+            lambdaQueryWrapper.like(AssetEntity::getGuarantee, params.get("guarantee").toString());
+        }
+
+
+        List<AssetEntity> allAssets = list(lambdaQueryWrapper);
+//        if (params.get("location") != null && !params.get("location").toString().isEmpty()) {
+//            for (int i = 0; i < allAssets.size(); i++) {
+//                List<AssetCollateralEntity> assetCollateralEntities = assetCollateralService.list(new LambdaQueryWrapper<AssetCollateralEntity>().eq(AssetCollateralEntity::getAssetId, allAssets.get(i).getId()));
+//                boolean flag = false;
+//                for (AssetCollateralEntity assetCollateralEntity : assetCollateralEntities) {
+//                    if (assetCollateralEntity.getLocation() != null && assetCollateralEntity.getLocation().equals(params.get("location").toString())) {
+//                        flag = true;
+//                        break;
+//                    }
+//                }
+//                if (!flag) {
+//                    allAssets.remove(i);
+//                    i--;
+//                }
+//            }
+//        }
+
+        for (int i = 0; i < allAssets.size(); i++) {
+            List<AssetCollateralEntity> assetCollateralEntities = assetCollateralService.list(new LambdaQueryWrapper<AssetCollateralEntity>().eq(AssetCollateralEntity::getAssetId, allAssets.get(i).getId()));
+            boolean flag1 = !(params.get("location") != null && !params.get("location").toString().isEmpty());
+            boolean flag2 = !(params.get("collateralName") != null && !params.get("collateralName").toString().isEmpty());
+            boolean flag3 = !(params.get("collateralType") != null && !params.get("collateralType").toString().isEmpty());
+            for (AssetCollateralEntity assetCollateralEntity : assetCollateralEntities) {
+                if (params.get("location") != null && !params.get("location").toString().isEmpty() && !flag1) {
+                    if (assetCollateralEntity.getLocation() != null && assetCollateralEntity.getLocation().equals(params.get("location").toString())) {
+                        flag1 = true;
+                    }
+                }
+                if (params.get("collateralName") != null && !params.get("collateralName").toString().isEmpty() && !flag2) {
+                    if (assetCollateralEntity.getAssetName() != null && assetCollateralEntity.getAssetName().contains(params.get("collateralName").toString())) {
+                        flag2 = true;
+                    }
+                }
+                if (params.get("collateralType") != null && !params.get("collateralType").toString().isEmpty() && !flag3) {
+                    if (assetCollateralEntity.getCollateralType() != null && assetCollateralEntity.getCollateralType().equals(params.get("collateralType").toString())) {
+                        flag3 = true;
+                    }
+                }
+            }
+            if (!flag1 || !flag2 || !flag3) {
+                allAssets.remove(i);
+                i--;
+            }
+        }
+        int current = Integer.parseInt(params.get("current").toString());
+        int size = Integer.parseInt(params.get("size").toString());
+        Page<AssetDto> page1 = new Page<>(Long.parseLong(params.get("current").toString()), Long.parseLong(params.get("size").toString()));
+        page1.setTotal(allAssets.size());
+        allAssets = allAssets.subList(Math.min((current - 1) * size, allAssets.size()), Math.min(current * size, allAssets.size()));
+//        this.page(page, lambdaQueryWrapper);
+//        List<AssetEntity> assetEntities = page.getRecords();
+        List<AssetDto> assetDtos = allAssets.stream().map(assetEntity -> {
             AssetDto assetDto = new AssetDto();
             BeanUtils.copyProperties(assetEntity, assetDto);
             List<AssetCollateralEntity> assetCollateralEntities = assetCollateralService.list(new LambdaQueryWrapper<AssetCollateralEntity>().eq(AssetCollateralEntity::getAssetId, assetEntity.getId()));
-            List<AssetGuaranteeEntity> assetGuaranteeEntities = assetGuaranteeService.list(new LambdaQueryWrapper<AssetGuaranteeEntity>().eq(AssetGuaranteeEntity::getAssetId, assetEntity.getId()));
-            List<AssetHighlight> assetHighlights = assetHighlightService.list(new LambdaQueryWrapper<AssetHighlight>().eq(AssetHighlight::getAssetId, assetEntity.getId()));
+            List<AssetFile> assetFiles = assetFileService.list(new LambdaQueryWrapper<AssetFile>().eq(AssetFile::getAssetId, assetEntity.getId()));
             assetDto.setAssetCollateralEntities(assetCollateralEntities);
-            assetDto.setAssetGuaranteeEntities(assetGuaranteeEntities);
-            assetDto.setAssetHighlights(assetHighlights);
-            SysUserEntity sysUserEntity1 = sysUserService.getById(assetEntity.getCreateUser());
-            assetDto.setCreateUserName(sysUserEntity1.getName());
+            assetDto.setAssetFiles(assetFiles);
             return assetDto;
         }).collect(Collectors.toList());
+
         page1.setRecords(assetDtos);
         return new PageUtils(page1);
     }
@@ -121,8 +170,14 @@ public class AssetServiceImpl extends ServiceImpl<AssetDao, AssetEntity> impleme
     public List<AssetDto> listByUserId(Long userId) {
         SysUserEntity sysUserEntity = sysUserService.getById(userId);
         List<AssetEntity> assetEntities;
-        if (sysUserEntity.getAdmin()) {
+        if (sysUserEntity.getAdmin() == 1) {
             assetEntities = list();
+        } else if (sysUserEntity.getAdmin() == 2) {
+            List<Long> ids = sysUserService.list(new LambdaQueryWrapper<SysUserEntity>().eq(SysUserEntity::getAdmin, 3).eq(SysUserEntity::getCaptain, sysUserEntity.getId())).stream().map((SysUserEntity::getId)).collect(Collectors.toList());
+            ids.add(sysUserEntity.getId());
+            LambdaQueryWrapper<AssetEntity> assetEntityLambdaQueryWrapper = new LambdaQueryWrapper<>();
+            assetEntityLambdaQueryWrapper.in(AssetEntity::getCreateUser, ids);
+            assetEntities = list(assetEntityLambdaQueryWrapper);
         } else {
             LambdaQueryWrapper<AssetEntity> assetEntityLambdaQueryWrapper = new LambdaQueryWrapper<>();
             assetEntityLambdaQueryWrapper.eq(AssetEntity::getCreateUser, userId);
@@ -135,11 +190,13 @@ public class AssetServiceImpl extends ServiceImpl<AssetDao, AssetEntity> impleme
             List<AssetCollateralEntity> assetCollateralEntities = assetCollateralService.list(
                     new LambdaQueryWrapper<AssetCollateralEntity>().eq(AssetCollateralEntity::getAssetId, assetEntity.getId())
             );
-            List<AssetGuaranteeEntity> assetGuaranteeEntities = assetGuaranteeService.list(new LambdaQueryWrapper<AssetGuaranteeEntity>().eq(AssetGuaranteeEntity::getAssetId, assetEntity.getId()));
-            List<AssetHighlight> assetHighlights = assetHighlightService.list(new LambdaQueryWrapper<AssetHighlight>().eq(AssetHighlight::getAssetId, assetEntity.getId()));
+//            List<AssetGuaranteeEntity> assetGuaranteeEntities = assetGuaranteeService.list(new LambdaQueryWrapper<AssetGuaranteeEntity>().eq(AssetGuaranteeEntity::getAssetId, assetEntity.getId()));
+//            List<AssetHighlight> assetHighlights = assetHighlightService.list(new LambdaQueryWrapper<AssetHighlight>().eq(AssetHighlight::getAssetId, assetEntity.getId()));
+            List<AssetFile> assetFiles = assetFileService.list(new LambdaQueryWrapper<AssetFile>().eq(AssetFile::getAssetId, assetEntity.getId()));
             assetDto.setAssetCollateralEntities(assetCollateralEntities);
-            assetDto.setAssetGuaranteeEntities(assetGuaranteeEntities);
-            assetDto.setAssetHighlights(assetHighlights);
+//            assetDto.setAssetGuaranteeEntities(assetGuaranteeEntities);
+//            assetDto.setAssetHighlights(assetHighlights);
+            assetDto.setAssetFiles(assetFiles);
             assetDtos.add(assetDto);
         }
         return assetDtos;
@@ -161,7 +218,7 @@ public class AssetServiceImpl extends ServiceImpl<AssetDao, AssetEntity> impleme
                     {
                         Highlight highlight = Highlight
                                 .builder()
-                                .highlightTitle(assetHighlight.getHighlightTitle())
+//                                .highlightTitle(assetHighlight.getHighlightTitle())
                                 .highlightContent(assetHighlight.getHighlightContent())
                                 .build();
                         highlights.add(highlight);
@@ -223,17 +280,17 @@ public class AssetServiceImpl extends ServiceImpl<AssetDao, AssetEntity> impleme
                 assetId));
 
 
-        if (!CollectionUtils.isEmpty(assetGuaranteeEntities)) {
-            assetGuaranteeEntities = assetGuaranteeEntities.stream()
-                    .peek(assetGuaranteeEntity -> {
-                        assetGuaranteeEntity.setMethodString(GuaranteeGuaranteeMethodConstant.guaranteeGuaranteeMethodMap.get(assetGuaranteeEntity.getMethod()));
-                        if (assetGuaranteeEntity.getGuaranteeName().length() <= 4) {
-                            //7.1,对名字进行加密
-                            this.nameEncryption(assetGuaranteeEntity);
-                        }
-                    })
-                    .collect(Collectors.toList());
-        }
+//        if (!CollectionUtils.isEmpty(assetGuaranteeEntities)) {
+//            assetGuaranteeEntities = assetGuaranteeEntities.stream()
+//                    .peek(assetGuaranteeEntity -> {
+//                        assetGuaranteeEntity.setMethodString(GuaranteeGuaranteeMethodConstant.guaranteeGuaranteeMethodMap.get(assetGuaranteeEntity.getMethod()));
+//                        if (assetGuaranteeEntity.getGuaranteeName().length() <= 4) {
+//                            //7.1,对名字进行加密
+//                            this.nameEncryption(assetGuaranteeEntity);
+//                        }
+//                    })
+//                    .collect(Collectors.toList());
+//        }
 
 
         return R.ok()
@@ -253,77 +310,23 @@ public class AssetServiceImpl extends ServiceImpl<AssetDao, AssetEntity> impleme
      */
     @Transactional
     @Override
-    public void addAsset(AssetAddDTO assetAddDTO) {
-
-
+    public void addAsset(AssetDto assetDto) {
         AssetEntity assetEntity = new AssetEntity();
-        BeanUtils.copyProperties(assetAddDTO, assetEntity);
-        //设置默认状态 默认状态为 1，拟处置
-        assetEntity.setDisposalStatus(DisposalStatus.PROPOSED_DISPOSAL.getCode());
-        //设置上架状态
-        assetEntity.setOnShelfStatus(OnShelfStatus.TO_BE_PUT_ON_THE_SHELF.getCode());
-        //资产默认的排序顺序是1
-        assetEntity.setPosition(1);
-        //插入
-        this.save(assetEntity);
-
-        //插入亮点
-        List<Highlight> highlights = assetAddDTO.getHighlights();
-        if (!CollectionUtils.isEmpty(highlights)) {
-            //待插入的亮点
-            List<AssetHighlight> highlightEntitiesToBeSaved = new ArrayList<>();
-            highlights.forEach(highlight -> {
-                AssetHighlight assetHighlight = new AssetHighlight();
-                assetHighlight.setAssetId(assetEntity.getId());
-                assetHighlight.setHighlightContent(highlight.getHighlightContent());
-                assetHighlight.setHighlightTitle((highlight.getHighlightTitle()));
-                highlightEntitiesToBeSaved.add(assetHighlight);
-            });
-            //批量插入
-            assetHighlightService.saveBatch(highlightEntitiesToBeSaved);
+        BeanUtils.copyProperties(assetDto, assetEntity);
+        assetEntity.setOnShelfStatus(0);
+        save(assetEntity);
+        for (AssetCollateralEntity assetCollateralEntity : assetDto.getAssetCollateralEntities()) {
+            assetCollateralEntity.setAssetId(assetEntity.getId());
+            assetCollateralService.save(assetCollateralEntity);
         }
-
-        //插入担保人
-        if (!CollectionUtils.isEmpty(assetAddDTO.getGuarantees())) {
-            //待插入的抵押人
-            List<AssetGuaranteeEntity> assetGuaranteeEntitiesToBeSaved = new ArrayList<>();
-            assetAddDTO.getGuarantees().forEach(guaranteesDTO -> {
-                AssetGuaranteeEntity assetGuaranteeEntity = new AssetGuaranteeEntity();
-                assetGuaranteeEntity.setAssetId(assetEntity.getId());
-                assetGuaranteeEntity.setGuaranteeName(guaranteesDTO.getGuaranteeName());
-                assetGuaranteeEntity.setMethod(guaranteesDTO.getMethod());
-                assetGuaranteeEntitiesToBeSaved.add(assetGuaranteeEntity);
-            });
-            //批量插入
-            assetGuaranteeService.saveBatch(assetGuaranteeEntitiesToBeSaved);
-        }
-
-        //插入抵押物
-        if (!CollectionUtils.isEmpty(assetAddDTO.getCollateral())) {
-            //待插入的抵押人
-            List<AssetCollateralEntity> assetCollateralEntitiesToBeSaved = new ArrayList<>();
-            assetAddDTO.getCollateral().forEach(collateralDTO -> {
-                AssetCollateralEntity assetGuaranteeEntity = new AssetCollateralEntity();
-                assetGuaranteeEntity.setAssetName(collateralDTO.getAssetName());
-                assetGuaranteeEntity.setArea(collateralDTO.getArea());
-                assetGuaranteeEntity.setLocation(collateralDTO.getLocation());
-                assetGuaranteeEntity.setDescription(collateralDTO.getDescription());
-                assetGuaranteeEntity.setCollateralType(collateralDTO.getCollateralType());
-                assetGuaranteeEntity.setAssetId(assetEntity.getId());
-                assetCollateralEntitiesToBeSaved.add(assetGuaranteeEntity);
-            });
-            //批量插入
-            assetCollateralService.saveBatch(assetCollateralEntitiesToBeSaved);
-        }
-
-        //设置浏览量和收藏量  最开始都是0
-        AssetCollectionBrowseEntity assetCollectionBrowseEntity = new AssetCollectionBrowseEntity();
-        assetCollectionBrowseEntity.setAssetId(assetEntity.getId());
-        assetCollectionBrowseEntity.setBrowse(0l);
-        assetCollectionBrowseEntity.setCollection(0l);
-
-        assetCollectionBrowseService.save(assetCollectionBrowseEntity);
-
+//        for (AssetGuaranteeEntity assetGuaranteeEntity : assetDto.getAssetGuaranteeEntities()) {
+//            assetGuaranteeEntity.setAssetId(assetEntity.getId());
+//            assetGuaranteeService.save(assetGuaranteeEntity);
+//        }
+//        for (AssetHighlight assetHighlight : assetDto.getAssetHighlights()) {
+//            assetHighlight.setAssetId(assetEntity.getId());
+//            assetHighlightService.save(assetHighlight);
+//        }
     }
 
     @Override
@@ -398,21 +401,7 @@ public class AssetServiceImpl extends ServiceImpl<AssetDao, AssetEntity> impleme
         assetCollectionBrowseService.remove(new LambdaQueryWrapper<AssetCollectionBrowseEntity>()
                 .eq(AssetCollectionBrowseEntity::getAssetId, assetId));
 
-        //删除资产的图片
-        List<AssetImageEntity> assetImageEntities = assetImageService.list(new LambdaQueryWrapper<AssetImageEntity>()
-                .eq(AssetImageEntity::getAssetId, assetId));
-
-        if (!CollectionUtils.isEmpty(assetImageEntities)) {
-            //收集他们的id
-            List<Long> assetImagesIds = assetImageEntities
-                    .stream()
-                    .map(assetImageEntity -> assetImageEntity.getId())
-                    .collect(Collectors.toList());
-            assetImagesIds.forEach(id -> {
-                //删除minio中的文件 且 删除数据库中的记录
-                deleteImage(id);
-            });
-        }
+        assetFileService.remove(new LambdaQueryWrapper<AssetFile>().eq(AssetFile::getAssetId, assetId));
 
 
         //删除客户对该债权的收藏关系
@@ -441,11 +430,11 @@ public class AssetServiceImpl extends ServiceImpl<AssetDao, AssetEntity> impleme
      */
     @Override
     @Transactional
-    public void updateAsset(AssetUpdateDTO assetUpdateDTO) {
+    public void updateAsset(AssetDto assetDto) {
 
         AssetEntity assetEntity = new AssetEntity();
         //修改债权基本信息
-        BeanUtils.copyProperties(assetUpdateDTO, assetEntity);
+        BeanUtils.copyProperties(assetDto, assetEntity);
         this.updateById(assetEntity);
 
         Long assetId = assetEntity.getId();
@@ -465,30 +454,27 @@ public class AssetServiceImpl extends ServiceImpl<AssetDao, AssetEntity> impleme
         assetGuaranteeService.remove(new LambdaQueryWrapper<AssetGuaranteeEntity>()
                 .eq(AssetGuaranteeEntity::getAssetId, assetId));
 
-        //增加担保人
-        if (!CollectionUtils.isEmpty(assetUpdateDTO.getGuarantees())) {
-            assetUpdateDTO.getGuarantees().forEach(o -> {
-                o.setAssetId(assetId);
-            });
-            assetGuaranteeService.saveBatch(assetUpdateDTO.getGuarantees());
+        assetFileService.remove(new LambdaQueryWrapper<AssetFile>().eq(AssetFile::getAssetId, assetId));
+
+        for (AssetCollateralEntity assetCollateralEntity : assetDto.getAssetCollateralEntities()) {
+            assetCollateralEntity.setAssetId(assetEntity.getId());
+            assetCollateralService.save(assetCollateralEntity);
         }
 
-        //增加亮点
-        if (!CollectionUtils.isEmpty(assetUpdateDTO.getHighlights())) {
-            assetUpdateDTO.getHighlights().forEach(o -> {
-                o.setAssetId(assetId);
-            });
-            assetHighlightService.saveBatch(assetUpdateDTO.getHighlights());
-        }
+//        for (AssetHighlight assetHighlight : assetDto.getAssetHighlights()) {
+//            assetHighlight.setAssetId(assetEntity.getId());
+//            assetHighlightService.save(assetHighlight);
+//        }
+//
+//        for (AssetGuaranteeEntity assetGuaranteeEntity : assetDto.getAssetGuaranteeEntities()) {
+//            assetGuaranteeEntity.setAssetId(assetEntity.getId());
+//            assetGuaranteeService.save(assetGuaranteeEntity);
+//        }
 
-        //添加抵押物
-        if (!CollectionUtils.isEmpty(assetUpdateDTO.getCollateral())) {
-            assetUpdateDTO.getCollateral().forEach(o -> {
-                o.setAssetId(assetId);
-            });
-            assetCollateralService.saveBatch(assetUpdateDTO.getCollateral());
+        for (AssetFile assetFile : assetDto.getAssetFiles()) {
+            assetFile.setAssetId(assetEntity.getId());
+            assetFileService.save(assetFile);
         }
-
     }
 
 
@@ -530,51 +516,58 @@ public class AssetServiceImpl extends ServiceImpl<AssetDao, AssetEntity> impleme
      * @email 1538520381@qq.com
      * @date 2024/5/23 下午9:09
      */
-    public List<AssetDto> match(List<String> intentionRegion, List<Integer> investmentType, List<Integer> investmentAmount) {
+    public List<AssetDto> match(List<String> intentionRegion, List<String> investmentType, List<String> investmentAmount) {
         LambdaQueryWrapper<AssetEntity> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.in(AssetEntity::getRegion, intentionRegion);
-        lambdaQueryWrapper.and(wq -> {
-            boolean flag = false;
-            if (investmentAmount.contains(1)) {
-                wq.between(AssetEntity::getCreditRightFare, 0, 10000000);
-                flag = true;
-            }
-            if (investmentAmount.contains(2)) {
-                if (flag) {
-                    wq.or();
+        if (!intentionRegion.isEmpty()) {
+            lambdaQueryWrapper.in(AssetEntity::getRegion, intentionRegion);
+        }
+        if (!investmentAmount.isEmpty()) {
+            lambdaQueryWrapper.and(wq -> {
+                boolean flag = false;
+                if (investmentAmount.contains("1000万以下")) {
+                    wq.between(AssetEntity::getCreditRightFare, 0, 1000);
+                    flag = true;
                 }
-                wq.between(AssetEntity::getCreditRightFare, 10000000, 30000000);
-                flag = true;
-            }
-            if (investmentAmount.contains(3)) {
-                if (flag) {
-                    wq.or();
+                if (investmentAmount.contains("1000万-3000万")) {
+                    if (flag) {
+                        wq.or();
+                    }
+                    wq.between(AssetEntity::getCreditRightFare, 1000, 3000);
+                    flag = true;
                 }
-                wq.between(AssetEntity::getCreditRightFare, 30000000, 60000000);
-            }
-            if (investmentAmount.contains(4)) {
-                if (flag) {
-                    wq.or();
+                if (investmentAmount.contains("3000万-6000万")) {
+                    if (flag) {
+                        wq.or();
+                    }
+                    wq.between(AssetEntity::getCreditRightFare, 3000, 6000);
                 }
-                wq.between(AssetEntity::getCreditRightFare, 60000000, 100000000);
-            }
-            if (investmentAmount.contains(5)) {
-                if (flag) {
-                    wq.or();
+                if (investmentAmount.contains("6000万-1亿")) {
+                    if (flag) {
+                        wq.or();
+                    }
+                    wq.between(AssetEntity::getCreditRightFare, 6000, 10000);
                 }
-                wq.between(AssetEntity::getCreditRightFare, 100000000, 300000000);
-            }
-            if (investmentAmount.contains(6)) {
-                if (flag) {
-                    wq.or();
+                if (investmentAmount.contains("1亿-3亿")) {
+                    if (flag) {
+                        wq.or();
+                    }
+                    wq.between(AssetEntity::getCreditRightFare, 10000, 30000);
                 }
-                wq.gt(AssetEntity::getCreditRightFare, 300000000);
-            }
-        });
+                if (investmentAmount.contains("3亿以上")) {
+                    if (flag) {
+                        wq.or();
+                    }
+                    wq.gt(AssetEntity::getCreditRightFare, 30000);
+                }
+            });
+        }
+//        if (!investmentType.isEmpty()) {
+//            lambdaQueryWrapper.in(AssetEntity::getCollateralType, investmentType);
+//        }
         List<AssetEntity> list = list(lambdaQueryWrapper);
         for (int i = 0; i < list.size(); i++) {
-            List<AssetCollateralEntity> assetCollateralEntities = assetCollateralService.list(new LambdaQueryWrapper<AssetCollateralEntity>().eq(AssetCollateralEntity::getAssetId, list.get(i).getId()));
             boolean flag = false;
+            List<AssetCollateralEntity> assetCollateralEntities = assetCollateralService.list(new LambdaQueryWrapper<AssetCollateralEntity>().eq(AssetCollateralEntity::getAssetId, list.get(i).getId()));
             for (AssetCollateralEntity assetCollateralEntity : assetCollateralEntities) {
                 if (investmentType.contains(assetCollateralEntity.getCollateralType())) {
                     flag = true;
@@ -582,22 +575,69 @@ public class AssetServiceImpl extends ServiceImpl<AssetDao, AssetEntity> impleme
                 }
             }
             if (!flag) {
-                list.remove(list.get(i));
+                list.remove(i);
                 i--;
             }
+//            if (collateralType == null) {
+//                list.remove(i);
+//                i--;
+//                continue;
+//            }
+//            String[] split = collateralType.split(";");
+//            boolean flag = false;
+//            for (String s : split) {
+//                if (investmentType.contains(s)) {
+//                    flag = true;
+//                    break;
+//                }
+//            }
+//            if (!flag) {
+//                list.remove(i);
+//                i--;
+//            }
         }
+//        for (int i = 0; i < list.size(); i++) {
+//            List<AssetCollateralEntity> assetCollateralEntities = assetCollateralService.list(new LambdaQueryWrapper<AssetCollateralEntity>().eq(AssetCollateralEntity::getAssetId, list.get(i).getId()));
+//            boolean flag = false;
+//            for (AssetCollateralEntity assetCollateralEntity : assetCollateralEntities) {
+//                if (investmentType.contains(assetCollateralEntity.getCollateralType())) {
+//                    flag = true;
+//                    break;
+//                }
+//            }
+//            if (!flag) {
+//                list.remove(list.get(i));
+//                i--;
+//            }
+//        }
         List<AssetDto> list1 = new ArrayList<>();
         for (AssetEntity assetEntity : list) {
             AssetDto assetDto = new AssetDto();
             BeanUtils.copyProperties(assetEntity, assetDto);
             List<AssetCollateralEntity> assetCollateralEntities = assetCollateralService.list(new LambdaQueryWrapper<AssetCollateralEntity>().eq(AssetCollateralEntity::getAssetId, assetEntity.getId()));
-            List<AssetGuaranteeEntity> assetGuaranteeEntities = assetGuaranteeService.list(new LambdaQueryWrapper<AssetGuaranteeEntity>().eq(AssetGuaranteeEntity::getAssetId, assetEntity.getId()));
-            List<AssetHighlight> assetHighlights = assetHighlightService.list(new LambdaQueryWrapper<AssetHighlight>().eq(AssetHighlight::getAssetId, assetEntity.getId()));
+//            List<AssetGuaranteeEntity> assetGuaranteeEntities = assetGuaranteeService.list(new LambdaQueryWrapper<AssetGuaranteeEntity>().eq(AssetGuaranteeEntity::getAssetId, assetEntity.getId()));
+//            List<AssetHighlight> assetHighlights = assetHighlightService.list(new LambdaQueryWrapper<AssetHighlight>().eq(AssetHighlight::getAssetId, assetEntity.getId()));
             assetDto.setAssetCollateralEntities(assetCollateralEntities);
-            assetDto.setAssetGuaranteeEntities(assetGuaranteeEntities);
-            assetDto.setAssetHighlights(assetHighlights);
+//            assetDto.setAssetGuaranteeEntities(assetGuaranteeEntities);
+//            assetDto.setAssetHighlights(assetHighlights);
             list1.add(assetDto);
         }
         return list1;
+    }
+
+    @Override
+    public AssetDto getDtoById(Long id) {
+        AssetEntity assetEntity = getById(id);
+        List<AssetCollateralEntity> assetCollateralEntities = assetCollateralService.list(new LambdaQueryWrapper<AssetCollateralEntity>().eq(AssetCollateralEntity::getAssetId, id));
+//        List<AssetGuaranteeEntity> assetGuaranteeEntities = assetGuaranteeService.list(new LambdaQueryWrapper<AssetGuaranteeEntity>().eq(AssetGuaranteeEntity::getAssetId, id));
+//        List<AssetHighlight> assetHighlights = assetHighlightService.list(new LambdaQueryWrapper<AssetHighlight>().eq(AssetHighlight::getAssetId, id));
+        List<AssetFile> assetFiles = assetFileService.list(new LambdaQueryWrapper<AssetFile>().eq(AssetFile::getAssetId, id));
+        AssetDto assetDto = new AssetDto();
+        BeanUtils.copyProperties(assetEntity, assetDto);
+        assetDto.setAssetCollateralEntities(assetCollateralEntities);
+//        assetDto.setAssetGuaranteeEntities(assetGuaranteeEntities);
+//        assetDto.setAssetHighlights(assetHighlights);
+        assetDto.setAssetFiles(assetFiles);
+        return assetDto;
     }
 }

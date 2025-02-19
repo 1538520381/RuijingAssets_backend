@@ -60,6 +60,12 @@ public class SysUserController {
         return R.ok().put("page", page);
     }
 
+    @GetMapping("/captain")
+    public R getCaptain() {
+        List<SysUserEntity> sysUserEntityList = sysUserService.list(new LambdaQueryWrapper<SysUserEntity>().eq(SysUserEntity::getAdmin, 2));
+        return R.ok().put("data", sysUserEntityList);
+    }
+
 
     /*
      * @author: K0n9D1KuA
@@ -134,11 +140,11 @@ public class SysUserController {
             return R.error("该用户导入过投资人，无法删除");
         } else {
             List<AssetEntity> list1 = assetService.list(new LambdaQueryWrapper<AssetEntity>().eq(AssetEntity::getCreateUser, userId));
-            if(!list1.isEmpty()) {
+            if (!list1.isEmpty()) {
                 return R.error("该用户导入过债权，无法删除");
-            }else {
-                List<TraceEntity> list2 = traceService.list(new LambdaQueryWrapper<TraceEntity>().eq(TraceEntity::getUserId,userId));
-                if(!list1.isEmpty()) {
+            } else {
+                List<TraceEntity> list2 = traceService.list(new LambdaQueryWrapper<TraceEntity>().eq(TraceEntity::getUserId, userId));
+                if (!list1.isEmpty()) {
                     return R.error("该用户进行过追踪操作，无法删除");
                 }
             }

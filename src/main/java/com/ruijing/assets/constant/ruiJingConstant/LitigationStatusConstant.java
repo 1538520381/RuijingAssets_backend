@@ -17,6 +17,7 @@ public class LitigationStatusConstant {
 
     static {
         litigationStatusMap = new HashMap<>();
+        litigationStatusMap.put(0, "其他");
         litigationStatusMap.put(1, "未诉");
         litigationStatusMap.put(2, "已诉未判决");
         litigationStatusMap.put(3, "已判决未执行");

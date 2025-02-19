@@ -28,7 +28,7 @@ public class InvestorEntity {
     private String name;
 
     // 投资人属性
-    private Integer type;
+    private String type;
 
     // 证件号码
     private String certificateId;
@@ -37,13 +37,15 @@ public class InvestorEntity {
     private String location;
 
     // 规模大小
-    private Integer scale;
+    private String scale;
+
+    // 经济类型
+    private String economicType;
 
     // 联系方式
     private String contact;
 
-    // 经济类型id
-    private Long economicTypeId;
+    private String remarks;
 
     // 创建用户
     private Long createUser;

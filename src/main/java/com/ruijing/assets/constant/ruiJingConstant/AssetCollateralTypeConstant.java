@@ -20,7 +20,7 @@ public class AssetCollateralTypeConstant {
 
     static {
         assetCollateralTypeMap = new HashMap<>();
-        assetCollateralTypeMap.put(1, "土地");
+        assetCollateralTypeMap.put(1, "公寓");
         assetCollateralTypeMap.put(2, "在建工程");
         assetCollateralTypeMap.put(3, "厂房");
         assetCollateralTypeMap.put(4, "酒店");
@@ -36,6 +36,14 @@ public class AssetCollateralTypeConstant {
         assetCollateralTypeMap.put(14, "知识产权");
         assetCollateralTypeMap.put(15, "无形资产");
         assetCollateralTypeMap.put(16, "其他资产");
+        assetCollateralTypeMap.put(17, "商铺");
+        assetCollateralTypeMap.put(18, "仓储用房");
+        assetCollateralTypeMap.put(19, "商业用地");
+        assetCollateralTypeMap.put(20, "工业用地");
+        assetCollateralTypeMap.put(21, "住宅用地");
+        assetCollateralTypeMap.put(22, "耕地");
+        assetCollateralTypeMap.put(23, "农业用地");
+        assetCollateralTypeMap.put(24, "交通用地");
+        assetCollateralTypeMap.put(25, "其他用地");
     }
-
 }

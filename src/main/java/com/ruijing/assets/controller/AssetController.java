@@ -16,15 +16,22 @@ import com.ruijing.assets.util.using.PageUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.YearMonth;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 /**
@@ -49,11 +56,11 @@ public class AssetController {
     @Autowired
     private InvestorService investorService;
     @Autowired
-    private InvestorIntentionRegionService investorIntentionRegionService;
-    @Autowired
-    private InvestorInvestmentTypeService investorInvestmentTypeService;
-    @Autowired
-    private InvestorInvestmentAmountService investorInvestmentAmountService;
+    private AssetFileService assetFileService;
+
+
+    @Value("${asset.file.path}")
+    private String basePath;
 
 
     /*
@@ -65,11 +72,22 @@ public class AssetController {
      */
     @PostMapping("/update")
     @SysLog(operationName = "修改债权", operationType = 2)
-    public R update(@RequestBody AssetUpdateDTO assetUpdateDTO) {
-        assetService.updateAsset(assetUpdateDTO);
+    public R update(@RequestBody AssetDto assetDto) {
+        assetService.updateAsset(assetDto);
         return R.ok();
     }
 
+    @PutMapping("unshelf/{assetId}")
+    public R unshelf(@PathVariable Long assetId) {
+        try {
+            AssetEntity assetEntity = assetService.getById(assetId);
+            assetEntity.setOnShelfStatus(1);
+            assetService.updateById(assetEntity);
+            return R.ok();
+        } catch (Exception e) {
+            return R.error();
+        }
+    }
 
     /*
      * @author: K0n9D1KuA
@@ -115,7 +133,7 @@ public class AssetController {
         AssetEntity assetEntity = new AssetEntity();
         BeanUtils.copyProperties(onShelfDTO, assetEntity);
         //设置开始时间
-        assetEntity.setStartTime(new Date());
+//        assetEntity.setStartTime(new Date());
         //设置状态  已上架
         assetEntity.setOnShelfStatus(OnShelfStatus.ON_THE_SHELF.getCode());
         //数据库更改
@@ -152,21 +170,6 @@ public class AssetController {
     @GetMapping("/assetInfo/{assetId}")
     public R getAssetInfo(@PathVariable Long assetId) {
         return assetService.getAssetInfo(assetId);
-    }
-
-
-    /*
-     * @author: K0n9D1KuA
-     * @description: 添加债权信息
-     * @param: assetAddDTO
-     * @return: com.ruijing.assets.entity.result.R
-     * @date: 2023/2/5 19:21
-     */
-    @PostMapping("/addAsset")
-    @SysLog(operationName = "新增债权", operationType = 2)
-    public R addAsset(@RequestBody AssetAddDTO assetAddDTO) {
-        assetService.addAsset(assetAddDTO);
-        return R.ok();
     }
 
     /*
@@ -228,22 +231,35 @@ public class AssetController {
      * @return: com.ruijing.assets.entity.result.R
      * @date: 2023/2/21 19:43
      */
-    @GetMapping("/deleteAsset/{assetId}")
+    @DeleteMapping("/deleteAsset/{assetId}")
     public R deleteAsset(@PathVariable Long assetId) {
-        List<TraceEntity> list = traceService.list(new LambdaQueryWrapper<TraceEntity>().eq(TraceEntity::getAssetId, assetId));
+        List<TraceEntity> list = traceService.list(new LambdaQueryWrapper<TraceEntity>().eq(TraceEntity::getAssetId, assetId).eq(TraceEntity::getType, 1));
         if (!list.isEmpty()) {
-            return R.error("该资产已被匹配，无法删除");
+            return R.error("该资产已被匹配且正在被追踪，无法删除");
         }
         assetService.deleteAsset(assetId);
+        traceService.remove(new LambdaQueryWrapper<TraceEntity>().eq(TraceEntity::getAssetId, assetId));
         return R.ok();
     }
+
+    @Autowired
+    private InvestorIntentionRegionService investorIntentionRegionService;
+
+    @Autowired
+    private InvestorInvestmentTypeService investorInvestmentTypeService;
+    @Autowired
+    private InvestorInvestmentAmountService investorInvestmentAmountService;
 
     @GetMapping("/matchAll")
     public R matchAll(@RequestParam Long userId) {
         SysUserEntity sysUserEntity = sysUserService.getById(userId);
         List<InvestorEntity> list;
-        if (!sysUserEntity.getAdmin()) {
+        if (sysUserEntity.getAdmin() == 3) {
             list = investorService.list(new LambdaQueryWrapper<InvestorEntity>().eq(InvestorEntity::getCreateUser, userId));
+        } else if (sysUserEntity.getAdmin() == 2) {
+            List<Long> ids = sysUserService.list(new LambdaQueryWrapper<SysUserEntity>().eq(SysUserEntity::getAdmin, 3).eq(SysUserEntity::getCaptain, sysUserEntity.getId())).stream().map((SysUserEntity::getId)).collect(Collectors.toList());
+            ids.add(sysUserEntity.getId());
+            list = investorService.list(new LambdaQueryWrapper<InvestorEntity>().in(InvestorEntity::getCreateUser, ids));
         } else {
             list = investorService.list();
         }
@@ -257,13 +273,19 @@ public class AssetController {
             }
             StringBuilder str2 = new StringBuilder(" ");
             for (InvestorInvestmentTypeEntity investorInvestmentType : list2) {
-                str2.append(investorInvestmentType.getInvestmentTypeId()).append(",");
+                str2.append(investorInvestmentType.getValue()).append(",");
             }
             StringBuilder str3 = new StringBuilder(" ");
             for (InvestorInvestmentAmountEntity investorInvestmentAmount : list3) {
-                str3.append(investorInvestmentAmount.getInvestmentAmountId()).append(",");
+                str3.append(investorInvestmentAmount.getValue()).append(",");
             }
-            match(investorEntity.getId(), str1.toString(), str2.toString(), str3.toString(), userId);
+            Map<String, String> map = new HashMap<>();
+            map.put("investorId", investorEntity.getId().toString());
+            map.put("intentionRegion", str1.toString());
+            map.put("investmentType", str2.toString());
+            map.put("investmentAmount", str3.toString());
+            map.put("userId", userId.toString());
+            match(map);
         }
         return R.ok();
     }
@@ -275,46 +297,61 @@ public class AssetController {
      * @email 1538520381@qq.com
      * @date 2024/5/23 下午9:21
      */
-    @GetMapping("/match")
-    public R match(@RequestParam Long investorId, @RequestParam String intentionRegion, @RequestParam String investmentType, @RequestParam String investmentAmount, @RequestParam Long userId) {
-        List<Integer> list1 = new ArrayList<>();
-        String[] split = investmentType.substring(1, investmentType.length() - 1).split(",");
-        for (String s : split) {
-            list1.add(Integer.parseInt(s));
+    @PostMapping("/match")
+    public R match(@RequestBody Map<String, String> map) {
+        String investorId = map.get("investorId");
+        String intentionRegion = map.get("intentionRegion");
+        String investmentType = map.get("investmentType");
+        String investmentAmount = map.get("investmentAmount");
+        String userId = map.get("userId");
+        List<String> list1 = new ArrayList<>();
+        if (investmentType != null && !investmentType.isEmpty() && !investmentType.equals(" ")) {
+            String[] split = investmentType.substring(1, investmentType.length() - 1).split(",");
+            if (!split[0].isEmpty()) {
+                list1 = new ArrayList<>(Arrays.asList(split));
+
+            }
         }
-        List<Integer> list2 = new ArrayList<>();
-        split = investmentAmount.substring(1, investmentAmount.length() - 1).split(",");
-        for (String s : split) {
-            list2.add(Integer.parseInt(s));
+        List<String> list2 = new ArrayList<>();
+        if (investmentAmount != null && !investmentAmount.isEmpty() && !investmentAmount.equals(" ")) {
+            String[] split = investmentAmount.substring(1, investmentAmount.length() - 1).split(",");
+            if (!split[0].isEmpty()) {
+                list2 = new ArrayList<>(Arrays.asList(split));
+            }
         }
-        List<AssetDto> match = assetService.match(Arrays.asList(intentionRegion.substring(1, intentionRegion.length() - 1).split(",")), list1, list2);
+        List<String> list3 = new ArrayList<>();
+        if (intentionRegion != null && !intentionRegion.isEmpty() && !intentionRegion.equals(" ")) {
+            String[] split = intentionRegion.substring(1, intentionRegion.length() - 1).split(",");
+            if (!split[0].isEmpty()) {
+                list3 = new ArrayList<>(Arrays.asList(split));
+            }
+        }
+        List<AssetDto> match = assetService.match(list3, list1, list2);
         List<TraceDto> list = new ArrayList<>();
         for (AssetDto assetDto : match) {
             TraceEntity trace = new TraceEntity();
-            trace.setInvestorId(investorId);
+            trace.setInvestorId(Long.parseLong(investorId));
             trace.setAssetId(assetDto.getId());
             trace.setType(0);
-            trace.setUserId(userId);
+            trace.setUserId(Long.parseLong(userId));
             Long l = traceService.addByUnique(trace);
             TraceDto traceDto = new TraceDto();
             traceDto.setId(l);
-            traceDto.setInvestorId(investorId);
-            traceDto.setInvestorName(investorService.getById(investorId).getName());
+            traceDto.setInvestorId(Long.parseLong(investorId));
+            traceDto.setInvestorName(investorService.getById(Long.parseLong(investorId)).getName());
             traceDto.setAssetId(assetDto.getId());
-            traceDto.setAssetName(assetDto.getAssetName());
+//            traceDto.setAssetName(assetDto.getAssetInformation());
             traceDto.setAssetUserName(assetDto.getName());
-            SysUserEntity sysUserEntity1 = sysUserService.getById(assetDto.getCreateUser());
-            traceDto.setCreateAssetName(sysUserEntity1.getName());
-            SysUserEntity sysUserEntity2 = sysUserService.getById(investorService.getById(investorId).getCreateUser());
-            traceDto.setCreateInvestorName(sysUserEntity2.getName());
+            traceDto.setCreateAssetName(assetDto.getOperator());
+            traceDto.setCreateInvestorName(investorService.getById(Long.parseLong(investorId)).getOperator());
             list.add(traceDto);
 
         }
         return R.ok().put("data", list);
     }
 
-    @GetMapping("/count")
-    public R count() {
+    @GetMapping("/count/{userId}")
+    public R count(@PathVariable Long userId) {
         LocalDate currentDate = LocalDate.now();
         List<String> xData = new ArrayList<>();
         List<Integer> yData = new ArrayList<>();
@@ -325,8 +362,94 @@ public class AssetController {
             LocalDateTime startOfMonth = LocalDateTime.of(firstDayOfMonth, LocalTime.MIN);
             LocalDateTime endOfMonth = LocalDateTime.of(lastDayOfMonth, LocalTime.MAX);
             xData.add(yearMonth.getMonthValue() + "月");
-            yData.add(assetService.count(new LambdaQueryWrapper<AssetEntity>().between(AssetEntity::getCreateTime, startOfMonth, endOfMonth)));
+
+            LambdaQueryWrapper<AssetEntity> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+            SysUserEntity sysUserEntity = sysUserService.getById(userId);
+            if (sysUserEntity.getAdmin() == 3) {
+                lambdaQueryWrapper.eq(AssetEntity::getCreateUser, userId);
+            } else if (sysUserEntity.getAdmin() == 2) {
+                List<Long> ids = sysUserService.list(new LambdaQueryWrapper<SysUserEntity>().eq(SysUserEntity::getAdmin, 3).eq(SysUserEntity::getCaptain, sysUserEntity.getId())).stream().map((SysUserEntity::getId)).collect(Collectors.toList());
+                ids.add(sysUserEntity.getId());
+                lambdaQueryWrapper.in(AssetEntity::getCreateUser, ids);
+            }
+
+            yData.add(assetService.count(lambdaQueryWrapper.between(AssetEntity::getCreateTime, startOfMonth, endOfMonth)));
         }
         return R.ok().put("xData", xData).put("yData", yData);
+    }
+
+    @PostMapping("/upload/file/{assetId}")
+    public R upload(@RequestParam("file") MultipartFile file, @PathVariable Long assetId) {
+        String originalFilename = file.getOriginalFilename();
+        String suffix = originalFilename.substring(originalFilename.lastIndexOf("."));
+        String fileName = UUID.randomUUID().toString() + suffix;
+        File dir = new File(basePath);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        try {
+            file.transferTo(new File(basePath + fileName));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        log.info("111:{}", basePath + fileName);
+        AssetFile assetFile = new AssetFile();
+        assetFile.setName(fileName);
+        assetFile.setAssetId(assetId);
+        assetFile.setOriginalName(originalFilename);
+        log.info("222:{}", originalFilename);
+        boolean save = assetFileService.save(assetFile);
+        log.info("333:{}", save);
+        return R.ok("上传成功" + basePath + fileName);
+    }
+
+
+    /*
+     * @author: K0n9D1KuA
+     * @description: 添加债权信息
+     * @param: assetAddDTO
+     * @return: com.ruijing.assets.entity.result.R
+     * @date: 2023/2/5 19:21
+     */
+    @PostMapping("/addAsset")
+    @SysLog(operationName = "新增债权", operationType = 2)
+    public R addAsset(@RequestBody AssetDto assetDTO) {
+        assetService.addAsset(assetDTO);
+        return R.ok();
+    }
+
+    @GetMapping("/asset/{assetId}")
+    public R getAssetById(@PathVariable Long assetId) {
+        AssetDto assetDto = assetService.getDtoById(assetId);
+        return R.ok().put("asset", assetDto);
+    }
+
+    @GetMapping("/download/{name}")
+    public void download(@PathVariable String name, HttpServletResponse response) {
+        log.info("1:");
+        try {
+            FileInputStream fileInputStream = new FileInputStream(new File(basePath + name));
+            log.info("2:");
+            ServletOutputStream outputStream = response.getOutputStream();
+            response.setContentType("image/jpeg");
+            int len = 0;
+            byte[] bytes = new byte[1024];
+            while ((len = fileInputStream.read(bytes)) != -1) {
+                outputStream.write(bytes, 0, len);
+                outputStream.flush();
+            }
+            log.info("3:");
+            outputStream.close();
+            fileInputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        log.info("4:");
+    }
+
+    @DeleteMapping("/assetFile/{id}")
+    public R removeAssetFile(@PathVariable Long id) {
+        assetFileService.removeById(id);
+        return R.ok();
     }
 }

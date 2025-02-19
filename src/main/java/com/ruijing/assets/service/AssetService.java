@@ -42,7 +42,7 @@ public interface AssetService extends IService<AssetEntity> {
      * @return: com.ruijing.assets.entity.result.R
      * @date: 2023/2/5 19:21
      */
-    void addAsset(AssetAddDTO assetAddDTO);
+    void addAsset(AssetDto assetDto);
 
     String upload(byte[] bytes, String originalFilename, String contentType, Long assetId);
 
@@ -73,7 +73,7 @@ public interface AssetService extends IService<AssetEntity> {
      * @return: com.ruijing.assets.entity.result.R
      * @date: 2023/2/21 22:19
      */
-    void updateAsset(AssetUpdateDTO assetUpdateDTO);
+    void updateAsset(AssetDto assetDto);
 
     /*
      * @author Persolute
@@ -82,6 +82,8 @@ public interface AssetService extends IService<AssetEntity> {
      * @email 1538520381@qq.com
      * @date 2024/5/23 下午9:20
      */
-    List<AssetDto> match(List<String> intentionRegion, List<Integer> investmentType, List<Integer> investmentAmount);
+    List<AssetDto> match(List<String> intentionRegion, List<String > investmentType, List<String > investmentAmount);
+
+    AssetDto getDtoById(Long id);
 }
 

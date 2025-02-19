@@ -41,7 +41,6 @@ public class AssetCollateralEntity implements Serializable {
     /**
      * 抵押物面积，保留两位小数
      */
-    private BigDecimal area;
     /**
      * 抵押物名字
      */
@@ -49,7 +48,7 @@ public class AssetCollateralEntity implements Serializable {
     /**
      * 抵押物类型
      */
-    private Integer collateralType;
+    private String collateralType;
 
 
     @TableField(exist = false)

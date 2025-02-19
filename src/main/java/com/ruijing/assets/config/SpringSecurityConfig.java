@@ -59,7 +59,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                         , "/assets/customer/register"
                         , "/assets/carouselchart/uploadCarouselChart"
                         , "/assets/asset/upload/*"
-                        , "/assets/contact_us/updateImage").anonymous()
+                        , "/assets/contact_us/updateImage"
+                        , "/assets/asset/upload/file/*").anonymous()
                 // TODO 其他接口后续认证
                 // 除上面外的所有请求全部需要登录
                 .anyRequest().authenticated();

@@ -21,6 +21,6 @@ public class InvestorInvestmentAmountEntity {
     // 投资人id
     private Long investorId;
 
-    // 拟投资金额id
-    private Long investmentAmountId;
+    // 拟投资金额
+    private String value;
 }

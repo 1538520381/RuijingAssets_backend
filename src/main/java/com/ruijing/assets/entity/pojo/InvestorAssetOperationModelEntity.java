@@ -21,6 +21,6 @@ public class InvestorAssetOperationModelEntity {
     // 投资人id
     private Long investorId;
 
-    // 拟投资金额id
-    private Long assetOperationModelId;
+    // 拟投资金额
+    private String value;
 }

@@ -41,17 +41,20 @@ spring:
         wall:
           config:
             multi-statement-allow: true
-      #      url: jdbc:mysql://175.178.189.129:3306/ruijing?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8
-      #      password: dsjaiodjasdsajdsadj213j14i1j451j423k5j1345jn12k5j,
-      #      ruijingPassword
-      password: mYsQl9572580729
-      username: Persolute
-      url: jdbc:mysql://192.168.213.128:3306/ruijing_assets_admin?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8
-#      password: Doit#2024
-#      username: root
-#      url: jdbc:mysql://localhost:3306/ruijing_assets_admin?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8
 
+#      password: mYsQl9572580729
+#      username: Persolute
+#      url: jdbc:mysql://192.168.213.128:3306/ruijing_assets_admin?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8
+#asset:
+#  file:
+#    path: C:\Users\15385\Desktop\file\
 
+      password: Doit#2024
+      username: root
+      url: jdbc:mysql://localhost:3306/ruijing_assets_admin?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8
+asset:
+  file:
+    path: /data/file/
 
 
 

@@ -33,12 +33,7 @@ public class AssetGuaranteeEntity implements Serializable {
 	/**
 	 * 担保方式
 	 */
-	private Integer method;
-	@TableField(exist = false)
-	/**
-	 * 担保方式
-	 */
-	private String methodString;
+	private String method;
 	/**
 	 * 资产id
 	 */

@@ -21,6 +21,6 @@ public class InvestorValueAddedServiceEntity {
     // 投资人id
     private Long investorId;
 
-    // 增值服务id
-    private Long valueAddedServiceId;
+    // 增值服务
+    private String value;
 }
